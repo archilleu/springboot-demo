@@ -52,9 +52,13 @@ class DateTest {
 
 @Controller
 @RequestMapping("/demo")
-public class HelloController {
+public class DemoController {
 	
-	private Log log = LogFactory.getLog(HelloController.class);
+	private Log log = LogFactory.getLog(DemoController.class);
+	
+	/*
+	 * 日志输出等级配置
+	 */
 	@GetMapping(path="/log")
 	@ResponseBody
 	public Success log() {
@@ -87,16 +91,16 @@ public class HelloController {
 	/*
 	 * foward
 	 */
-	@GetMapping(path="foward-demo")
+	@GetMapping(path="forward-demo")
 	public String forward() {
 		System.out.println("forward");
-		return "forward:/demo/foward";
+		return "forward:/demo/forward";
 	}
 
 	@GetMapping(path="foward")
 	public String forwardPage() {
 		System.out.println("forward page");
-		return "/demo/foward";
+		return "/demo/forward";
 	}
 
 	/*
@@ -104,7 +108,7 @@ public class HelloController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/consumes/sample.json", method = RequestMethod.POST, consumes = "application/json")
-	public User forJson(@RequestBody User user) {
+	public User postUser(@RequestBody User user) {
 		return user;
 	}
 
@@ -134,13 +138,13 @@ public class HelloController {
 	 */
 	@ResponseBody
 	@PostMapping(path = "/update.json", params = "action=save")
-	public void saveUser() {
+	public void updateUserSave() {
 		System.out.println("call save");
 	}
 
 	@ResponseBody
 	@PostMapping(path = "/update.json", params = "action=update")
-	public void updateUser() {
+	public void updateUserUpdate() {
 		System.out.println("call update");
 	}
 
@@ -149,7 +153,7 @@ public class HelloController {
 	 */
 	@ResponseBody
 	@GetMapping(path = "/update.json", headers = "action=update")
-	public void updateUser2() {
+	public void updateUserHeaders() {
 		System.out.println("call update(headers)");
 	}
 
@@ -157,19 +161,19 @@ public class HelloController {
 	 * HTTP提交映射的方法参数 下面匹配/update2.json?name=abc&id=1
 	 */
 	@ResponseBody
-	@GetMapping(path = "/update2.json")
-	public String updateUser2(Integer id,
+	@GetMapping(path = "/update-param")
+	public String updateUserParam(Integer id,
 			@RequestParam(value = "name", required = true, defaultValue = "name") String name) {
 		System.out.println("id:" + id + " name:" + name);
 		return "success";
 	}
 
 	/*
-	 * HTTP参数转换为JavaBean 下面匹配/update2.json?name=abc&id=1
+	 * HTTP参数转换为JavaBean,非json格式,form或者url参数
 	 */
 	@ResponseBody
 	@GetMapping(path = "/update.json")
-	public String updateUser1(User user) {
+	public String updateUserForm(User user) {
 		return "username:" + user.getName() + " password:" + user.getPassword();
 	}
 
@@ -191,11 +195,15 @@ public class HelloController {
 	public String handleUpload(String name, MultipartFile file) throws IOException {
 		if (!file.isEmpty()) {
 			// file.transferTo(new File("D://"+file.getOriginalFilename()));//保存到文件系统
-			return "success";
+			byte[] content = file.getBytes();
+			if(content.equals(FILE_UPLOAD_CONTENT))
+				return "success";
 		}
 
 		return "failure";
 	}
+	
+	public static final byte[] FILE_UPLOAD_CONTENT = "content".getBytes();
 
 	/*
 	 * ModelAttribute 用于Controllder
@@ -209,9 +217,9 @@ public class HelloController {
 
 	@ResponseBody
 	@GetMapping(path = "/var/{id}/get.json")
-	public String getUser1(Model model) {
+	public String getUser1(Model model, @PathVariable String id) {
 		System.out.println(model.containsAttribute("user"));
-		return "success";
+		return "success" + id;
 	}
 
 	@ResponseBody
@@ -230,6 +238,6 @@ public class HelloController {
 		if(0.5 < Math.random())
 			throw new BadRequestException();
 		
-		return new Success("haha");
+		return new Success("error");
 	}
 }

@@ -13,6 +13,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
 public class User {
 	
+	public User() {
+		
+	}
+
+	public User(String name, String password, String ignore) {
+		this.name = name;
+		this.password = password;
+		this.ignore = ignore;
+	}
+	
 	@Id
 	//@GeneratedValue(strategy=GenerationType.IDENTITY) 非自增字段
 	@Column(name="name")

@@ -48,6 +48,11 @@ public class UserServiceImpl implements UserService {
 	public List<User> getUserList() {
 		return userDao.getUserList();
 	}
+	
+	//mock 模拟接口，mock注入UserDao
+	public Long mockTest() {
+		return userDao.rowCount();
+	}
 
 	@Autowired
 	private UserDao userDao;

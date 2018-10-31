@@ -16,7 +16,7 @@ public class DataSourceConfig {
 	@Profile("dev")
 	public DataSource devDatasource(Environment env) {
 		HikariDataSource ds = getDataSource(env);
-		ds.setMaximumPoolSize(10);
+		ds.setMaximumPoolSize(2);
 		return (DataSource)ds;
 	}
 
@@ -24,7 +24,7 @@ public class DataSourceConfig {
 	@Profile("prod")
 	public DataSource prodDatasource(Environment env) {
 		HikariDataSource ds = getDataSource(env);
-		ds.setMaximumPoolSize(10);
+		ds.setMaximumPoolSize(16);
 		return (DataSource)ds;
 	}
 	

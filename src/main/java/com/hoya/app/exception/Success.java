@@ -25,4 +25,6 @@ public class Success {
 	final private int code = 200;
 	final private String error = "200 OK";
 	private String msg;
+	
+	public static final Success kSuccess = new Success();
 }
