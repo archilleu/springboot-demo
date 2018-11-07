@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hoya.app.demo.entity.User;
+import com.hoya.app.demo.service.CacheService;
 
 @Controller
 @RequestMapping("/redis")
@@ -26,15 +27,21 @@ public class RedisStringController {
 	@RequestMapping("/user.json")
 	@ResponseBody
 	public User User() throws Exception {
+		cache.getRow();
 		User user = new User("name", "password", "ingore");
 		jsonRedisTemplate.opsForValue().set("user", user);
-		user = jsonRedisTemplate.opsForValue().get("user");
+		jsonRedisTemplate.opsForValue().set("user1", user);
+		jsonRedisTemplate.opsForValue().set("count", 1L);
+		user = (User) jsonRedisTemplate.opsForValue().get("user");
 		return user;
 	}
 	
 	@Autowired
 	private StringRedisTemplate redisClient;
 	
-	@Resource
-	private RedisTemplate<String, User> jsonRedisTemplate;
+	@Resource(name="jsonRedisTemplate")
+	private RedisTemplate<String, Object> jsonRedisTemplate;
+	
+	@Autowired
+	CacheService cache;
 }

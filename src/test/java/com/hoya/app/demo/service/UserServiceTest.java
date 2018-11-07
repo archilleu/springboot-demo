@@ -1,6 +1,7 @@
 package com.hoya.app.demo.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -14,14 +15,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-
-import static org.mockito.BDDMockito.given;
 
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.hoya.app.demo.dao.UserDao;
 import com.hoya.app.demo.entity.User;
 
 @RunWith(SpringRunner.class)
@@ -41,6 +38,7 @@ public class UserServiceTest {
 	
 	@Before
 	public void beforeTest() {
+		userService.clear();
 		System.out.println("unit test method before...");
 	}
 	
@@ -51,30 +49,70 @@ public class UserServiceTest {
 	
 	@Test
 	public void testRowCount() {
+		User user = new User("name", "password", null);
+		userService.saveUser(user);
+		Long expected = 1L;
 		Long count = userService.rowCount();
-		System.out.println("count * : " + count);
-		count = userService.rowCount("cjy");
-		System.out.println("count cjy : " + count);
+		assertEquals(expected, count);
 		
-		User user = userService.getUser("cjy");
-		System.out.println(user);
+		String name = "name";
+		count = userService.rowCount(name);
+		assertEquals(expected, count);
+		
+		count = userService.rowCount("not exists");
+		assertEquals(new Long(0L), count);
+	}
+	
+	@Test
+	public void testGetSave() {
+		User user = new User("name", "password", null);
+		userService.saveUser(user);
+		User expected = userService.getUser(user.getName());
+		assertEquals(expected, user);
+		
 		user = userService.getUser("none");
 		assertNull(user);
-		
-		user = new User();
-		user.setName("new user");
-		user.setPassword("password");
+	}
+	
+	@Test
+	public void testUpdate() {
+		User user = new User("name", "password", null);
 		userService.saveUser(user);
-		
 		user.setPassword("new password");
 		userService.updatePassword(user);
-		
+		User expected = userService.getUser(user.getName());
+		assertEquals(expected.getPassword(), user.getPassword());
+		assertEquals(expected, user);
+	}
+	
+	@Test
+	public void testList() {
+		User user1 = new User("name1", "password", null);
+		User user2 = new User("name2", "password", null);
+		userService.saveUser(user1);
+		userService.saveUser(user2);
+
 		List<User> users = userService.getUserList();
-		System.out.println(users);
+		long expectedCount = 2L;
+		assertEquals(expectedCount, users.size());
 		
-		user.setName("new user");
+		User user = users.get(0);
+		assertTrue(user.equals(user1) || user.equals(user2));
+		user = users.get(1);
+		assertTrue(user.equals(user1) || user.equals(user2));
+	}
+	
+	@Test
+	public void testDelete() {
+		User user = new User("name", "password", null);
+		userService.saveUser(user);
+		assertNotNull(userService.getUser(user.getName()));
 		userService.delete(user);
-		assertNull(userService.getUser("new user"));
+		assertNull(userService.getUser(user.getName()));
+	}
+	
+	@Test
+	public void testTransaction() {
 		
 		try {
 			userService.transaction();
@@ -82,21 +120,8 @@ public class UserServiceTest {
 		} catch (Exception e) {
 			assertTrue(true);
 		}
-		
 	}
 	
-	@Test
-	public void testMock() {
-		Long expected = 100L;
-		//模拟userDao的rowCount函数返回expected
-		given(this.userDao.rowCount()).willReturn(expected);
-		Long result = userService.mockTest();
-		assertEquals(expected, result);
-	}
-
 	@Autowired
 	UserServiceImpl userService;
-	
-	@MockBean
-	private UserDao userDao;
 }

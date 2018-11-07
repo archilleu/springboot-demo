@@ -3,6 +3,7 @@ package com.hoya.app.demo.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -16,6 +17,11 @@ import com.hoya.app.demo.repository.UserRepository;
 @Service
 @Transactional
 public class UserRepositoryServiceImpl implements UserService {
+	
+	@Override
+	public void clear() {
+		repository.deleteAll();
+	}
 
 	@Override
 	public Long rowCount() {
@@ -24,8 +30,9 @@ public class UserRepositoryServiceImpl implements UserService {
 
 	@Override
 	public Long rowCount(String username) {
-		// TODO Auto-generated method stub
-		return repository.count();
+		User user = new User(username, "password", null);
+		Example<User> example = Example.of(user);
+		return repository.count(example);
 	}
 
 	@Override
@@ -43,8 +50,9 @@ public class UserRepositoryServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updatePassword(User user) {
+	public User updatePassword(User user) {
 		repository.save(user);
+		return user;
 	}
 
 	@Override
@@ -61,9 +69,9 @@ public class UserRepositoryServiceImpl implements UserService {
 		return repository.findAll();
 	}
 	
-	public List<User> getUserListSortAndPage() {
-		Sort sort = new Sort(Direction.DESC, "name");
-		PageRequest pageable = PageRequest.of(0, 1, sort);
+	public List<User> getUserListSortAndPage(int page, int size) {
+		Sort sort = new Sort(Direction.ASC, "name");
+		PageRequest pageable = PageRequest.of(page, size, sort);
 		Page<User> pageObject = repository.findAll(pageable);
 		return pageObject.getContent();
 	}

@@ -2,12 +2,14 @@ package com.hoya.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 
 /*
  * 建议该类放在工程包顶层，这样可以扫描改包下所有的注解类
  */
 
 @SpringBootApplication
+@EnableCaching
 /*
  * jar 方式部署自带servlet容器
 */

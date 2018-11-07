@@ -6,11 +6,12 @@ import com.hoya.app.demo.entity.User;
 
 public interface UserService {
 	
+	public void clear();
 	public Long rowCount();
 	public Long rowCount(String username); 
 	public User getUser(String username);
 	public void saveUser(User user);
-	public void updatePassword(User user);
+	public User updatePassword(User user);
 	public void delete(User user);
 	public List<User> getUserList();
 

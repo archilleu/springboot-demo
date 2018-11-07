@@ -14,6 +14,10 @@ import com.hoya.app.demo.entity.User;
 @Repository
 public class UserDao {
 	
+	public void clear() {
+		jdbcTemplate.execute("delete from user");
+	}
+	
 	public Long rowCount() {
 		return jdbcTemplate.queryForObject("select count(*) from user", Long.class);
 	}

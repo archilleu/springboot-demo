@@ -12,6 +12,11 @@ import com.hoya.app.demo.entity.User;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
+	
+	@Override
+	public void clear() {
+		userDao.clear();
+	}
 
 	@Override
 	public Long rowCount() {
@@ -35,8 +40,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updatePassword(User user) {
+	public User updatePassword(User user) {
 		userDao.updatePassword(user);
+		return user;
 	}
 
 	@Override
@@ -49,11 +55,6 @@ public class UserServiceImpl implements UserService {
 		return userDao.getUserList();
 	}
 	
-	//mock 模拟接口，mock注入UserDao
-	public Long mockTest() {
-		return userDao.rowCount();
-	}
-
 	@Autowired
 	private UserDao userDao;
 

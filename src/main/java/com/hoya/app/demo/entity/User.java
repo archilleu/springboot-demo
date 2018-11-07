@@ -1,5 +1,7 @@
 package com.hoya.app.demo.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,12 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-public class User {
-	
+public class User implements Serializable {
+
 	public User() {
 		
 	}
@@ -56,6 +61,16 @@ public class User {
 	public String toString() {
 		return "username: " + name + " password: " + password + " ignore: " + ignore;
 	}
+	
+	@Override
+	public boolean equals(Object other) {
+		return EqualsBuilder.reflectionEquals(this, other);
+	}
+
+	@Override
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this);
+	}
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -67,4 +82,6 @@ public class User {
 	
 	@JsonIgnore
 	private String ignore;
+
+	private static final long serialVersionUID = 1L;
 }
