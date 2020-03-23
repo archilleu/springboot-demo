@@ -1,0 +1,53 @@
+-- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
+--
+-- Host: localhost    Database: demo
+-- ------------------------------------------------------
+-- Server version	5.7.28-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `sys_role_menu`
+--
+
+DROP TABLE IF EXISTS `sys_role_menu`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sys_role_menu` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `role_id` bigint(20) DEFAULT NULL COMMENT '角色ID',
+  `menu_id` bigint(20) DEFAULT NULL COMMENT '菜单ID',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ROLE_MENU` (`role_id`,`menu_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=889 DEFAULT CHARSET=utf8 COMMENT='角色与菜单对应关系';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_role_menu`
+--
+
+LOCK TABLES `sys_role_menu` WRITE;
+/*!40000 ALTER TABLE `sys_role_menu` DISABLE KEYS */;
+INSERT INTO `sys_role_menu` VALUES (841,1,1),(861,1,2),(867,1,3),(881,1,4),(878,1,5),(843,1,6),(844,1,7),(845,1,8),(846,1,9),(847,1,10),(848,1,11),(849,1,12),(850,1,13),(851,1,14),(862,1,15),(863,1,16),(864,1,17),(865,1,18),(868,1,19),(869,1,20),(870,1,21),(871,1,22),(882,1,23),(883,1,24),(884,1,25),(885,1,26),(853,1,27),(879,1,29),(854,1,30),(872,1,31),(873,1,32),(874,1,33),(875,1,34),(876,1,35),(855,1,36),(856,1,37),(857,1,38),(858,1,39),(859,1,40),(888,1,41),(842,1,42),(860,1,46),(877,1,47),(887,1,48),(880,1,49),(886,1,50),(866,1,51),(852,1,61);
+/*!40000 ALTER TABLE `sys_role_menu` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2020-03-23 15:51:27
