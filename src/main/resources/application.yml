@@ -1,0 +1,35 @@
+# Tomcat
+server:
+    tomcat:
+        uri-encoding: UTF-8
+        max-threads: 1000
+        min-spare-threads: 30
+    port: 8080
+    context-path: /demo
+
+spring:
+    # 环境 dev|test|prod
+    profiles:
+        active: dev
+    http:
+        multipart:
+            max-file-size: 100MB
+            max-request-size: 100MB
+            enabled: true
+    application:
+      name: haoya-demo
+
+    #模板引擎
+    thymeleaf:
+        prefix: classpath:/templates/
+        check-template-location: false
+        cache: true
+        suffix: .html
+        encoding: UTF-8
+        content-type: text/html
+        mode: HTML5
+
+logging:
+  path: logs/
+
+

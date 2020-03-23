@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="common_treegrid_header(title,links)">
+    <!-- Common styles and scripts -->
+    <title th:replace="${title}">title</title>
+
+    <meta charset="utf-8">
+    </meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    </meta>
+    <meta name="renderer" content="webkit" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </meta>
+    <meta name="description" content="">
+    </meta>
+    <meta name="author" content="">
+    </meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    </meta>
+
+    <link rel="stylesheet" th:href="@{/thirdparty/layui/layui-v2.5.5/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/thirdparty/bootstrap/3.3.7/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/thirdparty/treegrid/jquery.treegrid.css}">
+    <link rel="stylesheet" th:href="@{/common/template/css/treegrid.css}">
+    <link rel="stylesheet" th:href="@{/common/template/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/common/template/css/scrollbar.css}">
+
+    <!--/* Per-page placeholder for additional links */-->
+    <th:block th:replace="${links}" />
+</head>

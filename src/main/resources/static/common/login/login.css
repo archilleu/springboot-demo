@@ -1,0 +1,46 @@
+html,body {
+    height: 100%;
+}
+
+body {
+    background: #f9f9f9;
+}
+
+#logo {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    padding: 35px 0;
+}
+
+.header {
+    margin-bottom: 25px;
+    color: #333;
+    text-align: center;
+    text-shadow: none;
+    background-color: initial;
+    border: 0;
+}
+
+label {
+    color: #032f62;
+}
+
+.layui-container .layui-row {
+    padding: 35px 46px 17px 0px;
+    border: 1px solid #d8dee2;
+    background: #fff;
+    border-radius: 8px;
+    color: white;
+    width: 340px;
+    margin: auto;
+}
+
+.layui-btn {
+    width: 100%;
+}
+
+#error {
+    color: red;
+}

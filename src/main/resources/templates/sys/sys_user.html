@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/list-header:: common_list_header(~{::title},~{::link})">
+  <title>用户</title>
+  <link rel="stylesheet" th:href="@{/common/sys/css/user.css}">
+</head>
+
+<body>
+
+  <!-- add & edit -->
+  <div class="site-text site-block layui-fluid hy-edit-form" hidden>
+    <form class="layui-form" action="" layui-filter="hy-edit-form">
+      <input type="text" name="userId" hidden>
+      <div class="layui-form-item">
+        <label class="layui-form-label">名称</label>
+        <div class="layui-input-block">
+          <input type="text" name="username" lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">昵称</label>
+        <div class="layui-input-block">
+          <input type="text" name="nickname" lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">邮箱</label>
+        <div class="layui-input-block">
+          <input type="email" name="email" autocomplete="off" lay-verify="email" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">电话</label>
+        <div class="layui-input-block">
+          <input type="tel" name="mobile" lay-verify="required|phone" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <div class="layui-inline">
+          <label class="layui-form-label">密码</label>
+          <div class="layui-input-inline">
+            <input type="password" name="password" lay-verify="required" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-inline">
+          <label class="layui-form-label">确认密码</label>
+          <div class="layui-input-inline">
+            <input type="password" name="confirmPassword" lay-verify="required" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">用户状态</label>
+        <div class="layui-input-block">
+          <select name="status" lay-verify="required">
+            <option value=""></option>
+            <option value="0">禁用</option>
+            <option value="1">启用</option>
+          </select>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <div class="layui-input-block">
+          <button type="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit">提交</button>
+          <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- role -->
+  <div class="site-text site-block layui-fluid role-edit" hidden>
+    <table id="role-table" lay-filter="role-table"></table>
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button id="roleSave" class="layui-btn">保存</button>
+        <button id="roleCancle" class="layui-btn layui-btn-primary">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="layui-container hy-sidebar">
+    <div>搜索</div>
+    <div class="layui-row">
+      <div class="layui-col-md12">
+        <form class="layui-form" action="">
+          <div class="layui-form-item">
+            <label class="layui-form-label">名称:</label>
+            <div class="layui-input-block">
+              <input type="text" name="username" lay-verify="" placeholder="支持sql模糊匹配" autocomplete="off"
+                class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <label class="layui-form-label">昵称:</label>
+            <div class="layui-input-block">
+              <input type="text" name="nickname" lay-verify="" placeholder="支持sql模糊匹配" autocomplete="off"
+                class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <button type="submit" class="layui-btn">搜索</button>
+            <button type="reset" class="layui-btn">重置</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="layui-fluid">
+    <div class="layui-row hy-main-list">
+      <div class="layui-col-md12" id="hy-table-toolbar">
+        <button class="layui-btn hy-toolbar-add">增加</button>
+        <button class="layui-btn layui-btn-normal hy-toolbar-edit">修改</button>
+        <button class="layui-btn layui-btn-danger hy-toolbar-delete">删除</button>
+        <button class="layui-btn hy-toolbar-role-edit">角色编辑</button>
+      </div>
+      <div class="layui-col-md12">
+        <table id="hy-table" lay-filter="hyTable"></table>
+      </div>
+    </div>
+  </div>
+
+  <div th:replace="common/list-footer:: common_list_footer(~{::script})">
+    <script th:src="@{/common/sys/js/user.js}"></script>
+  </div>
+
+</body>
+
+
+</html>

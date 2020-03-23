@@ -1,0 +1,39 @@
+/* 侧边栏 */
+.hy-sidebar {
+    padding-top: 15px;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    background: #393d49;
+    z-index: 999;
+    width: 225px;
+    right: -225px;
+    transition: right 0.5s;
+    -webkit-transition: right 0.5s; /* Safari */
+}
+.hy-sidebar>div:first-child {
+    box-sizing: content-box;
+    position: absolute;
+    top: 0;
+    left: -20px;
+    background: #393d49;
+    width: 15px;
+    padding: 5px 0 5px 5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    cursor: pointer;
+}
+
+.hy-sidebar label {
+    padding-left: 0 !important;
+    text-align: left;
+}
+
+.hy-sidebar .layui-input-block {
+    margin-left: 0;
+}
+
+.hy-sidebar .layui-form-item:last-child {
+    text-align: right
+}

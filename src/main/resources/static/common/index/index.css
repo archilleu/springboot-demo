@@ -1,0 +1,98 @@
+body {
+    min-width: 1100px;
+}
+
+#header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #393d49;
+    color: white;
+}
+
+#header .layui-nav-side {
+    top: 60px;
+}
+
+#header .layui-tab {
+    margin: 0;
+}
+
+#header .layui-tab-content {
+    padding: 0;
+}
+
+#toolbar-left {
+    font-size: 20px;
+    line-height: 60px;
+    padding-left: 100px;
+    background-repeat: no-repeat;
+    background-position-y: center;
+    background-size: contain;
+    background-image: url("/common/index/images/default-logo.png");
+}
+
+#toolbar-mid {
+    height: 60px;
+}
+
+#toolbar-mid .layui-tab-title {
+    height: 60px;
+    border: none;
+}
+
+#toolbar-mid .layui-tab-title li {
+    line-height: 60px;
+}
+
+#toolbar-mid .layui-this:after {
+    height: 60px;
+}
+
+#toolbar-mid ul.layui-nav {
+    border-radius: 0;
+}
+
+#main-board {
+    position: absolute;
+    top: 60px;
+    left: 200px;
+    right: 0;
+    bottom: 0;
+}
+
+#main-board .layui-tab {
+    margin: 0;
+}
+
+#main-board .layui-tab-card {
+    height: 100%;
+    border: none;
+    border-radius: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+#main-board .layui-tab-card .layui-tab-content {
+    padding: 0;
+    flex-grow: 1;
+}
+#main-board .layui-tab-card .layui-tab-content .layui-tab-item {
+    height: 100%
+}
+
+#fillLeft{
+    position: absolute;
+    background: #393D49;
+    bottom: 0;
+    top: 60px;
+    left: 0;
+    width: 200px
+}
+
+#password-modify,
+#info-modify {
+    margin-top: 20px;
+}
+
+#main-board .layui-tab-card>.layui-tab-title .layui-this {}

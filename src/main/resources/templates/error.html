@@ -1,18 +1,3 @@
-<html>
-  <head>
-    <title>Oops!</title>
-    <link rel="stylesheet" th:href="@{/style.css}"></link>
-  </head>
-
-  <html>
-    <div class="errorPage">
-      <span class="oops">Oops!</span><br/>
-      <p>There seems to be a problem with the page you requested 
-         (<span th:text="${requestPath}">/demo</span>).</p>
-      <p th:text="${'status: ' + status}"></p>
-      <p th:text="${'errorMessage: ' + errorMessage}"></p>
-      <p th:text="${'cause: ' + cause}"></p>
-    </div>
-  </html>
-
-</html>
+<p><span th:text="${message}"></span></p>
+<p><span th:text="${status}"></span></p>
+<p><span th:text="${cause}">aaa</span></p>
