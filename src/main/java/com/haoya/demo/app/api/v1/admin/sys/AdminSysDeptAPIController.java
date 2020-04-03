@@ -43,7 +43,7 @@ public class AdminSysDeptAPIController {
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable(name="id") BigInteger id) {
-        throw AppException.Forbidden;
+        sysDeptRepository.deleteDeptAndChild(id);
     }
 
     @Autowired

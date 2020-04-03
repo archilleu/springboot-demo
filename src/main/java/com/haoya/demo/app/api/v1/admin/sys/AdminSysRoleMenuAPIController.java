@@ -45,6 +45,10 @@ public class AdminSysRoleMenuAPIController {
         }
 
         List<SysMenu> menus = sysRoleMenuRepository.getRoleMenu(roleIds);
+        if(menus.isEmpty()) {
+            return new JSONArray();
+        }
+
         return makeMenuListData(menus);
     }
 

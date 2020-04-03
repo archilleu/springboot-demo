@@ -47,3 +47,6 @@ logging:
         org.springframework.web: trace
         com.haoya.demo: debug
     path: logs/
+    org:
+        hibernate:
+            SQL: DEBUG

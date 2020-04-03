@@ -91,6 +91,9 @@
                             $table.bootstrapTreeTable("refresh");
                         },
                         error: (data) => {
+                            if (!data.responseJSON) {
+                                data.responseJSON = JSON.parse(data.responseText);
+                            }
                             layer.msg(data.responseJSON.message);
                         },
                         complete: (data) => {}
@@ -162,6 +165,9 @@
                     $table.bootstrapTreeTable("refresh");
                 },
                 error: (data) => {
+                    if (!data.responseJSON) {
+                        data.responseJSON = JSON.parse(data.responseText);
+                    }
                     layer.msg(data.responseJSON.message);
                 },
                 complete: (data) => {

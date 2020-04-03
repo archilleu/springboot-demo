@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.math.BigInteger;
 import java.util.List;
 
-public interface SysDeptRepository extends JpaRepository<SysDept, BigInteger> {
+public interface SysDeptRepository extends JpaRepository<SysDept, BigInteger>, SysDeptExtRepository {
     List<SysDept> findByNameLike(String name);
 }

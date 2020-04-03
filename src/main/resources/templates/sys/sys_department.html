@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="common/treegrid-header:: common_treegrid_header(~{::title},~{::link})">
-  <title>菜单</title>
+  <title>部门</title>
   <link rel="stylesheet" th:href="@{/common/sys/css/department.css}">
 </head>
 
@@ -10,29 +10,18 @@
   <!-- add & edit -->
   <div id="hy-edit-form" hidden>
     <form class="layui-form" action="">
-      <input type="text" name="menuId" hidden>
+      <input type="text" name="deptId" hidden>
       <input type="text" name="parentId" hidden>
       <div class="layui-form-item">
-        <label class="layui-form-label">菜单名字:</label>
+        <label class="layui-form-label">部门名字:</label>
         <div class="layui-input-block">
           <input type="text" name="name" lay-verify="required" autocomplete="off" class="layui-input">
         </div>
       </div>
       <div class="layui-form-item">
-        <label class="layui-form-label">类型:</label>
+        <label class="layui-form-label">描述:</label>
         <div class="layui-input-block">
-          <select name="type" lay-verify="required">
-            <option value=""></option>
-            <option value="0">目录</option>
-            <option value="1">菜单</option>
-            <option value="2">按钮</option>
-          </select>
-        </div>
-      </div>
-      <div class="layui-form-item">
-        <label class="layui-form-label">地址:</label>
-        <div class="layui-input-block">
-          <input type="text" name="url" lay-verify="required" autocomplete="off" class="layui-input">
+          <input type="text" name="description" lay-verify="required" autocomplete="off" class="layui-input">
         </div>
       </div>
       <div class="layui-form-item">

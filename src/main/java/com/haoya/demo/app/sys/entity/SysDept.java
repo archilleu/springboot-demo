@@ -30,12 +30,12 @@ public class SysDept {
         this.name = name;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Short getOrderNum() {
@@ -62,7 +62,7 @@ public class SysDept {
     @Column
     private String name;
     @Column
-    private String desc;
+    private String description;
     @Column
     private Short orderNum;
     @Column
