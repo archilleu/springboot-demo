@@ -4,6 +4,7 @@ import com.haoya.demo.app.exception.AppException;
 import com.haoya.demo.app.sys.entity.SysMenu;
 import com.haoya.demo.app.sys.repository.SysMenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class AdminSysMenuAPIController {
     @GetMapping("/list.json")
     public List<SysMenu> list(@RequestParam(required=false)String name) {
         if(StringUtils.isEmpty(name))
-            return sysMenuRepository.findAll();
+            return sysMenuRepository.findAll(new Sort(Sort.Direction.ASC, "orderNum"));
 
         return sysMenuRepository.findByNameLike(name);
     }

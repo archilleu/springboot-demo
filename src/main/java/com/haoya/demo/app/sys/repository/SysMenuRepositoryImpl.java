@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.math.BigInteger;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,28 +27,28 @@ public class SysMenuRepositoryImpl implements SysMenuExtRepository {
         }
 
         List<BigInteger> ids = new LinkedList<>();
+        Deque<BigInteger> parents = new LinkedList<>();
         ids.add(menu_id);
+        parents.add(menu_id);
 
-        //获取子菜单
         try {
-            while (true) {
+            //获取子菜单
+            while (!parents.isEmpty()) {
+                menu_id = parents.pollFirst();
                 String sql = "SELECT menu_id FROM sys_menu WHERE parent_id = ?1";
                 Query query = em.createNativeQuery(sql);
                 query.setParameter(1, menu_id);
-                menu_id = (BigInteger) query.getSingleResult();
-                ids.add(menu_id);
+                List<BigInteger> res =  query.getResultList();
+                parents.addAll(res);
+                ids.addAll(res);
             }
-        } catch (NoResultException e) {
-            //没有子菜单，执行删除操作
-            try {
-                String sql = "DELETE FROM sys_menu WHERE menu_id in(?1)";
-                Query query = em.createNativeQuery(sql);
-                query.setParameter(1, ids);
 
-                query.executeUpdate();
-            } catch (Exception ex) {
-                throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
-            }
+            //删除
+            String sql = "DELETE FROM sys_menu WHERE menu_id in(?1)";
+            Query query = em.createNativeQuery(sql);
+            query.setParameter(1, ids);
+
+            query.executeUpdate();
         } catch (Exception e) {
             throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
