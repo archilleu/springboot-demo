@@ -2,6 +2,9 @@ $(function () {
     var $mainMenu = $("#main-menu");
     var $subMenu = $("#sub-menu");
 
+    var infoEdit = null;
+    var pwdEdit = null;
+
     /**
      * 动态生成菜单,从session里面获取菜单缓存
      */
@@ -135,7 +138,7 @@ $(function () {
     //个人信息编辑
     function bindUserInfoModify() {
         $("#user-info-modify").click(() => {
-            var infoEdit = layer.open({
+            infoEdit = layer.open({
                 title: "用户信息编辑",
                 area: ['90%', '90%'],
                 type: 1,
@@ -149,7 +152,7 @@ $(function () {
     //修改密码
     function bindPasswordModify() {
         $("#user-password-modify").click(() => {
-            var infoEdit = layer.open({
+            pwdEdit = layer.open({
                 title: "用户密码修改",
                 area: ['90%', '90%'],
                 type: 1,
@@ -186,10 +189,11 @@ $(function () {
             type: "POST",
             contentType: "application/json",
             success: (e) => {
-                layer.msg("保存成功");
+                layer.msg("保存成功,重新登录生效");
             },
             error: (e) => {
                 layer.msg("保存失败");
+                layer.close(infoEdit);
             }
         });
         return false;
@@ -199,7 +203,7 @@ $(function () {
     layui.form.on('submit(formPasswordModify)', function (data) {
         var field = data.field;
         //对比密码
-        if(field.newPassword != field.confirmPassword) {
+        if (field.newPassword != field.confirmPassword) {
             layer.msg("两次输入密码不一致");
             return false;
         }

@@ -63,19 +63,19 @@
       <div class="layui-form-item">
         <label class="layui-form-label">昵称</label>
         <div class="layui-input-block">
-          <input type="text" name="nickname" lay-verify="required" autocomplete="off" class="layui-input">
+          <input type="text" name="nickname" lay-verify="required" autocomplete="off" class="layui-input" th:value="${sysUser.nickname}">
         </div>
       </div>
       <div class="layui-form-item">
         <label class="layui-form-label">邮箱</label>
         <div class="layui-input-block">
-          <input type="email" name="email" autocomplete="off" lay-verify="email" class="layui-input">
+          <input type="email" name="email" autocomplete="off" lay-verify="email" class="layui-input" th:value="${sysUser.email}">
         </div>
       </div>
       <div class="layui-form-item">
         <label class="layui-form-label">电话</label>
         <div class="layui-input-block">
-          <input type="tel" name="mobile" lay-verify="required|phone" autocomplete="off" class="layui-input">
+          <input type="tel" name="mobile" lay-verify="required|phone" autocomplete="off" class="layui-input" th:value="${sysUser.mobile}">
         </div>
       </div>
       <div class="layui-input-block">
