@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/admin/sys/role_menu")
 public class AdminSysRoleMenuAPIController {
 
-    //获取layui树形结构的菜单
+    //获取角色layui树形结构的菜单
     @GetMapping("/listTree.json")
     public JSONArray listTree(@RequestParam(required=true)BigInteger roleId) {
         List<SysMenu> menus = sysMenuRepository.findAll();
@@ -37,7 +37,6 @@ public class AdminSysRoleMenuAPIController {
         return;
     }
 
-    //获取角色菜单
     @PostMapping(value = "/list.json", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public JSONArray list(@RequestBody List<BigInteger> roleIds) {
         if(roleIds.isEmpty()) {

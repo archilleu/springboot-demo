@@ -136,9 +136,7 @@
                     dataType: "json",
                     success: (data) => {
                         callback && callback(data);
-                        $.each(data, function (key, val) {
-                            $editForm.find("[name=" + key + "]").val(val);
-                        });
+                        fillForm(data, null);
                     },
                     error: (data) => {
                         if (!data.responseJSON) {
@@ -228,9 +226,13 @@
     }
 
     //刷新table
-    function reload() {
+    function reload(where) {
         table.reload({
-            url: listUrl
+            url: listUrl,
+            where: where,
+            page: {
+                curr: 1
+            }
         });
 
         return false;
@@ -282,8 +284,8 @@
                 return getSelections();
             },
             // 刷新记录
-            refresh: function () {
-                reload();
+            refresh: function (where) {
+                reload(where);
             },
         };
         if (methods[option]) {
@@ -294,4 +296,17 @@
             $.error('Method ' + method + ' does not exist on jQuery.tooltip');
         }
     };
+
+    function fillForm(data, prev) {
+        $.each(data, function (key, val) {
+            if(prev) {
+                key = prev + "." + key;
+            }
+            if(val instanceof Object) {
+                fillForm(val, key);
+            }
+
+            $editForm.find("[name='" + key + "']").val(val);
+        });
+    }
 })(jQuery);

@@ -38,9 +38,9 @@ public class SysUserAPIController {
     }
 
     @GetMapping("/info")
-    public SysUser info() {
+    public SysUserDetails info() {
         SysUserDetails userDetails = (SysUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userDetails.getSysUser();
+        return userDetails;
     }
 
 

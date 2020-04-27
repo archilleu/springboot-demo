@@ -61,6 +61,14 @@
         </div>
       </div>
       <div class="layui-form-item">
+        <label class="layui-form-label">部门</label>
+        <div class="layui-input-block dept">
+          <input name="sysDept.deptId" type="text" class="layui-input" style="display:none">
+          <input name="sysDept.name" type="text" class="layui-input" readonly>
+          <button type="button" class="layui-btn" id="selectDept">选择部门</button>
+        </div>
+      </div>
+      <div class="layui-form-item">
         <div class="layui-input-block">
           <button type="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit">提交</button>
           <button type="reset" class="layui-btn layui-btn-primary">重置</button>
@@ -76,6 +84,22 @@
       <div class="layui-input-block">
         <button id="roleSave" class="layui-btn">保存</button>
         <button id="roleCancle" class="layui-btn layui-btn-primary">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- select dept -->
+  <div class="site-text site-block layui-fluid select-dept" hidden>
+    <div id="selectDeptTree"></div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">当前部门:</label>
+      <div class="layui-input-block">
+        <input id="selectDeptName" type="text" class="layui-input" readonly>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button id="deptSave" class="layui-btn">关闭</button>
       </div>
     </div>
   </div>
@@ -108,15 +132,34 @@
     </div>
   </div>
   <div class="layui-fluid">
-    <div class="layui-row hy-main-list">
-      <div class="layui-col-md12" id="hy-table-toolbar">
-        <button class="layui-btn hy-toolbar-add">增加</button>
-        <button class="layui-btn layui-btn-normal hy-toolbar-edit">修改</button>
-        <button class="layui-btn layui-btn-danger hy-toolbar-delete">删除</button>
-        <button class="layui-btn hy-toolbar-role-edit">角色编辑</button>
+    <div class="layui-row">
+      <!-- 组织机构 -->
+      <div class="layui-col-md2">
+        <div class="layui-card">
+          <div class="layui-card-header">部门</div>
+          <div class="layui-card-body left">
+            <div id="deptTree"></div>
+          </div>
+        </div>
       </div>
-      <div class="layui-col-md12">
-        <table id="hy-table" lay-filter="hyTable"></table>
+      <!-- 用户列表 -->
+      <div class="layui-col-md10">
+        <div class="layui-card">
+          <div class="layui-card-header"><span id="selectedDeptTitle">全部</span>:用户</div>
+          <div class="layui-card-body">
+            <div class="layui-row hy-main-list">
+              <div class="layui-col-md12" id="hy-table-toolbar">
+                <button class="layui-btn hy-toolbar-add">增加</button>
+                <button class="layui-btn layui-btn-normal hy-toolbar-edit">修改</button>
+                <button class="layui-btn layui-btn-danger hy-toolbar-delete">删除</button>
+                <button class="layui-btn hy-toolbar-role-edit">角色编辑</button>
+              </div>
+              <div class="layui-col-md12">
+                <table id="hy-table" lay-filter="hyTable"></table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

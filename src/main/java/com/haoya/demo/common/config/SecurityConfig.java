@@ -1,8 +1,13 @@
 package com.haoya.demo.common.config;
 
+import com.haoya.demo.app.sys.entity.SysDept;
+import com.haoya.demo.app.sys.entity.SysRole;
 import com.haoya.demo.app.sys.entity.SysUser;
 import com.haoya.demo.app.sys.entity.SysUserDetails;
+import com.haoya.demo.app.sys.repository.SysDeptRepository;
+import com.haoya.demo.app.sys.repository.SysRoleRepository;
 import com.haoya.demo.app.sys.repository.SysUserRepository;
+import com.haoya.demo.app.sys.repository.SysUserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -21,6 +26,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -78,11 +84,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+                //用户基本信息
                 SysUser user = sysUserRepository.findByUsername(username);
                 if(null == user)
                     return null;
 
-                UserDetails userDetails = new SysUserDetails(user);
+                //角色信息
+                List<SysRole> roles = sysRoleRepository.findByUserId(user.getUserId());
+
+                //部门信息
+                SysDept dept = sysDeptRepository.findByUserId(user.getUserId());
+
+                UserDetails userDetails = new SysUserDetails(user, roles, dept);
                 return userDetails;
             }
         })
@@ -97,6 +110,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     SysUserRepository sysUserRepository;
+
+    @Autowired
+    SysRoleRepository sysRoleRepository;
+
+    @Autowired
+    SysDeptRepository sysDeptRepository;
 
     @Autowired
     private HyLogoutSuccessHandler hyLogoutSuccessHandler;

@@ -18,6 +18,14 @@ import java.sql.Timestamp;
 @RequestMapping("/api/v1/admin/sys/role")
 public class AdminSysRoleAPIController {
 
+    /**
+     * 获取角色表格
+     * @param page 分页从1开始
+     * @param limit 每页条数
+     * @param roleName 搜索条件角色名称，支持SQL模糊匹配
+     * @param remark 搜索条件备注名称，支持SQL模糊匹配
+     * @return
+     */
     @GetMapping("/list.json")
     public PageVO<SysRole> list(
             @RequestParam(required = false) Integer page,

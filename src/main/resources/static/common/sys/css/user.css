@@ -1,2 +1,29 @@
 /*
 */
+
+.layui-card {
+    box-shadow: none
+}
+
+.layui-card-header {
+    font-size: 18px;
+}
+
+.layui-card-body.left {
+    border: 1px solid #393D49;
+    border-radius: 5px;
+}
+
+.layui-input-block.dept>input {
+    display: inline-block;
+    width:70%;
+}
+
+.select-dept {
+    margin: 20px;
+    padding: 10px;
+}
+#selectDeptTree {
+    border: 1px solid grey;
+    margin-bottom: 20px;
+}

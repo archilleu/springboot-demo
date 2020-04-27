@@ -15,6 +15,11 @@ import java.util.List;
 @RequestMapping("/api/v1/admin/sys/menu")
 public class AdminSysMenuAPIController {
 
+    /**
+     * 获取树形表格菜单
+     * @param name 搜索条件菜单名称，支持SQL模糊匹配
+     * @return
+     */
     @GetMapping("/list.json")
     public List<SysMenu> list(@RequestParam(required=false)String name) {
         if(StringUtils.isEmpty(name))

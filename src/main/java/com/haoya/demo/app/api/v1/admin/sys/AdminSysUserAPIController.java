@@ -1,16 +1,14 @@
-package com.haoya.demo.app.api.v1.sys.api.v1.admin.sys;
+package com.haoya.demo.app.api.v1.admin.sys;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.haoya.demo.app.exception.AppException;
 import com.haoya.demo.app.exception.AppExceptionFound;
-import com.haoya.demo.app.sys.entity.SysRole;
-import com.haoya.demo.app.sys.entity.SysUser;
-import com.haoya.demo.app.sys.entity.SysUserRole;
-import com.haoya.demo.app.sys.repository.SysRoleRepository;
-import com.haoya.demo.app.sys.repository.SysUserRepository;
-import com.haoya.demo.app.sys.repository.SysUserRoleRepository;
+import com.haoya.demo.app.sys.entity.*;
+import com.haoya.demo.app.sys.entity.VO.SysUserVO;
+import com.haoya.demo.app.sys.repository.*;
 import com.haoya.demo.common.utils.PageVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
@@ -32,7 +30,8 @@ public class AdminSysUserAPIController {
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer limit,
             @RequestParam(required = false) String username,
-            @RequestParam(required = false) String nickname) {
+            @RequestParam(required = false) String nickname,
+            @RequestParam(required = false) BigInteger deptId) {
 
         if (null == page) {
             page = 0;
@@ -44,6 +43,10 @@ public class AdminSysUserAPIController {
         try {
             PageRequest pageable = PageRequest.of(page, limit);
             if (StringUtils.isEmpty(username) && StringUtils.isEmpty(nickname)) {
+                if(null != deptId) {
+                    return new PageVO<>(sysUserRepository.findByDeptId(deptId, pageable));
+                }
+
                 return new PageVO<>(sysUserRepository.findAll(pageable));
             } else {
                 if (StringUtils.isEmpty(username)) {
@@ -61,26 +64,56 @@ public class AdminSysUserAPIController {
     }
 
     @PostMapping("/add.json")
-    public SysUser add(@RequestBody SysUser sysUser) {
-        sysUser.setCreateTime(new Timestamp(System.currentTimeMillis()));
+    public SysUser add(@RequestBody SysUserVO sysUserVO) {
         try {
-            sysUser.setPassword(bCryptPasswordEncoder.encode(sysUser.getPassword()));
-            return sysUserRepository.save(sysUser);
+            SysUser sysUser = new SysUser();
+            sysUser.setUsername(sysUserVO.getUsername());
+            sysUser.setNickname(sysUserVO.getNickname());
+            sysUser.setPassword(bCryptPasswordEncoder.encode(sysUserVO.getPassword()));
+            sysUser.setEmail(sysUserVO.getEmail());
+            sysUser.setMobile(sysUserVO.getMobile());
+            sysUser.setStatus(sysUserVO.getStatus());
+            sysUser.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            sysUserRepository.save(sysUser);
+
+            SysDept sysDept = sysUserVO.getSysDept();
+            if(null != sysDept) {
+                try {
+                    sysDeptUserRepository.save(new SysDeptUser(sysDept.getDeptId(), sysUser.getUserId()));
+                } catch (DataIntegrityViolationException e) {
+                } catch (Exception e) {
+                    throw e;
+                }
+            }
+
+            return sysUser;
         } catch (DataIntegrityViolationException e) {
-            throw new AppExceptionFound("用户已存在");
+            throw new AppExceptionFound("角色已存在");
         } catch (Exception e) {
             throw AppException.ServerError;
         }
     }
 
     @PostMapping("/modify")
-    public void modify(@RequestBody SysUser sysUser) {
+    public void modify(@RequestBody SysUserVO sysUserVO) {
         try {
-            SysUser old = sysUserRepository.findById(sysUser.getUserId()).get();
-            sysUser.setCreateTime(old.getCreateTime());
-            sysUser.setPassword(sysUser.getPassword());
-            sysUser.setRoles(old.getRoles());
-            sysUserRepository.save(sysUser);
+            SysUser old = sysUserRepository.findById(sysUserVO.getUserId()).get();
+            old.setUsername(sysUserVO.getUsername());
+            old.setNickname(sysUserVO.getNickname());
+            old.setEmail(sysUserVO.getEmail());
+            old.setMobile(sysUserVO.getMobile());
+            old.setStatus(sysUserVO.getStatus());
+            sysUserRepository.save(old);
+
+            SysDept sysDept = sysUserVO.getSysDept();
+            if(null != sysDept) {
+                try {
+                    sysDeptUserRepository.save(new SysDeptUser(sysDept.getDeptId(), sysUserVO.getUserId()));
+                } catch (DataIntegrityViolationException e) {
+                } catch (Exception e) {
+                    throw e;
+                }
+            }
         } catch (DataIntegrityViolationException e) {
             throw new AppExceptionFound("角色已存在");
         } catch (Exception e) {
@@ -89,9 +122,11 @@ public class AdminSysUserAPIController {
     }
 
     @GetMapping("/{id}.json")
-    public SysUser get(@PathVariable(name = "id") BigInteger id) {
+    public SysUserVO get(@PathVariable(name = "id") BigInteger id) {
         try {
-            return sysUserRepository.findById(id).get();
+            SysUser sysUser = sysUserRepository.findById(id).get();
+            SysDept sysDept = sysDeptRepository.findByUserId(sysUser.getUserId());
+            return new SysUserVO(sysUser, sysDept, null);
         } catch (Exception e) {
             throw AppException.NotFound;
         }
@@ -140,6 +175,12 @@ public class AdminSysUserAPIController {
 
     @Autowired
     private SysUserRoleRepository sysUserRoleRepository;
+
+    @Autowired
+    private SysDeptUserRepository sysDeptUserRepository;
+
+    @Autowired
+    private SysDeptRepository sysDeptRepository;
 
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 }

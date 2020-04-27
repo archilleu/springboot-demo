@@ -4,11 +4,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 public class SysUserDetails implements UserDetails {
 
-    public SysUserDetails(SysUser sysUser) {
+    public SysUserDetails(SysUser sysUser, List<SysRole> sysRoles, SysDept sysDept) {
         this.sysUser = sysUser;
+        this.sysRoles = sysRoles;
+        this.sysDept = sysDept;
     }
 
     @Override
@@ -53,8 +56,18 @@ public class SysUserDetails implements UserDetails {
         return sysUser;
     }
 
+    public List<SysRole> getSysRoles() {
+        return sysRoles;
+    }
+
+    public SysDept getSysDept() {
+        return sysDept;
+    }
+
     public static final short STATUS_ENABLE = 1;
     public static final short STATUS_DISABLE = 0;
 
     private SysUser sysUser;
+    private List<SysRole> sysRoles;
+    private SysDept sysDept;
 }

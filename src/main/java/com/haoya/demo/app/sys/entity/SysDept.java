@@ -2,6 +2,7 @@ package com.haoya.demo.app.sys.entity;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.List;
 
 @Entity
 public class SysDept {

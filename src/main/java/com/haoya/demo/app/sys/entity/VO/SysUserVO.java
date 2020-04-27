@@ -1,16 +1,32 @@
-package com.haoya.demo.app.sys.entity;
+package com.haoya.demo.app.sys.entity.VO;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.haoya.demo.app.sys.entity.SysDept;
+import com.haoya.demo.app.sys.entity.SysRole;
+import com.haoya.demo.app.sys.entity.SysUser;
 
-import javax.persistence.*;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.List;
 
-@Entity
-public class SysUser {
-    public static final short STATUS_ENABLE = 1;
-    public static final short STATUS_DISABLE = 0;
+public class SysUserVO {
+
+    public SysUserVO() {
+
+    }
+
+    public SysUserVO(SysUser sysUser, SysDept sysDept, List<SysRole> sysRoles) {
+        this.userId = sysUser.getUserId();
+        this.username = sysUser.getUsername();
+        this.nickname = sysUser.getNickname();
+        this.password = sysUser.getPassword();
+        this.email = sysUser.getEmail();
+        this.mobile = sysUser.getMobile();
+        this.status = sysUser.getStatus();
+        this.createTime = sysUser.getCreateTime();
+
+        this.sysDept = sysDept;
+        this.sysRoles = sysRoles;
+    }
 
     public BigInteger getUserId() {
         return userId;
@@ -36,12 +52,12 @@ public class SysUser {
         this.nickname = nickname;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {
@@ -76,26 +92,32 @@ public class SysUser {
         this.createTime = createTime;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public SysDept getSysDept() {
+        return sysDept;
+    }
+
+    public void setSysDept(SysDept sysDept) {
+        this.sysDept = sysDept;
+    }
+
+    public List<SysRole> getSysRoles() {
+        return sysRoles;
+    }
+
+    public void setSysRoles(List<SysRole> sysRoles) {
+        this.sysRoles = sysRoles;
+    }
+
     private BigInteger userId;
     private String username;
     private String nickname;
     private String password;
     private String email;
     private String mobile;
-    private Short status;   //状态  0：禁用   1：正常
+    private Short status;
     private Timestamp createTime;
 
-    /*
-    @OneToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY)
-    @JoinTable(name="sys_dept_user", joinColumns = {@JoinColumn(name = "userId", referencedColumnName = "userId")}
-    ,inverseJoinColumns = {@JoinColumn(name = "deptId", referencedColumnName = "deptId")})
-    private SysDept dept;
+    private SysDept sysDept;
+    private List<SysRole> sysRoles;
 
-    @OneToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY)
-    @JoinTable(name="sys_user_role", joinColumns = {@JoinColumn(name = "userId", referencedColumnName = "userId")}
-    ,inverseJoinColumns = {@JoinColumn(name = "roleId", referencedColumnName = "roleId")})
-    private List<SysRole> roles;
-     */
 }

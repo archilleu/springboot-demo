@@ -32,7 +32,7 @@ $(function () {
     const user = JSON.parse(userStr);
 
     //只要id
-    const roleIds = user.roles.map((role) => {
+    const roleIds = user.sysRoles.map((role) => {
       return role.roleId;
     });
 
