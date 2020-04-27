@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
 --
 -- Host: localhost    Database: demo
 -- ------------------------------------------------------
@@ -26,9 +26,8 @@ CREATE TABLE `sys_role_menu` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `role_id` bigint(20) DEFAULT NULL COMMENT '角色ID',
   `menu_id` bigint(20) DEFAULT NULL COMMENT '菜单ID',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `ROLE_MENU` (`role_id`,`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=889 DEFAULT CHARSET=utf8 COMMENT='角色与菜单对应关系';
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 COMMENT='角色与菜单对应关系';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +36,7 @@ CREATE TABLE `sys_role_menu` (
 
 LOCK TABLES `sys_role_menu` WRITE;
 /*!40000 ALTER TABLE `sys_role_menu` DISABLE KEYS */;
-INSERT INTO `sys_role_menu` VALUES (841,1,1),(861,1,2),(867,1,3),(881,1,4),(878,1,5),(843,1,6),(844,1,7),(845,1,8),(846,1,9),(847,1,10),(848,1,11),(849,1,12),(850,1,13),(851,1,14),(862,1,15),(863,1,16),(864,1,17),(865,1,18),(868,1,19),(869,1,20),(870,1,21),(871,1,22),(882,1,23),(883,1,24),(884,1,25),(885,1,26),(853,1,27),(879,1,29),(854,1,30),(872,1,31),(873,1,32),(874,1,33),(875,1,34),(876,1,35),(855,1,36),(856,1,37),(857,1,38),(858,1,39),(859,1,40),(888,1,41),(842,1,42),(860,1,46),(877,1,47),(887,1,48),(880,1,49),(886,1,50),(866,1,51),(852,1,61);
+INSERT INTO `sys_role_menu` VALUES (1,1,1),(2,1,46),(3,1,2),(4,1,15),(5,1,16),(6,1,17),(7,1,18),(8,1,51),(9,1,3),(10,1,19),(11,1,20),(12,1,21),(13,1,22),(14,1,31),(15,1,32),(16,1,33),(17,1,34),(18,1,35),(19,1,49),(20,1,4),(21,1,23),(22,1,24),(23,1,25),(24,1,26),(25,1,50),(26,1,48),(27,1,41),(40,3,1),(41,3,47),(42,3,5),(43,3,48),(44,3,41),(45,3,62);
 /*!40000 ALTER TABLE `sys_role_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-23 15:51:27
+-- Dump completed on 2020-04-27 14:41:55

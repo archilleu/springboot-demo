@@ -16,28 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `sys_user_role`
+-- Table structure for table `sys_dept_user`
 --
 
-DROP TABLE IF EXISTS `sys_user_role`;
+DROP TABLE IF EXISTS `sys_dept_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `sys_user_role` (
+CREATE TABLE `sys_dept_user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) DEFAULT NULL COMMENT '用户ID',
-  `role_id` bigint(20) DEFAULT NULL COMMENT '角色ID',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='用户与角色对应关系';
+  `user_id` bigint(20) NOT NULL,
+  `dept_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`,`dept_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='用户与部门对应关系';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `sys_user_role`
+-- Dumping data for table `sys_dept_user`
 --
 
-LOCK TABLES `sys_user_role` WRITE;
-/*!40000 ALTER TABLE `sys_user_role` DISABLE KEYS */;
-INSERT INTO `sys_user_role` VALUES (3,27,2),(4,8,3),(7,7,2),(8,1,1),(9,1,2),(10,1,3),(11,10,3),(12,18,3);
-/*!40000 ALTER TABLE `sys_user_role` ENABLE KEYS */;
+LOCK TABLES `sys_dept_user` WRITE;
+/*!40000 ALTER TABLE `sys_dept_user` DISABLE KEYS */;
+INSERT INTO `sys_dept_user` VALUES (1,1,1),(10,8,1),(14,10,1),(15,11,1),(16,12,1),(17,13,1),(18,14,1),(19,15,1),(9,16,1),(20,17,1),(21,18,1),(28,18,1000),(22,19,1),(23,20,4),(24,21,22),(2,27,22),(3,28,1),(5,30,1),(7,31,1),(25,32,5),(29,33,1),(26,100,0),(27,1000,1);
+/*!40000 ALTER TABLE `sys_dept_user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

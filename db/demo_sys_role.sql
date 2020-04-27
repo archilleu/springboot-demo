@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
 --
 -- Host: localhost    Database: demo
 -- ------------------------------------------------------
@@ -29,7 +29,7 @@ CREATE TABLE `sys_role` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`role_id`),
   UNIQUE KEY `role_name_UNIQUE` (`role_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='角色';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='角色';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `sys_role` (
 
 LOCK TABLES `sys_role` WRITE;
 /*!40000 ALTER TABLE `sys_role` DISABLE KEYS */;
-INSERT INTO `sys_role` VALUES (1,'admin','系统用户','2020-02-11 01:28:31'),(2,'user','普通用户','2020-02-11 01:28:31');
+INSERT INTO `sys_role` VALUES (1,'admin','系统管理员','2020-02-11 01:28:31'),(2,'user','普通用户','2020-02-11 01:28:31'),(3,'guest','来宾','2020-04-26 06:50:50');
 /*!40000 ALTER TABLE `sys_role` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-23 15:51:28
+-- Dump completed on 2020-04-27 14:41:54

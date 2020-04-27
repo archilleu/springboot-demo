@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
 --
 -- Host: localhost    Database: demo
 -- ------------------------------------------------------
@@ -33,7 +33,7 @@ CREATE TABLE `sys_user` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='系统用户';
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COMMENT='系统用户';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `sys_user` (
 
 LOCK TABLES `sys_user` WRITE;
 /*!40000 ALTER TABLE `sys_user` DISABLE KEYS */;
-INSERT INTO `sys_user` VALUES (1,'admin','大佬','$2a$10$9ydghU74aa5TNadASMAeguJPmPcJ2sXqyDCcLpclgt8ggWzQNekk.','313720180@qq.com','18344309587',1,'2020-02-14 02:30:17'),(7,'user','普通用户','$2a$10$xNE4DsH13L95xAPkvd2Jfu8PziPbBmt5Dw3CSzAaXexmwoB3bgIge','313720@qq.com','13844746202',0,'2020-02-14 02:30:17'),(8,'black','小黑','$2a$10$3zQuBv1ob9diJ6cNXChDROA2KklZS5M..cNhVnTNufJKMwozL23AG','313720180@qq.com','18344309587',0,'2020-03-22 08:41:29');
+INSERT INTO `sys_user` VALUES (1,'admin','大佬','$2a$10$9KFo2FmlT9oogCPZ3McnTOMGRzou25LFCZ7/t59wdulL/LhxbF6T2','root@haoya.io','13612345678',1,'2016-11-11 11:11:11'),(7,'user','普通用户','$2a$10$a0EgZ.JgO4j8.D7DkD6BnOWvsQdKxRmZg2UmmQs8..V4DZBIXNpH.','313720@qq.com','13844746202',0,'2020-02-14 02:30:17'),(8,'a1','1','$2a$10$v46jZ8IOFL5Bc4Yp9Rsw5.xPIsJc0S6iEJhl5q401ueip9QgYyg/S','313720180@qq.com','19433695358',1,'2020-04-23 01:02:41'),(10,'a2','1','$2a$10$GAKoHfrzb9/j663..i./YuF8diQqkm4lVflrgwBHjUYwfcjpity36','313720180@qq.com','19433695358',1,'2020-04-23 01:02:51'),(11,'a3','1','$2a$10$wOvy8NywZeli3WlAXN/PW.MWpq3KrCyKJMf5AdnNG50ST5G45S4fK','313720180@qq.com','19433695358',1,'2020-04-23 01:02:56'),(12,'a4','1','$2a$10$2nzN8qk/Y.xSCxHYTFtlwOKE8aoLXe3CUkmaMp4dlobLx0ias4yli','313720180@qq.com','19433695358',1,'2020-04-23 01:03:01'),(13,'a5','1','$2a$10$BpF4R20.CB7omZb2KQ.PSOfefe5JNwjnu/WhCDT3dfpPcjkxgU4w.','313720180@qq.com','19433695358',1,'2020-04-23 01:03:05'),(14,'a6','1','$2a$10$GFosV0gfMts8x14uYLT1Qe9K4Mhp1oKMLilbOzKTUXSoYs8t2GhEO','313720180@qq.com','19433695358',1,'2020-04-23 01:03:08'),(15,'a7','1','$2a$10$wIwgVQhZ924Fp0sXQGDnQOH.3wlif01jRyWcIPNiO1fbWUOBx2DJy','313720180@qq.com','19433695358',1,'2020-04-23 01:03:12'),(16,'a8','1','$2a$10$5u2LUq3XdwAM/aOks4zHuumPmN1t02AS0xk.t9ZQvRY7rhTsIzuHa','313720180@qq.com','19433695358',1,'2020-04-23 01:03:17'),(17,'a9','1','$2a$10$LysZ7TSKDtYwqmnrfZt7t.VIXhTaVc0dUMH/GUa9J7/JCageX36RC','313720180@qq.com','19433695358',1,'2020-04-23 01:03:20'),(18,'a10','1','$2a$10$JidqOS8jVVbbN1q5iBJhm.yoafV17ffbnbk3QdMK.U6iZlVkHc.4W','313720180@qq.com','19433695358',1,'2020-04-23 01:03:26'),(19,'a11','1','$2a$10$N8Zw5b9iQnT8mllPU8tiFeOa47xvvsuWZvd7sqHNphDJq9WbiepSe','313720180@qq.com','19433695358',1,'2020-04-23 01:03:30'),(20,'a12','1','$2a$10$dMZqC9scDCVT3Ggvfnog8uHxbVkSvHkko/BPyuBeVxDz2zLAb8WLy','313720180@qq.com','19433695358',1,'2020-04-23 01:03:34'),(21,'a13','1','$2a$10$CGVsTkjtcmy/pY7c62dEeOScCj2MzacgvMZixk3SkQM3tz5UwllL2','313720180@qq.com','19433695358',1,'2020-04-23 01:03:38'),(23,'admin11','1111','$2a$10$FziWl4RyId6pE294CIOgru0zLBLA5rKQHzcQwMnHPBT1ailjAk/em','313720180@qq.com','12345667881',0,'2020-04-23 05:41:09'),(24,'admin113','1111','$2a$10$jEU1/aOc2BXEkiS3G9UPTun53v1hC1SN6jZ5B0mQfpbsua1n3qj/.','313720180@qq.com','12345667881',0,'2020-04-23 05:41:14'),(27,'admin14','1','$2a$10$JOXv18QbrBa4p.diHAcsHu/xaYVaTqB2UoA806QaBzSNAe5SME/0.','1@11.com','18311452594',0,'2020-04-24 01:44:16'),(32,'a20','a','$2a$10$paqy2u8xtQqfkp8ov7uiEeBHilAmqCHbwlgFqQiQOuhuz1Rrs7BYm','313720@qq.cm','18222282822',0,'2020-04-26 09:34:21'),(33,'阿里巴巴','阿里巴巴','$2a$10$HHjQvB6Okm6sZCZujhkEL.THWusWWRBChmH68hCWRyMKsAdWEpJy.','313720180@qq.com','18333452895',0,'2020-04-27 06:27:14');
 /*!40000 ALTER TABLE `sys_user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-23 15:51:27
+-- Dump completed on 2020-04-27 14:41:55

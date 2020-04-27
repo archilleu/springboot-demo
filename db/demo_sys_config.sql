@@ -16,28 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `sys_user_role`
+-- Table structure for table `sys_config`
 --
 
-DROP TABLE IF EXISTS `sys_user_role`;
+DROP TABLE IF EXISTS `sys_config`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `sys_user_role` (
+CREATE TABLE `sys_config` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) DEFAULT NULL COMMENT '用户ID',
-  `role_id` bigint(20) DEFAULT NULL COMMENT '角色ID',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='用户与角色对应关系';
+  `param_key` varchar(50) DEFAULT NULL COMMENT 'key',
+  `param_value` varchar(2000) DEFAULT NULL COMMENT 'value',
+  `status` tinyint(4) DEFAULT '1' COMMENT '状态   0：隐藏   1：显示',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `param_key` (`param_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='系统配置信息表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `sys_user_role`
+-- Dumping data for table `sys_config`
 --
 
-LOCK TABLES `sys_user_role` WRITE;
-/*!40000 ALTER TABLE `sys_user_role` DISABLE KEYS */;
-INSERT INTO `sys_user_role` VALUES (3,27,2),(4,8,3),(7,7,2),(8,1,1),(9,1,2),(10,1,3),(11,10,3),(12,18,3);
-/*!40000 ALTER TABLE `sys_user_role` ENABLE KEYS */;
+LOCK TABLES `sys_config` WRITE;
+/*!40000 ALTER TABLE `sys_config` DISABLE KEYS */;
+INSERT INTO `sys_config` VALUES (1,'CLOUD_STORAGE_CONFIG_KEY','{\"aliyunAccessKeyId\":\"\",\"aliyunAccessKeySecret\":\"\",\"aliyunBucketName\":\"\",\"aliyunDomain\":\"\",\"aliyunEndPoint\":\"\",\"aliyunPrefix\":\"\",\"qcloudBucketName\":\"\",\"qcloudDomain\":\"\",\"qcloudPrefix\":\"\",\"qcloudSecretId\":\"\",\"qcloudSecretKey\":\"\",\"qiniuAccessKey\":\"NrgMfABZxWLo5B-YYSjoE8-AZ1EISdi1Z3ubLOeZ\",\"qiniuBucketName\":\"mall\",\"qiniuDomain\":\"http://7xlij2.com1.z0.glb.clouddn.com\",\"qiniuPrefix\":\"upload\",\"qiniuSecretKey\":\"uIwJHevMRWU0VLxFvgy0tAcOdGqasdtVlJkdy6vV\",\"type\":1}',0,'云存储配置信息');
+/*!40000 ALTER TABLE `sys_config` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
 --
 -- Host: localhost    Database: demo
 -- ------------------------------------------------------
@@ -28,8 +28,9 @@ CREATE TABLE `sys_dept` (
   `name` varchar(50) DEFAULT NULL COMMENT '部门名称',
   `order_num` int(11) DEFAULT NULL COMMENT '排序',
   `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
+  `description` varchar(512) DEFAULT NULL,
   PRIMARY KEY (`dept_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='部门管理';
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='部门管理';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +39,7 @@ CREATE TABLE `sys_dept` (
 
 LOCK TABLES `sys_dept` WRITE;
 /*!40000 ALTER TABLE `sys_dept` DISABLE KEYS */;
-INSERT INTO `sys_dept` VALUES (1,0,'龙浩集团',0,0),(2,1,'长沙分公司',1,0),(3,1,'上海分公司',2,0),(4,3,'技术部',0,0),(5,3,'销售部',1,0);
+INSERT INTO `sys_dept` VALUES (1,0,'集团总部',0,NULL,'总部'),(3,1,'上海总部',2,NULL,'上海分管'),(4,3,'技术部',0,0,NULL),(5,3,'销售部',1,0,NULL),(22,1,'广州总部',1,NULL,'广州分管'),(23,22,'天河分公司',1,NULL,'分公司'),(24,22,'黄埔分公司',0,NULL,'黄埔');
 /*!40000 ALTER TABLE `sys_dept` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-23 15:51:27
+-- Dump completed on 2020-04-27 14:41:55
