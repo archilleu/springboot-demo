@@ -13,7 +13,9 @@ body {
     text-align: center;
     padding: 35px 0;
 }
-
+#logo>img {
+    width: 110px;
+}
 .header {
     margin-bottom: 25px;
     color: #333;

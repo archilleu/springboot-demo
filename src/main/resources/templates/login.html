@@ -9,11 +9,18 @@
     <title>登录</title>
 </head>
 
+<style th:inline="css">
+    body {
+        background-image: url("[(${bg})]");
+        background-size: cover;
+    }
+</style>
+
 <body>
     <div class="layui-container">
-        <div id="logo"><img src="/common/index/images/default-logo.png" /></div>
+        <div id="logo"><img th:src="${logo}" /></div>
         <div class="header">
-            <h1>浩亚信息科技有限公司</h1>
+            <h1 th:text="${title}"></h1>
         </div>
         <div class="layui-row">
             <div class="layui-col-md12">

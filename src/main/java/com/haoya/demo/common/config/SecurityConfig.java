@@ -39,10 +39,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
         .and()
                 .formLogin()
-                .loginPage("/sys/login")
+                .loginPage("/login")
                 .loginProcessingUrl("/auth/form")
-                .failureUrl("/sys/login?error=true")
-                .defaultSuccessUrl("/index")
+                .failureUrl("/login?error=true")
+                .defaultSuccessUrl("/main")
                 .permitAll()
         .and()
                 .logout()
@@ -62,10 +62,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             @Override
             public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
                 if(isAjaxRequest(request)){
-                    response.setHeader("X-Redirect", "/sys/login");
+                    response.setHeader("X-Redirect", "/login");
                     response.sendError(HttpServletResponse.SC_UNAUTHORIZED,e.getMessage());
                 }else{
-                    response.sendRedirect("/sys/login");
+                    response.sendRedirect("/login");
                 }
             }
             public boolean isAjaxRequest(HttpServletRequest request) {
@@ -104,7 +104,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity security) throws Exception {
-        security.ignoring().antMatchers("/thirdparty/**", "/common/**");
+        security.ignoring().antMatchers("/favicon.ico","/thirdparty/**", "/common/**");
         //security.ignoring().antMatchers("/**");
     }
 

@@ -19,6 +19,10 @@ spring:
     application:
       name: haoya-demo
 
+    mvc:
+        favicon:
+            enabled: false
+
     #模板引擎
     thymeleaf:
         prefix: classpath:/templates/
@@ -31,5 +35,11 @@ spring:
 
 logging:
   path: logs/
+
+#系统配置
+system:
+    logo-path: logo
+    background-path: background
+    upload-path: upload
 
 
