@@ -78,7 +78,7 @@ public class SysParam {
         this.backgroundImage = backgroundImage;
     }
 
-    public static final String kRESOURCE_MAIN = "/common/main/";
+    public static final String kRESOURCE_MAIN = "/common/sys-res/";
 
     public static SysParam DEFAULT() {
         if(null == instance) {

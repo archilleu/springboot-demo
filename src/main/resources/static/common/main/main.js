@@ -171,7 +171,7 @@ $(function () {
                 type: "POST",
                 success: (e) => {
                     layer.msg("登出成功");
-                    setTimeout('window.location.href = "/sys/login"', 1000);
+                    setTimeout('window.location.href = "/login"', 1000);
                 },
                 error: (e) => {
                     layer.msg("层出失败");
@@ -213,7 +213,7 @@ $(function () {
             type: "POST",
             success: (e) => {
                 layer.msg("修改成功,请重新登陆");
-                setTimeout('window.location.href = "/sys/login"', 1000);
+                setTimeout('window.location.href = "/login"', 1000);
             },
             error: (e) => {
                 layer.msg("旧密码验证失败，请重试");
