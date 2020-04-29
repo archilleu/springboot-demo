@@ -38,8 +38,6 @@ logging:
 
 #系统配置
 system:
-    logo-path: logo
-    background-path: background
     upload-path: upload
 
 
