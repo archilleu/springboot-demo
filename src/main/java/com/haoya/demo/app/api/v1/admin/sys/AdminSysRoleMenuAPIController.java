@@ -76,9 +76,9 @@ public class AdminSysRoleMenuAPIController {
         return children;
     }
 
-    //生id下所有子菜单的map
+    //生成id下所有子菜单的map
     private Map<BigInteger, List<SysMenu>> makeIdChildrenMap(List<SysMenu> menus) {
-        HashMap<BigInteger, List<SysMenu>> idMenuMap = new HashMap<>();
+        HashMap<BigInteger, List<SysMenu>> idMenuMap = new LinkedHashMap<>();
         for(SysMenu menu : menus) {
             List<SysMenu> list = idMenuMap.get(menu.getParentId());
             if(null == list) {

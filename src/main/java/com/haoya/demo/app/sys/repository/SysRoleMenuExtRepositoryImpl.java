@@ -17,7 +17,8 @@ public class SysRoleMenuExtRepositoryImpl implements SysRoleMenuExtRepository {
     @Override
     public List<SysMenu> getRoleMenu(List<BigInteger> roleIds) {
         try {
-            String jpql = "select distinct sm from SysMenu sm, SysRoleMenu rm where rm.roleId in ?1 and rm.menuId=sm.menuId";
+            String jpql = "select distinct sm from SysMenu sm, SysRoleMenu rm " +
+                    "where rm.roleId in ?1 and rm.menuId=sm.menuId order by sm.orderNum";
             Query query = em.createQuery(jpql);
             query.setParameter(1, roleIds);
             List<SysMenu> list = query.getResultList();
