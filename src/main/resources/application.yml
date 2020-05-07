@@ -7,6 +7,11 @@ server:
     port: 8080
     context-path: /demo
 
+
+    servlet:
+        session:
+            timeout: 10 #session过期时间
+
 spring:
     # 环境 dev|test|prod
     profiles:
