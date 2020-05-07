@@ -7,7 +7,6 @@ import com.haoya.demo.app.sys.entity.SysUserDetails;
 import com.haoya.demo.app.sys.repository.SysDeptRepository;
 import com.haoya.demo.app.sys.repository.SysRoleRepository;
 import com.haoya.demo.app.sys.repository.SysUserRepository;
-import com.haoya.demo.app.sys.repository.SysUserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
