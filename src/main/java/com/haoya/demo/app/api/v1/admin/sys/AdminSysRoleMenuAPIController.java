@@ -37,20 +37,6 @@ public class AdminSysRoleMenuAPIController {
         return;
     }
 
-    @PostMapping(value = "/list.json", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public JSONArray list(@RequestBody List<BigInteger> roleIds) {
-        if(roleIds.isEmpty()) {
-            return new JSONArray();
-        }
-
-        List<SysMenu> menus = sysRoleMenuRepository.getRoleMenu(roleIds);
-        if(menus.isEmpty()) {
-            return new JSONArray();
-        }
-
-        return makeMenuListData(menus);
-    }
-
     //生成lauui tree需要的结构
     private JSONArray makeLayuiTreeData(BigInteger roleId, List<SysMenu> menus) {
         Map<BigInteger, List<SysMenu>> idMenuMap = makeIdChildrenMap(menus);
@@ -120,48 +106,6 @@ public class AdminSysRoleMenuAPIController {
             jMenu.put("checked", true);
 
         idMenuMap.remove(parentId);
-    }
-
-    //生成父子关系菜单
-    private JSONArray makeMenuListData(List<SysMenu> menus) {
-        Map<BigInteger, List<SysMenu>> idMenuMap = makeIdChildrenMap(menus);
-
-        //一级菜单,父id为0
-        List<SysMenu> topMenu = idMenuMap.get(BigInteger.ZERO);
-        if(null == topMenu)
-            throw AppException.ServerError;
-
-        //虚拟tree的根，方便递归
-        JSONObject root = new JSONObject();
-        root.put("id", BigInteger.ZERO);
-        JSONArray children = new JSONArray();
-        root.put("children", children);
-        makeListJSON(idMenuMap, root);
-        return children;
-    }
-
-    private void makeListJSON(Map<BigInteger, List<SysMenu>> idMenuMap, JSONObject jMenu) {
-        BigInteger parentId = jMenu.getBigInteger("id");
-        List<SysMenu> menus = idMenuMap.get(parentId);
-        if(null == menus) {
-            return;
-        }
-
-        JSONArray children = jMenu.getJSONArray("children");
-        for(SysMenu sysMenu : menus) {
-            JSONObject tmp = new JSONObject();
-            tmp.put("title", sysMenu.getName());
-            tmp.put("id", sysMenu.getMenuId());
-            tmp.put("type", sysMenu.getType());
-            tmp.put("url", sysMenu.getUrl());
-            tmp.put("children", new JSONArray());
-
-            children.add(tmp);
-            makeListJSON(idMenuMap, tmp);
-        }
-
-        idMenuMap.remove(parentId);
-        return;
     }
 
     @Autowired

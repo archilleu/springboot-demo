@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="zh" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+    <title>来宾测试</title>
+</head>
+
+<body>
+    <div sec:authorize="hasRole('admin')">
+        <p class="bg-info">admin信息显示</p>
+    </div>
+    <div sec:authorize="hasRole('user')">
+        <p class="bg-info">user信息显示</p>
+    </div>
+    <div sec:authorize="hasRole('guest')">
+        <p class="bg-info">guest信息显示</p>
+    </div>
+</body>
+
+</html>

@@ -1,22 +1,26 @@
 package com.haoya.demo.app.sys.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 public class SysUserDetails implements UserDetails {
 
-    public SysUserDetails(SysUser sysUser, List<SysRole> sysRoles, SysDept sysDept) {
+    public SysUserDetails(SysUser sysUser, List<SysRole> sysRoles, SysDept sysDept, List<SimpleGrantedAuthority> authorities) {
         this.sysUser = sysUser;
         this.sysRoles = sysRoles;
         this.sysDept = sysDept;
+        this.authorities = authorities;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return authorities;
     }
 
     @Override
@@ -70,4 +74,7 @@ public class SysUserDetails implements UserDetails {
     private SysUser sysUser;
     private List<SysRole> sysRoles;
     private SysDept sysDept;
+
+    @JsonIgnore
+    List<SimpleGrantedAuthority> authorities;
 }

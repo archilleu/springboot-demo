@@ -8,7 +8,6 @@ import com.haoya.demo.app.sys.entity.*;
 import com.haoya.demo.app.sys.entity.VO.SysUserVO;
 import com.haoya.demo.app.sys.repository.*;
 import com.haoya.demo.common.utils.PageVO;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;

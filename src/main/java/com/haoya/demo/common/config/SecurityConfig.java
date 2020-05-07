@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,6 +27,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
@@ -36,38 +38,48 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .anyRequest().authenticated()
-        .and()
+                .antMatchers("/api/*/admin/**")
+                .hasRole("admin")
+                .and()
+                .authorizeRequests()
+                .antMatchers("/api/*/guest/**")
+                .access("hasRole('guest') or hasRole('user')")
+                .and()
+                .authorizeRequests()
+                .anyRequest()
+                .authenticated()
+                .and()
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/auth/form")
                 .failureUrl("/login?error=true")
                 .defaultSuccessUrl("/main")
                 .permitAll()
-        .and()
+                .and()
                 .logout()
                 .logoutUrl("/logout")
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessHandler(hyLogoutSuccessHandler)
                 .permitAll()
-        .and()
+                .and()
                 .csrf()
                 .disable()
-        .headers()
+                .headers()
                 .frameOptions()
                 .sameOrigin()
-        .and()
-        .exceptionHandling().authenticationEntryPoint(new AuthenticationEntryPoint() {
+                .and()
+                .exceptionHandling().authenticationEntryPoint(new AuthenticationEntryPoint() {
             //ajax请求返回401，web返回301
             @Override
             public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-                if(isAjaxRequest(request)){
+                if (isAjaxRequest(request)) {
                     response.setHeader("X-Redirect", "/login");
-                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED,e.getMessage());
-                }else{
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
+                } else {
                     response.sendRedirect("/login");
                 }
             }
+
             public boolean isAjaxRequest(HttpServletRequest request) {
                 String ajaxFlag = request.getHeader("X-Requested-With");
                 return ajaxFlag != null && "XMLHttpRequest".equals(ajaxFlag);
@@ -86,7 +98,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
                 //用户基本信息
                 SysUser user = sysUserRepository.findByUsername(username);
-                if(null == user)
+                if (null == user)
                     return null;
 
                 //角色信息
@@ -95,16 +107,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //部门信息
                 SysDept dept = sysDeptRepository.findByUserId(user.getUserId());
 
-                UserDetails userDetails = new SysUserDetails(user, roles, dept);
+                //权限信息
+                List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+                for(SysRole rs : roles) {
+                    authorities.add(new SimpleGrantedAuthority("ROLE_" + rs.getRoleName()));
+                }
+
+                UserDetails userDetails = new SysUserDetails(user, roles, dept, authorities);
                 return userDetails;
             }
         })
-        .passwordEncoder(new BCryptPasswordEncoder());
+                .passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Override
     public void configure(WebSecurity security) throws Exception {
-        security.ignoring().antMatchers("/favicon.ico","/thirdparty/**", "/common/**");
+        security.ignoring().antMatchers("/favicon.ico", "/thirdparty/**", "/common/**");
         //security.ignoring().antMatchers("/**");
     }
 

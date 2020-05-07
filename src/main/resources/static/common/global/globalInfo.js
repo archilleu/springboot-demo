@@ -38,7 +38,7 @@ $(function () {
 
     $.ajax({
       method: "POST",
-      url: "/api/v1/admin/sys/role_menu/list.json",
+      url: "/api/v1/sys/user/menu_list.json",
       data: JSON.stringify(roleIds),
       contentType: "application/json",
       success: (data) => {
