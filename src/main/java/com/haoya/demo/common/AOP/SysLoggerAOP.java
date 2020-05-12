@@ -1,12 +1,13 @@
 package com.haoya.demo.common.AOP;
 
-import com.alibaba.fastjson.JSONObject;
 import com.haoya.demo.common.annotation.SysLogger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
 import java.lang.reflect.Method;
@@ -17,6 +18,8 @@ import java.lang.reflect.Method;
 @Aspect
 @Configuration
 public class SysLoggerAOP {
+
+    Logger logger = LoggerFactory.getLogger(SysLogger.class);
 
     @SuppressWarnings("unused")
     @Pointcut("@annotation(com.haoya.demo.common.annotation.SysLogger)")
@@ -41,19 +44,31 @@ public class SysLoggerAOP {
         MethodSignature signature = (MethodSignature)point.getSignature();
         String methodName = signature.getName();
 
-        Object params = point.getArgs();
+        String paramsStr = null;
+        StringBuilder sb = new StringBuilder();
+        Object[] params = point.getArgs();
         if(null != params) {
-            JSONObject.toJSONString(params);
+            for(Object param : params) {
+                sb.append(param.toString()).append(",");
+            }
+
+            paramsStr = sb.toString();
         }
 
         Method method = signature.getMethod();
-        SysLogger logger = method.getAnnotation(SysLogger.class);
-        String value = logger.value();
+        SysLogger sysLogger = method.getAnnotation(SysLogger.class);
 
         //TODO: ip
 
         //TODO: username
 
+        sb = new StringBuilder();
+        sb.append("[desc: " + sysLogger.value()).append("]");
+        sb.append("[class name: " + className).append("]");
+        sb.append("[method name: " + methodName).append("]");
+        sb.append("[params: " + paramsStr).append("]");
+
+        logger.info(sb.toString());
         return;
     }
 
