@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/admin/sys/role")
@@ -86,11 +87,12 @@ public class AdminSysRoleAPIController {
 
     @GetMapping("/{id}.json")
     public SysRole get(@PathVariable(name = "id") BigInteger id) {
-        try {
-            return sysRoleRepository.findById(id).get();
-        } catch (Exception e) {
+        Optional<SysRole> sysRoleOptional = sysRoleRepository.findById(id);
+        if(!sysRoleOptional.isPresent()) {
             throw AppException.NotFound;
         }
+
+        return sysRoleOptional.get();
     }
 
     @DeleteMapping("/{id}")

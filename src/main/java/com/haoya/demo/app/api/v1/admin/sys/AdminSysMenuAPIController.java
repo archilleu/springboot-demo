@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/admin/sys/menu")
@@ -40,11 +41,12 @@ public class AdminSysMenuAPIController {
 
     @GetMapping("/{id}.json")
     public SysMenu get(@PathVariable(name="id") BigInteger id) {
-        try {
-            return sysMenuRepository.findById(id).get();
-        } catch (Exception e) {
+        Optional<SysMenu> sysMenuOptional = sysMenuRepository.findById(id);
+        if(!sysMenuOptional.isPresent()) {
             throw AppException.NotFound;
         }
+
+        return sysMenuOptional.get();
     }
 
     @DeleteMapping("/{id}")

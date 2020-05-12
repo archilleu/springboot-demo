@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/admin/sys/param")
@@ -85,11 +86,12 @@ public class AdminSysParamAPIController {
 
     @GetMapping("/{id}.json")
     public SysParam get(@PathVariable(name = "id") BigInteger id) {
-        try {
-            return sysParamRepository.findById(id).get();
-        } catch (Exception e) {
+        Optional<SysParam> sysParamOptional = sysParamRepository.findById(id);
+        if(!sysParamOptional.isPresent()) {
             throw AppException.NotFound;
         }
+
+        return sysParamOptional.get();
     }
 
     @DeleteMapping("/{id}")

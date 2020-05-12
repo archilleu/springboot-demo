@@ -42,11 +42,12 @@ public class AdminSysDeptAPIController {
 
     @GetMapping("/{id}.json")
     public SysDept get(@PathVariable(name="id") BigInteger id) {
-        try {
-            return sysDeptRepository.findById(id).get();
-        } catch (Exception e) {
+        Optional<SysDept> deptOptional = sysDeptRepository.findById(id);
+        if(!deptOptional.isPresent()) {
             throw AppException.NotFound;
         }
+
+        return deptOptional.get();
     }
 
     @DeleteMapping("/{id}")
