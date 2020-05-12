@@ -8,7 +8,7 @@ $(function () {
     baseUrl: "/api/v1/admin/sys/param/",
     list: {
       url: "list.json",
-      id: "paramId",
+      id: "id",
       title: "参数",
       cols: [
         [{
