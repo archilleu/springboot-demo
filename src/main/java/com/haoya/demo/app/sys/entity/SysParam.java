@@ -85,8 +85,8 @@ public class SysParam {
             synchronized (SysParam.class) {
                 instance = new SysParam();
                 instance.setTitle("Google科技有限公司");
-                instance.setLoginPage("/login.html");
-                instance.setHomePage("/home.html");
+                instance.setLoginPage("login.html");
+                instance.setHomePage("home.html");
                 instance.setCopyright("Google信息科技有限公司");
                 instance.setLogo("default-logo.png");
                 instance.setFavicon("default-favicon.ico");

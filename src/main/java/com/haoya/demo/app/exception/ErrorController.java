@@ -55,7 +55,7 @@ public class ErrorController extends AbstractErrorController {
             } catch (Exception e){}
             return null;
         } else {
-            ModelAndView view = new ModelAndView("/error.html");
+            ModelAndView view = new ModelAndView("error.html");
             view.addAllObjects(model);
             view.addObject("errorMessage", errorMessage);
             view.addObject("status", status);
