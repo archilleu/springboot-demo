@@ -1,23 +1,6 @@
 $(function () {
 
-  setTimeout(userInfo, 0);
   setTimeout(userMenu, 0);
-
-  //用户基本信息
-  function userInfo() {
-    if (null != sessionStorage.getItem("user"))
-      return;
-    $.ajax({
-      url: "/api/v1/sys/user/info",
-      success: (data) => {
-        sessionStorage.setItem("user", JSON.stringify(data));
-      },
-      error: (data) => {
-        setTimeout(userInfo, 1000);
-      },
-      dataType: "json"
-    });
-  };
 
   //用户菜单
   function userMenu() {

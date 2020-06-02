@@ -3,26 +3,28 @@ package com.haoya.demo;
 import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
-//@RunWith(SpringRunner.class)
-//@SpringBootTest
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class DemoApplicationTests {
 
-	public static void main(String[] argc0){
+    @Autowired
+	DataSource dataSource;
 
-		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-		String pwd = bCryptPasswordEncoder.encode("123456");
-		System.out.println(pwd);
-	}
-	//@Test
-	public void contextLoads() {
-		String pwd = bCryptPasswordEncoder.encode("123456");
-		System.out.println(pwd);
-	}
+    @Test
+    public void contextLoads() throws SQLException {
+        System.out.println(dataSource.getClass());
 
-	private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-
+        Connection connection = dataSource.getConnection();
+        System.out.println(connection);
+        connection.close();
+    }
 }

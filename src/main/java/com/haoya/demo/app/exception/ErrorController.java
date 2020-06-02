@@ -22,6 +22,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.haoya.demo.app.common.utils.RequestHelper.isJsonRequest;
+
 @Controller
 public class ErrorController extends AbstractErrorController {
 
@@ -82,21 +84,6 @@ public class ErrorController extends AbstractErrorController {
         return "server error";
     }
 
-    private boolean isJsonRequest(HttpServletRequest request) {
-        String requestUri = (String)request.getAttribute("javax.servlet.error.request_uri");
-        //后缀是json表示是请求json格式
-        if(requestUri!=null && requestUri.endsWith(".json")) {
-            return true;
-        } else {
-            //通过请求头判断是否请求json格式数据
-            String accept = request.getHeader("Accept");
-            if(accept != null) {
-                return accept.contains("application/json");
-            }
-
-            return false;
-        }
-    }
 
     private static final Logger LOG = LoggerFactory.getLogger(ErrorController.class);
 }
