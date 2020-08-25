@@ -1,5 +1,7 @@
 package com.hoya.admin.config;
 
+import com.hoya.admin.security.JwtAccessDeniedHandler;
+import com.hoya.admin.security.JwtAuthenticationEntryPoint;
 import com.hoya.admin.security.JwtAuthenticationFilter;
 import com.hoya.admin.security.JwtAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +64,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/actuator/**").permitAll()
             // 其他所有请求需要身份认证
             .anyRequest().authenticated();
+
+        //异常处理
+        http.exceptionHandling().accessDeniedHandler(new JwtAccessDeniedHandler()).authenticationEntryPoint(new JwtAuthenticationEntryPoint());
 
         // token验证过滤器
         http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);

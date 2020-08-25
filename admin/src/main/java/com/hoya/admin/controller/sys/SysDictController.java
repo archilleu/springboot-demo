@@ -17,18 +17,19 @@ public class SysDictController {
     @Autowired
     private SysDictService sysDictService;
 
-    //    @PreAuthorize("hasAuthority('sys:dict:add') AND hasAuthority('sys:dict:edit')")
+    @PreAuthorize("hasAuthority('sys:dict:add') AND hasAuthority('sys:dict:edit')")
     @PostMapping(value = "/save")
     public void save(@RequestBody SysDict record) {
         int res = sysDictService.save(record);
     }
 
+    @PreAuthorize("hasAuthority('sys:dict:delete')")
     @PostMapping(value = "/delete")
     public void delete(@RequestBody List<SysDict> records) {
         int res = sysDictService.delete(records);
     }
 
-    @PreAuthorize("hasAuthority('sys:dict:view')")
+    @PreAuthorize("hasAuthority('sys:dict:view1')")
     @PostMapping(value = "/findPage")
     public PageResult findPage(@RequestBody PageRequest pageRequest) {
         PageResult res = sysDictService.findPage(pageRequest);
