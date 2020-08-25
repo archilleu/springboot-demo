@@ -45,7 +45,7 @@ public class SysLoginController {
 
         // 系统登录认证
         JwtAuthenticatioToken token = SecurityUtils.login(request, username, password, authenticationManager);
-        return new HttpResult(token);
+        return new HttpResult(token.getToken());
     }
 
 }

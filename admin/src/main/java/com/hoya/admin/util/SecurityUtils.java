@@ -3,6 +3,8 @@ package com.hoya.admin.util;
 import com.hoya.admin.security.JwtAuthenticatioToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +29,9 @@ public class SecurityUtils {
         // 执行登录认证过程
         Authentication authentication = authenticationManager.authenticate(token);
 
+        // 认证成功存储认证信息到上下文
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
         // 生成令牌并返回给客户端
         token.setToken(JwtTokenUtils.generateToken(authentication));
         return token;
@@ -38,7 +43,55 @@ public class SecurityUtils {
      * @param request
      */
     public static void checkAuthentication(HttpServletRequest request) {
-        JwtTokenUtils.authentication(request);
+        Authentication authentication = JwtTokenUtils.authentication(request);
+
+        // 设置登录认证信息到上下文
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
+    /**
+     * 获取当前用户名
+     *
+     * @return
+     */
+    public static String getUsername() {
+        String username = null;
+        Authentication authentication = getAuthentication();
+        if (authentication != null) {
+            Object principal = authentication.getPrincipal();
+            if (principal != null && principal instanceof UserDetails) {
+                username = ((UserDetails) principal).getUsername();
+            }
+        }
+        return username;
+    }
+
+    /**
+     * 获取用户名
+     *
+     * @return
+     */
+    public static String getUsername(Authentication authentication) {
+        String username = null;
+        if (authentication != null) {
+            Object principal = authentication.getPrincipal();
+            if (principal != null && principal instanceof UserDetails) {
+                username = ((UserDetails) principal).getUsername();
+            }
+        }
+        return username;
+    }
+
+    /**
+     * 获取当前登录信息
+     *
+     * @return
+     */
+    public static Authentication getAuthentication() {
+        if (SecurityContextHolder.getContext() == null) {
+            return null;
+        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication;
+    }
 }

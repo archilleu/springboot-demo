@@ -95,19 +95,26 @@ public class JwtTokenUtils implements Serializable {
      *
      * @param request
      */
-    public static void authentication(HttpServletRequest request) {
+    public static Authentication authentication(HttpServletRequest request) {
         // 获取请求携带的令牌
         String token = JwtTokenUtils.getToken(request);
 
         // 请求令牌为空返回空
         if (null == token) {
-            throw new AppExceptionForbidden("用户未登陆");
+            return null;
         }
 
-        // 校验令牌
-        isTokenExpired(token);
+        Authentication authentication = SecurityUtils.getAuthentication();
+        if (authentication == null) {
+            //session没有授权信息，需要重新登陆(虽然可以从token获取信息还原session，太复杂了没必要)
+        } else {
+            String username = SecurityUtils.getUsername();
+            if(!validateToken(token, username)) {
+                authentication = null;
+            }
+        }
 
-        return;
+        return authentication;
     }
 
     /**
@@ -123,6 +130,18 @@ public class JwtTokenUtils implements Serializable {
         } catch (Exception e) {
             throw new AppExceptionForbidden("非法token");
         }
+    }
+
+    /**
+     * 验证令牌
+     *
+     * @param token
+     * @param username
+     * @return
+     */
+    public static Boolean validateToken(String token, String username) {
+        String userName = getUsernameFromToken(token);
+        return (userName.equals(username) && !isTokenExpired(token));
     }
 
     /**
@@ -143,14 +162,15 @@ public class JwtTokenUtils implements Serializable {
     /**
      * 判断令牌是否过期
      */
-    public static void isTokenExpired(String token) {
-        Claims claims = getClaimsFromToken(token);
-        Date expiration = claims.getExpiration();
+    public static Boolean isTokenExpired(String token) {
+        try {
+            Claims claims = getClaimsFromToken(token);
+            Date expiration = claims.getExpiration();
 
-        if (expiration.before(new Date()))
-            throw new AppExceptionForbidden("token过期");
-
-        return;
+            return expiration.before(new Date());
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**

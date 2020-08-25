@@ -21,7 +21,7 @@ public class JwtAuthenticationProvider extends DaoAuthenticationProvider {
             throws AuthenticationException {
 
         if (authentication.getCredentials() == null) {
-            throw new AppExceptionForbidden("Bad credentials");
+            throw new AppExceptionForbidden("错误的凭证");
         }
 
         if (!userDetails.isAccountNonLocked()) {
