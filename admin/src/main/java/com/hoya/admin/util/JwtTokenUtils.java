@@ -3,12 +3,16 @@ package com.hoya.admin.util;
 import java.io.Serializable;
 import java.util.*;
 
+import com.hoya.admin.security.GrantedAuthorityImpl;
+import com.hoya.admin.security.JwtAuthenticatioToken;
 import com.hoya.admin.security.JwtUserDetails;
 import com.hoya.core.exception.AppExceptionForbidden;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,7 +31,7 @@ public class JwtTokenUtils implements Serializable {
     /**
      * 用户id
      */
-    private static final String USER_ID = "userI";
+    private static final String USER_ID = "userId";
 
     /**
      * 创建时间
@@ -106,7 +110,32 @@ public class JwtTokenUtils implements Serializable {
 
         Authentication authentication = SecurityUtils.getAuthentication();
         if (authentication == null) {
-            //session没有授权信息，需要重新登陆(虽然可以从token获取信息还原session，太复杂了没必要)
+            //还原授权信息
+            Claims claims = getClaimsFromToken(token);
+            if(claims == null) {
+                return null;
+            }
+
+            //判断令牌是否过期
+            Date expiration = claims.getExpiration();
+            if(true == expiration.before(new Date()))
+                return null;
+
+            String username = claims.getSubject();
+            if(username == null) {
+                return null;
+            }
+
+            Object authors = claims.get(AUTHORITIES);
+            Long id = claims.get(USER_ID, Long.class);
+            List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+            if (authors != null && authors instanceof List) {
+                for (Object object : (List) authors) {
+                    authorities.add(new GrantedAuthorityImpl((String) ((Map) object).get("authority")));
+                }
+            }
+            UserDetails userDetails = new JwtUserDetails(username, null, id, null, authorities);
+            authentication = new JwtAuthenticatioToken(userDetails, null, authorities, token);
         } else {
             String username = SecurityUtils.getUsername();
             if(!validateToken(token, username)) {

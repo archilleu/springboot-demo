@@ -31,9 +31,9 @@ public class SysUser extends BaseModel {
 
     // 非数据库字段
     private String deptName;
-    // 非数据库字段
-    private String roleNames;
-    // 非数据库字段
-    private List<SysUserRole> userRoles = new ArrayList<>();
+    // 非数据库字段,角色名称
+    private List<String> roleNames;
+    // 非数据库字段,用户角色
+    private List<SysUserRole> userRoles;
 
 }

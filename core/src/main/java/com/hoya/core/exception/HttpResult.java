@@ -5,6 +5,10 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 public class HttpResult {
+    public HttpResult() {
+        this(null);
+    }
+
     public HttpResult(Object data) {
         this(data, "success");
     }
@@ -13,6 +17,8 @@ public class HttpResult {
         this.data = data;
         this.message = message;
     }
+
+    public static final HttpResult OK = new HttpResult();
 
     final private static int status = HttpStatus.OK.value();
     private String message;

@@ -10,6 +10,8 @@ import com.hoya.admin.model.sys.SysMenu;
 import com.hoya.admin.model.sys.SysRole;
 import com.hoya.admin.model.sys.SysRoleMenu;
 import com.hoya.admin.server.sys.SysRoleService;
+import com.hoya.core.exception.AppExceptionForbidden;
+import com.hoya.core.exception.AppExceptionNotFound;
 import com.hoya.core.page.PageHelper;
 import com.hoya.core.page.PageRequest;
 import com.hoya.core.page.PageResult;
@@ -22,30 +24,36 @@ public class SysRoleServiceImpl implements SysRoleService {
 
     @Autowired
     private SysRoleMapper sysRoleMapper;
+
     @Autowired
     private SysRoleMenuMapper sysRoleMenuMapper;
+
     @Autowired
     private SysMenuMapper sysMenuMapper;
 
     @Override
     public int save(SysRole record) {
-        if (record.getId() == null || record.getId() == 0) {
+        if (record.getId() == null) {
             return sysRoleMapper.insertSelective(record);
         }
+
         return sysRoleMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override
     public int delete(SysRole record) {
+        //TODO: 删除用户对应的，菜单对应的
         return sysRoleMapper.deleteByPrimaryKey(record.getId());
     }
 
     @Override
     public int delete(List<SysRole> records) {
+        int count = 0;
         for (SysRole record : records) {
-            delete(record);
+            count += delete(record);
         }
-        return 1;
+
+        return count;
     }
 
     @Override
@@ -67,17 +75,13 @@ public class SysRoleServiceImpl implements SysRoleService {
         return sysRoleMapper.findAll();
     }
 
-    public SysRoleMapper getSysRoleMapper() {
-        return sysRoleMapper;
-    }
-
-    public void setSysRoleMapper(SysRoleMapper sysRoleMapper) {
-        this.sysRoleMapper = sysRoleMapper;
-    }
-
     @Override
     public List<SysMenu> findRoleMenus(Long roleId) {
         SysRole sysRole = sysRoleMapper.selectByPrimaryKey(roleId);
+        if(null == sysRole) {
+            throw new AppExceptionNotFound("角色不存在");
+        }
+
         if (SysConstants.ADMIN.equalsIgnoreCase(sysRole.getName())) {
             // 如果是超级管理员，返回全部
             return sysMenuMapper.findAll();
@@ -88,15 +92,26 @@ public class SysRoleServiceImpl implements SysRoleService {
     @Transactional
     @Override
     public int saveRoleMenus(List<SysRoleMenu> records) {
-        if (records == null || records.isEmpty()) {
-            return 1;
+        if (records.isEmpty()) {
+            return 0;
         }
+
+        for (SysRoleMenu record : records) {
+            SysRole sysRole = sysRoleMapper.selectByPrimaryKey(record.getRoleId());
+            if (SysConstants.ADMIN.equalsIgnoreCase(sysRole.getName())) {
+                // 如果是超级管理员，不允许修改
+                throw new AppExceptionForbidden("超级管理员拥有所有菜单权限，不允许修改！");
+            }
+        }
+
+        //删除旧的菜单
         Long roleId = records.get(0).getRoleId();
         sysRoleMenuMapper.deleteByRoleId(roleId);
+        //插入新菜单
         for (SysRoleMenu record : records) {
             sysRoleMenuMapper.insertSelective(record);
         }
-        return 1;
+        return records.size();
     }
 
     @Override

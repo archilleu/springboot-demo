@@ -1,6 +1,7 @@
 package com.hoya.core.page;
 
 import com.github.pagehelper.PageInfo;
+import com.hoya.core.exception.AppExceptionServerError;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Method;
@@ -17,13 +18,9 @@ public class PageHelper {
     public static PageResult findPage(
             PageRequest pageRequest, Object mapper, String methodName, Object... args) {
 
-        Method method = ReflectionUtils.findMethod(mapper.getClass(), methodName);
+        Method method = getMethod(mapper.getClass(), methodName, args);
         if (null == method) {
-            try {
-                throw new NoSuchMethodException(mapper.getClass().getName() + " 类中没有找到 " + method + " 方法。");
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            }
+            throw new AppExceptionServerError("内部错误");
         }
 
         com.github.pagehelper.PageHelper.startPage(pageRequest.getPageNum(), pageRequest.getPageSize());
@@ -39,4 +36,20 @@ public class PageHelper {
         return pageResult;
     }
 
+    private static Method getMethod(Class<?> clazz, String methodName, Object[] params) {
+        Class<?> paramTypes[] = new Class<?>[params.length];
+        for (int i = 0; i < params.length; i++) {
+            paramTypes[i] = params[i].getClass();
+        }
+        Method method = ReflectionUtils.findMethod(clazz, methodName, paramTypes);
+        if (null == method) {
+            try {
+                throw new NoSuchMethodException(clazz.getName() + " 类中没有找到 " + methodName + " 方法。");
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return method;
+    }
 }

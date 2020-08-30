@@ -1,9 +1,6 @@
 package com.hoya.admin.server.sys.impl;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import com.hoya.admin.dao.sys.SysRoleMapper;
 import com.hoya.admin.dao.sys.SysUserMapper;
@@ -20,14 +17,17 @@ import com.hoya.core.page.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 @Service
 public class SysUserServiceImpl implements SysUserService {
 
     @Autowired
     private SysUserMapper sysUserMapper;
+
     @Autowired
     private SysMenuService sysMenuService;
+
     @Autowired
     private SysUserRoleMapper sysUserRoleMapper;
 
@@ -38,7 +38,7 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public int save(SysUser record) {
         Long id = null;
-        if (record.getId() == null || record.getId() == 0) {
+        if (record.getId() == null) {
             // 新增用户
             sysUserMapper.insertSelective(record);
             id = record.getId();
@@ -46,7 +46,8 @@ public class SysUserServiceImpl implements SysUserService {
             // 更新用户信息
             sysUserMapper.updateByPrimaryKeySelective(record);
         }
-        // 更新用户角色
+
+        //TODO:单独做个接口 更新用户角色
         if (id != null && id == 0) {
             return 1;
         }
@@ -60,20 +61,24 @@ public class SysUserServiceImpl implements SysUserService {
         for (SysUserRole sysUserRole : record.getUserRoles()) {
             sysUserRoleMapper.insertSelective(sysUserRole);
         }
+
         return 1;
     }
 
     @Override
     public int delete(SysUser record) {
+        //TODO: 删除用户对应的，菜单对应的
         return sysUserMapper.deleteByPrimaryKey(record.getId());
     }
 
     @Override
     public int delete(List<SysUser> records) {
+        int count = 0;
         for (SysUser record : records) {
-            delete(record);
+            count += delete(record);
         }
-        return 1;
+
+        return count;
     }
 
     @Override
@@ -88,9 +93,10 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public PageResult findPage(PageRequest pageRequest) {
-        PageResult pageResult = null;
+        PageResult pageResult;
         Object name = pageRequest.getParam("name");
         Object email = pageRequest.getParam("email");
+        //TODO:统一一个参数查询sql
         if (name != null) {
             if (email != null) {
                 pageResult = PageHelper.findPage(pageRequest, sysUserMapper, "findPageByNameAndEmail", name, email);
@@ -105,11 +111,6 @@ public class SysUserServiceImpl implements SysUserService {
         return pageResult;
     }
 
-    /**
-     * 加载用户角色
-     *
-     * @param pageResult
-     */
     private void findUserRoles(PageResult pageResult) {
         List<?> content = pageResult.getData();
         for (Object object : content) {
@@ -120,20 +121,18 @@ public class SysUserServiceImpl implements SysUserService {
         }
     }
 
-    private String getRoleNames(List<SysUserRole> userRoles) {
-        StringBuilder sb = new StringBuilder();
-        for (Iterator<SysUserRole> iter = userRoles.iterator(); iter.hasNext(); ) {
-            SysUserRole userRole = iter.next();
+    private List<String> getRoleNames(List<SysUserRole> userRoles) {
+        List<String> roles = new ArrayList<>();
+        for (SysUserRole userRole : userRoles) {
             SysRole sysRole = sysRoleMapper.selectByPrimaryKey(userRole.getRoleId());
             if (sysRole == null) {
                 continue;
             }
-            sb.append(sysRole.getRemark());
-            if (iter.hasNext()) {
-                sb.append(", ");
-            }
+
+            roles.add(sysRole.getName());
         }
-        return sb.toString();
+
+        return roles;
     }
 
     @Override
@@ -141,7 +140,7 @@ public class SysUserServiceImpl implements SysUserService {
         Set<String> perms = new HashSet<>();
         List<SysMenu> sysMenus = sysMenuService.findByUser(userName);
         for (SysMenu sysMenu : sysMenus) {
-            if (sysMenu.getPerms() != null && !"".equals(sysMenu.getPerms())) {
+            if (!StringUtils.isEmpty(sysMenu.getPerms())) {
                 perms.add(sysMenu.getPerms());
             }
         }
