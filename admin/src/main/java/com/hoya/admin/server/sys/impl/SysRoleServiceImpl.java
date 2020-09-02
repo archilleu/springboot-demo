@@ -33,7 +33,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 
     @Override
     public int save(SysRole record) {
-        if (record.getId() == null) {
+        if (record.getId() == null || record.getId() == 0) {
             return sysRoleMapper.insertSelective(record);
         }
 
@@ -78,7 +78,7 @@ public class SysRoleServiceImpl implements SysRoleService {
     @Override
     public List<SysMenu> findRoleMenus(Long roleId) {
         SysRole sysRole = sysRoleMapper.selectByPrimaryKey(roleId);
-        if(null == sysRole) {
+        if (null == sysRole) {
             throw new AppExceptionNotFound("角色不存在");
         }
 

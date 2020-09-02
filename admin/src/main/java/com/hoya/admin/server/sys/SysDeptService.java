@@ -5,13 +5,10 @@ import com.hoya.core.service.CurdService;
 
 import java.util.List;
 
-/**
- * 机构管理
- */
 public interface SysDeptService extends CurdService<SysDept> {
 
     /**
-     * 查询机构树
+     * 获取整颗机构树
      *
      * @return
      */

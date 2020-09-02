@@ -58,7 +58,7 @@ public class SysUserController {
         } catch (DuplicateKeyException e) {
             throw new AppExceptionAreadyExists("用户名已经存在");
         } catch (Exception e) {
-            throw new AppExceptionServerError("未知错误");
+            throw new AppExceptionServerError("内部错误");
         }
 
         return HttpResult.OK;

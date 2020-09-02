@@ -3,12 +3,9 @@ package com.hoya.admin.controller.sys;
 import com.hoya.admin.constant.SysConstants;
 import com.hoya.admin.model.sys.SysRole;
 import com.hoya.admin.model.sys.SysRoleMenu;
-import com.hoya.admin.model.sys.SysUser;
 import com.hoya.admin.server.sys.SysRoleService;
-import com.hoya.admin.util.PasswordUtils;
 import com.hoya.core.exception.*;
 import com.hoya.core.page.PageRequest;
-import com.hoya.core.page.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,7 +38,7 @@ public class SysRoleController {
         } catch (DuplicateKeyException e) {
             throw new AppExceptionAreadyExists("角色已经存在");
         } catch (Exception e) {
-            throw new AppExceptionServerError("未知错误");
+            throw new AppExceptionServerError("内部错误");
         }
 
         return HttpResult.OK;

@@ -1,10 +1,11 @@
 package com.hoya.admin.controller.sys;
 
-import com.hoya.admin.model.sys.SysDict;
-import com.hoya.admin.server.sys.SysDictService;
+import com.hoya.admin.model.sys.SysDept;
+import com.hoya.admin.server.sys.SysDeptService;
 import com.hoya.admin.util.ParameterCheck;
-import com.hoya.core.exception.*;
-import com.hoya.core.page.PageRequest;
+import com.hoya.core.exception.AppExceptionAreadyExists;
+import com.hoya.core.exception.AppExceptionServerError;
+import com.hoya.core.exception.HttpResult;
 import com.hoya.core.utils.RequestParametersCheck;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,37 +19,37 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/sys/dict")
-public class SysDictController {
+@RequestMapping("/sys/dept")
+public class SysDeptController {
 
-    private Logger logger = LoggerFactory.getLogger(SysDictController.class);
+    private Logger logger = LoggerFactory.getLogger(SysDeptController.class);
 
     @Autowired
-    private SysDictService sysDictService;
+    private SysDeptService sysDeptService;
 
-    @PreAuthorize("hasAuthority('sys:dict:add') AND hasAuthority('sys:dict:edit')")
+    @PreAuthorize("hasAuthority('sys:dept:add') AND hasAuthority('sys:dept:edit')")
     @PostMapping(value = "/save")
-    public HttpResult save(@RequestBody @Validated SysDict record, BindingResult bindingResult) {
+    public HttpResult save(@RequestBody @Validated SysDept record, BindingResult bindingResult) {
         RequestParametersCheck.check(bindingResult);
 
         try {
-            sysDictService.save(record);
+            sysDeptService.save(record);
             return HttpResult.OK;
         } catch (DuplicateKeyException e) {
-            throw new AppExceptionAreadyExists("字典值已经存在");
+            throw new AppExceptionAreadyExists("部门已经存在");
         } catch (Exception e) {
             logger.error(e.toString());
             throw new AppExceptionServerError("内部错误");
         }
     }
 
-    @PreAuthorize("hasAuthority('sys:dict:delete')")
+    @PreAuthorize("hasAuthority('sys:dept:delete')")
     @PostMapping(value = "/delete")
-    public HttpResult delete(@RequestBody List<SysDict> records) {
+    public HttpResult delete(@RequestBody List<SysDept> records) {
         ParameterCheck.modelIdNotNull(records);
 
         try {
-            sysDictService.delete(records);
+            sysDeptService.delete(records);
             return HttpResult.OK;
         } catch (Exception e) {
             logger.error(e.toString());
@@ -56,11 +57,11 @@ public class SysDictController {
         }
     }
 
-    @PreAuthorize("hasAuthority('sys:dict:view')")
-    @PostMapping(value = "/findPage")
-    public HttpResult findPage(@RequestBody PageRequest pageRequest) {
+    @PreAuthorize("hasAuthority('sys:dept:view')")
+    @GetMapping(value = "/findTree")
+    public HttpResult findTree() {
         try {
-            return new HttpResult(sysDictService.findPage(pageRequest));
+            return new HttpResult(sysDeptService.findTree());
         } catch (Exception e) {
             logger.error(e.toString());
             throw new AppExceptionServerError("内部错误");

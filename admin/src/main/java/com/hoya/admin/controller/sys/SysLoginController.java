@@ -1,13 +1,14 @@
 package com.hoya.admin.controller.sys;
 
-import com.google.code.kaptcha.Producer;
 import com.hoya.admin.security.JwtAuthenticatioToken;
-import com.hoya.admin.server.sys.SysUserService;
 import com.hoya.admin.util.SecurityUtils;
 import com.hoya.admin.vo.LoginBean;
 import com.hoya.core.exception.HttpResult;
+import com.hoya.core.utils.RequestParametersCheck;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,16 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @RestController
 public class SysLoginController {
-
-    @Autowired
-    private Producer producer;
-
-    @Autowired
-    SysUserService sysUserService;
 
     @Autowired
     AuthenticationManager authenticationManager;
@@ -39,7 +33,10 @@ public class SysLoginController {
      * 登录接口
      */
     @PostMapping(value = "/login")
-    public HttpResult login(@RequestBody LoginBean loginBean, HttpServletRequest request) throws IOException {
+    public HttpResult login(@RequestBody @Validated LoginBean loginBean, BindingResult bindingResult,
+                            HttpServletRequest request) {
+        RequestParametersCheck.check(bindingResult);
+
         String username = loginBean.getAccount();
         String password = loginBean.getPassword();
 

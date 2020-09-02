@@ -37,17 +37,16 @@ public class SysUserServiceImpl implements SysUserService {
     @Transactional
     @Override
     public int save(SysUser record) {
-        Long id = null;
-        if (record.getId() == null) {
+        if (record.getId() == null || record.getId() == 0) {
             // 新增用户
             sysUserMapper.insertSelective(record);
-            id = record.getId();
         } else {
             // 更新用户信息
             sysUserMapper.updateByPrimaryKeySelective(record);
         }
 
         //TODO:单独做个接口 更新用户角色
+        Long id = record.getId();
         if (id != null && id == 0) {
             return 1;
         }

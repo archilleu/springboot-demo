@@ -8,6 +8,7 @@ import com.hoya.core.exception.AppError;
 import com.hoya.core.exception.AppException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -27,4 +28,12 @@ public class AppExceptionControllerHandler {
         ResponseEntity<AppError> entity = new ResponseEntity<AppError>(error, HttpStatus.BAD_REQUEST);
         return entity;
     }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<AppError> exception(HttpMessageNotReadableException ex) {
+        AppError error = new AppError(HttpStatus.BAD_REQUEST.value(), "HTTP数据解析失败");
+        ResponseEntity<AppError> entity = new ResponseEntity<AppError>(error, HttpStatus.BAD_REQUEST);
+        return entity;
+    }
+
 }

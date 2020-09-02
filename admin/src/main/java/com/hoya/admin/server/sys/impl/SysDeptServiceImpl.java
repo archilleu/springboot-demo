@@ -33,10 +33,11 @@ public class SysDeptServiceImpl implements SysDeptService {
 
     @Override
     public int delete(List<SysDept> records) {
+        int count = 0;
         for (SysDept record : records) {
-            delete(record);
+            count += delete(record);
         }
-        return 1;
+        return count;
     }
 
     @Override
