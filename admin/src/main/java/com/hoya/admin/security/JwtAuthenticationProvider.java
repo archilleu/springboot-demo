@@ -1,9 +1,7 @@
 package com.hoya.admin.security;
 
 import com.hoya.admin.util.PasswordEncoder;
-import com.hoya.core.exception.AppException;
 import com.hoya.core.exception.AppExceptionForbidden;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.AuthenticationException;

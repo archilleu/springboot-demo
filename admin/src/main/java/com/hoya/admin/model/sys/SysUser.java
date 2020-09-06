@@ -3,7 +3,6 @@ package com.hoya.admin.model.sys;
 import com.hoya.admin.model.BaseModel;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data

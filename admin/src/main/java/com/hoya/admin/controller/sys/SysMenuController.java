@@ -1,7 +1,7 @@
 package com.hoya.admin.controller.sys;
 
-import com.hoya.admin.model.sys.SysDept;
-import com.hoya.admin.server.sys.SysDeptService;
+import com.hoya.admin.model.sys.SysMenu;
+import com.hoya.admin.server.sys.SysMenuService;
 import com.hoya.core.exception.AppExceptionAreadyExists;
 import com.hoya.core.exception.AppExceptionServerError;
 import com.hoya.core.exception.HttpResult;
@@ -18,35 +18,35 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/sys/dept")
-public class SysDeptController {
+@RequestMapping("/sys/menu")
+public class SysMenuController {
 
-    private Logger logger = LoggerFactory.getLogger(SysDeptController.class);
+    private Logger logger = LoggerFactory.getLogger(SysMenuController.class);
 
     @Autowired
-    private SysDeptService sysDeptService;
+    private SysMenuService sysMenuService;
 
-    @PreAuthorize("hasAuthority('sys:dept:add') AND hasAuthority('sys:dept:edit')")
+    @PreAuthorize("hasAuthority('sys:menu:add') AND hasAuthority('sys:menu:edit')")
     @PostMapping(value = "/save")
-    public HttpResult save(@RequestBody @Validated SysDept record, BindingResult bindingResult) {
+    public HttpResult save(@RequestBody @Validated SysMenu record, BindingResult bindingResult) {
         RequestParametersCheck.check(bindingResult);
 
         try {
-            sysDeptService.save(record);
+            sysMenuService.save(record);
             return HttpResult.OK;
         } catch (DuplicateKeyException e) {
-            throw new AppExceptionAreadyExists("部门已经存在");
+            throw new AppExceptionAreadyExists("菜单已经存在");
         } catch (Exception e) {
             logger.error(e.toString());
             throw new AppExceptionServerError("内部错误");
         }
     }
 
-    @PreAuthorize("hasAuthority('sys:dept:delete')")
+    @PreAuthorize("hasAuthority('sys:menu:delete')")
     @PostMapping(value = "/delete")
-    public HttpResult delete(@RequestBody List<SysDept> records) {
+    public HttpResult delete(@RequestBody List<SysMenu> records) {
         try {
-            sysDeptService.delete(records);
+            sysMenuService.delete(records);
             return HttpResult.OK;
         } catch (Exception e) {
             logger.error(e.toString());
@@ -54,15 +54,25 @@ public class SysDeptController {
         }
     }
 
-    @PreAuthorize("hasAuthority('sys:dept:view')")
-    @GetMapping(value = "/findTree")
-    public HttpResult findTree() {
+    @PreAuthorize("hasAuthority('sys:menu:view')")
+    @GetMapping(value = "/findNavTree")
+    public HttpResult findNavTree(@RequestParam String userName) {
         try {
-            return new HttpResult(sysDeptService.findTree());
+            return new HttpResult(sysMenuService.findTree(userName, SysMenuService.FindType.EXCLUDE_BUTTON));
         } catch (Exception e) {
             logger.error(e.toString());
             throw new AppExceptionServerError("内部错误");
         }
     }
 
+    @PreAuthorize("hasAuthority('sys:menu:view')")
+    @GetMapping(value = "/findMenuTree")
+    public HttpResult findMenuTree() {
+        try {
+            return new HttpResult(sysMenuService.findTree(null, SysMenuService.FindType.ALL));
+        } catch (Exception e) {
+            logger.error(e.toString());
+            throw new AppExceptionServerError("内部错误");
+        }
+    }
 }

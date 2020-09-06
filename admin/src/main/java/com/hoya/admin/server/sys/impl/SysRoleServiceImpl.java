@@ -82,7 +82,7 @@ public class SysRoleServiceImpl implements SysRoleService {
             throw new AppExceptionNotFound("角色不存在");
         }
 
-        if (SysConstants.ADMIN.equalsIgnoreCase(sysRole.getName())) {
+        if (SysConstants.ADMIN_ID.equals(sysRole.getId())) {
             // 如果是超级管理员，返回全部
             return sysMenuMapper.findAll();
         }
@@ -97,10 +97,13 @@ public class SysRoleServiceImpl implements SysRoleService {
         }
 
         for (SysRoleMenu record : records) {
-            SysRole sysRole = sysRoleMapper.selectByPrimaryKey(record.getRoleId());
-            if (SysConstants.ADMIN.equalsIgnoreCase(sysRole.getName())) {
-                // 如果是超级管理员，不允许修改
+            if(SysConstants.ADMIN_ID.equals(record.getId())) {
                 throw new AppExceptionForbidden("超级管理员拥有所有菜单权限，不允许修改！");
+            }
+
+            SysRole sysRole = sysRoleMapper.selectByPrimaryKey(record.getRoleId());
+            if(null == sysRole) {
+                throw new AppExceptionNotFound("角色不存在");
             }
         }
 
@@ -111,6 +114,7 @@ public class SysRoleServiceImpl implements SysRoleService {
         for (SysRoleMenu record : records) {
             sysRoleMenuMapper.insertSelective(record);
         }
+
         return records.size();
     }
 

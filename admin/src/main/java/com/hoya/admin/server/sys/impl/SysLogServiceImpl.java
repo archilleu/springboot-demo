@@ -32,10 +32,11 @@ public class SysLogServiceImpl implements SysLogService {
 
     @Override
     public int delete(List<SysLog> records) {
+        int count = 0;
         for (SysLog record : records) {
-            delete(record);
+            count += delete(record);
         }
-        return 1;
+        return count;
     }
 
     @Override

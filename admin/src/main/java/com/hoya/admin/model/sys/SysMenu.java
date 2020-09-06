@@ -3,6 +3,7 @@ package com.hoya.admin.model.sys;
 import com.hoya.admin.model.BaseModel;
 import lombok.Data;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Data
@@ -27,8 +28,6 @@ public class SysMenu extends BaseModel {
     // 非数据库字段
     private String parentName;
     // 非数据库字段
-    private Integer level;
-    // 非数据库字段
-    private List<SysMenu> children;
+    private List<SysMenu> children = new LinkedList<>();
 
 }

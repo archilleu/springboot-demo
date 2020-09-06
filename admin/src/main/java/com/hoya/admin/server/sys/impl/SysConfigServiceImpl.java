@@ -32,10 +32,11 @@ public class SysConfigServiceImpl implements SysConfigService {
 
     @Override
     public int delete(List<SysConfig> records) {
+        int count = 0;
         for (SysConfig record : records) {
-            delete(record);
+            count += delete(record);
         }
-        return 1;
+        return count;
     }
 
     @Override

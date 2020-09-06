@@ -2,7 +2,6 @@ package com.hoya.admin.controller.sys;
 
 import com.hoya.admin.model.sys.SysDict;
 import com.hoya.admin.server.sys.SysDictService;
-import com.hoya.admin.util.ParameterCheck;
 import com.hoya.core.exception.*;
 import com.hoya.core.page.PageRequest;
 import com.hoya.core.utils.RequestParametersCheck;
@@ -45,7 +44,6 @@ public class SysDictController {
     @PreAuthorize("hasAuthority('sys:dict:delete')")
     @PostMapping(value = "/delete")
     public HttpResult delete(@RequestBody List<SysDict> records) {
-        ParameterCheck.modelIdNotNull(records);
 
         try {
             sysDictService.delete(records);
