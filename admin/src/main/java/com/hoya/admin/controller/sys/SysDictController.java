@@ -44,7 +44,6 @@ public class SysDictController {
     @PreAuthorize("hasAuthority('sys:dict:delete')")
     @PostMapping(value = "/delete")
     public HttpResult delete(@RequestBody List<SysDict> records) {
-
         try {
             sysDictService.delete(records);
             return HttpResult.OK;

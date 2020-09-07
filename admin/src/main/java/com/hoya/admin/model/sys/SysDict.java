@@ -17,10 +17,8 @@ public class SysDict extends BaseModel {
     @NotNull
     private String type;
 
-    @NotNull
     private String description;
 
-    @NotNull
     private Long sort;
 
     private String remarks;

@@ -10,7 +10,7 @@ server:
 spring:
     # 环境 dev|test|prod
     profiles:
-        active: test
+        active: dev
     application:
       name: haoya-admin
     http:
@@ -48,11 +48,3 @@ pagehelper:
     supportMethodsArguments: true
     params: count=countSql
 
-#日志
-logging:
-  path: logs/
-  level:
-      com:
-          hoya:
-              admin:
-                dao: debug

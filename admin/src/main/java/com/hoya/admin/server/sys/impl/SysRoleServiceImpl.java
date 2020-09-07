@@ -1,5 +1,6 @@
 package com.hoya.admin.server.sys.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import com.hoya.admin.constant.SysConstants;
@@ -10,6 +11,7 @@ import com.hoya.admin.model.sys.SysMenu;
 import com.hoya.admin.model.sys.SysRole;
 import com.hoya.admin.model.sys.SysRoleMenu;
 import com.hoya.admin.server.sys.SysRoleService;
+import com.hoya.admin.util.SecurityUtils;
 import com.hoya.core.exception.AppExceptionForbidden;
 import com.hoya.core.exception.AppExceptionNotFound;
 import com.hoya.core.page.PageHelper;
@@ -34,6 +36,8 @@ public class SysRoleServiceImpl implements SysRoleService {
     @Override
     public int save(SysRole record) {
         if (record.getId() == null || record.getId() == 0) {
+            record.setCreateBy(SecurityUtils.getUsername());
+            record.setCreateTime(new Date());
             return sysRoleMapper.insertSelective(record);
         }
 

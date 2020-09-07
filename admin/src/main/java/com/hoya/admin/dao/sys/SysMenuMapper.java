@@ -26,5 +26,9 @@ public interface SysMenuMapper {
 
     List<SysMenu> findByUserName(@Param(value = "userName") String userName);
 
+    // 除了按钮之外的菜单
+    List<SysMenu> findNavAll();
+    List<SysMenu> findNavByUserName(@Param(value = "userName") String userName);
+
     List<SysMenu> findRoleMenus(@Param(value = "roleId") Long roleId);
 }

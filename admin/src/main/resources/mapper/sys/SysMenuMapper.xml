@@ -207,6 +207,17 @@
         where u.name = #{userName,jdbcType=BIGINT} and u.id = ur.user_id
         and ur.role_id = rm.role_id and rm.menu_id = m.id
     </select>
+    <select id="findNavAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_menu
+        where sys_menu.type != 2
+    </select>
+    <select id="findNavByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select m.* from sys_menu m, sys_user u, sys_user_role ur, sys_role_menu rm
+        where u.name = #{userName,jdbcType=BIGINT} and m.type != 2 and u.id = ur.user_id
+        and ur.role_id = rm.role_id and rm.menu_id = m.id
+    </select>
     <select id="findRoleMenus" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select m.* from sys_menu m, sys_role_menu rm
         where rm.role_id = #{roleId,jdbcType=BIGINT}

@@ -2,6 +2,7 @@ package com.hoya.admin.server.sys.impl;
 
 import java.util.*;
 
+import com.hoya.admin.constant.SysConstants;
 import com.hoya.admin.dao.sys.SysRoleMapper;
 import com.hoya.admin.dao.sys.SysUserMapper;
 import com.hoya.admin.dao.sys.SysUserRoleMapper;
@@ -11,6 +12,7 @@ import com.hoya.admin.model.sys.SysUser;
 import com.hoya.admin.model.sys.SysUserRole;
 import com.hoya.admin.server.sys.SysMenuService;
 import com.hoya.admin.server.sys.SysUserService;
+import com.hoya.admin.util.SecurityUtils;
 import com.hoya.core.page.PageHelper;
 import com.hoya.core.page.PageRequest;
 import com.hoya.core.page.PageResult;
@@ -39,6 +41,8 @@ public class SysUserServiceImpl implements SysUserService {
     public int save(SysUser record) {
         if (record.getId() == null || record.getId() == 0) {
             // 新增用户
+            record.setCreateBy(SecurityUtils.getUsername());
+            record.setCreateTime(new Date());
             sysUserMapper.insertSelective(record);
         } else {
             // 更新用户信息
@@ -92,26 +96,15 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public PageResult findPage(PageRequest pageRequest) {
-        PageResult pageResult;
-        Object name = pageRequest.getParam("name");
-        Object email = pageRequest.getParam("email");
-        //TODO:统一一个参数查询sql
-        if (name != null) {
-            if (email != null) {
-                pageResult = PageHelper.findPage(pageRequest, sysUserMapper, "findPageByNameAndEmail", name, email);
-            } else {
-                pageResult = PageHelper.findPage(pageRequest, sysUserMapper, "findPageByName", name);
-            }
-        } else {
-            pageResult = PageHelper.findPage(pageRequest, sysUserMapper);
-        }
+        PageResult pageResult = PageHelper.findPage(pageRequest, sysUserMapper, pageRequest.getParams());
+
         // 加载用户角色信息
         findUserRoles(pageResult);
         return pageResult;
     }
 
     private void findUserRoles(PageResult pageResult) {
-        List<?> content = pageResult.getData();
+        List<?> content = pageResult.getContent();
         for (Object object : content) {
             SysUser sysUser = (SysUser) object;
             List<SysUserRole> userRoles = findUserRoles(sysUser.getId());
@@ -136,13 +129,19 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public Set<String> findPermissions(String userName) {
+        List<SysMenu> sysMenus;
+        if (SysConstants.ADMIN.equals(userName)) {
+            sysMenus = sysMenuService.findAll();
+        } else {
+            sysMenus = sysMenuService.findByUsername(userName);
+        }
         Set<String> perms = new HashSet<>();
-        List<SysMenu> sysMenus = sysMenuService.findByUser(userName);
         for (SysMenu sysMenu : sysMenus) {
             if (!StringUtils.isEmpty(sysMenu.getPerms())) {
                 perms.add(sysMenu.getPerms());
             }
         }
+
         return perms;
     }
 

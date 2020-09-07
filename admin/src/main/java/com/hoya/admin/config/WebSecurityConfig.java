@@ -52,14 +52,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/druid/**").permitAll()
             // 首页和登录页面
             .antMatchers("/").permitAll()
-            .antMatchers("/login").permitAll()
+            .antMatchers("/user/login").permitAll()
             // swagger
             .antMatchers("/swagger-ui.html").permitAll()
             .antMatchers("/swagger-resources/**").permitAll()
             .antMatchers("/v2/api-docs").permitAll()
             .antMatchers("/webjars/springfox-swagger-ui/**").permitAll()
             // 验证码
-            .antMatchers("/captcha.jpg**").permitAll()
+            .antMatchers("/user/captcha.jpg**").permitAll()
             // 服务监控
             .antMatchers("/actuator/**").permitAll()
             // 其他所有请求需要身份认证

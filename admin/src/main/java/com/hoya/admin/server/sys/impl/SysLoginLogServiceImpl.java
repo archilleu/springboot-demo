@@ -1,10 +1,12 @@
 package com.hoya.admin.server.sys.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import com.hoya.admin.dao.sys.SysLoginLogMapper;
 import com.hoya.admin.model.sys.SysLoginLog;
 import com.hoya.admin.server.sys.SysLoginLogService;
+import com.hoya.admin.util.SecurityUtils;
 import com.hoya.core.page.PageHelper;
 import com.hoya.core.page.PageRequest;
 import com.hoya.core.page.PageResult;
@@ -20,6 +22,8 @@ public class SysLoginLogServiceImpl implements SysLoginLogService {
     @Override
     public int save(SysLoginLog record) {
         if (record.getId() == null || record.getId() == 0) {
+            record.setCreateBy(SecurityUtils.getUsername());
+            record.setCreateTime(new Date());
             return sysLoginLogMapper.insertSelective(record);
         }
         return sysLoginLogMapper.updateByPrimaryKeySelective(record);

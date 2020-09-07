@@ -6,13 +6,17 @@ import com.hoya.admin.server.sys.SysUserService;
 import com.hoya.admin.util.PasswordUtils;
 import com.hoya.core.exception.*;
 import com.hoya.core.page.PageRequest;
+import com.hoya.core.utils.RequestParametersCheck;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @RestController
@@ -26,7 +30,9 @@ public class SysUserController {
 
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('sys:user:add') AND hasAuthority('sys:user:edit')")
-    public HttpResult save(@RequestBody SysUser record) {
+        public HttpResult save(@RequestBody @Validated SysUser record, BindingResult bindingResult) {
+            RequestParametersCheck.check(bindingResult);
+
         if (SysConstants.ADMIN_ID.equals(record.getId()))
             throw new AppExceptionForbidden("不能修改超级管理员");
 

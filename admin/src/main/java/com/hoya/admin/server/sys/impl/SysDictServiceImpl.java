@@ -3,12 +3,14 @@ package com.hoya.admin.server.sys.impl;
 import com.hoya.admin.dao.sys.SysDictMapper;
 import com.hoya.admin.model.sys.SysDict;
 import com.hoya.admin.server.sys.SysDictService;
+import com.hoya.admin.util.SecurityUtils;
 import com.hoya.core.page.PageHelper;
 import com.hoya.core.page.PageRequest;
 import com.hoya.core.page.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -20,6 +22,8 @@ public class SysDictServiceImpl implements SysDictService {
     @Override
     public int save(SysDict record) {
         if (record.getId() == null || record.getId() == 0) {
+            record.setCreateBy(SecurityUtils.getUsername());
+            record.setCreateTime(new Date());
             return sysDictMapper.insertSelective(record);
         }
         return sysDictMapper.updateByPrimaryKeySelective(record);
@@ -46,11 +50,7 @@ public class SysDictServiceImpl implements SysDictService {
 
     @Override
     public PageResult findPage(PageRequest pageRequest) {
-        Object label = pageRequest.getParam("label");
-        if (label != null) {
-            return PageHelper.findPage(pageRequest, sysDictMapper, "findPageByLabel", label);
-        }
-        return PageHelper.findPage(pageRequest, sysDictMapper);
+        return PageHelper.findPage(pageRequest, sysDictMapper, pageRequest.getParams());
     }
 
 }

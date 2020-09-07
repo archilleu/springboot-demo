@@ -58,7 +58,7 @@ public class SysMenuController {
     @GetMapping(value = "/findNavTree")
     public HttpResult findNavTree(@RequestParam String userName) {
         try {
-            return new HttpResult(sysMenuService.findTree(userName, SysMenuService.FindType.EXCLUDE_BUTTON));
+            return new HttpResult(sysMenuService.findNavTreeByUsername(userName));
         } catch (Exception e) {
             logger.error(e.toString());
             throw new AppExceptionServerError("内部错误");
@@ -69,7 +69,7 @@ public class SysMenuController {
     @GetMapping(value = "/findMenuTree")
     public HttpResult findMenuTree() {
         try {
-            return new HttpResult(sysMenuService.findTree(null, SysMenuService.FindType.ALL));
+            return new HttpResult(sysMenuService.findMenuTree());
         } catch (Exception e) {
             logger.error(e.toString());
             throw new AppExceptionServerError("内部错误");

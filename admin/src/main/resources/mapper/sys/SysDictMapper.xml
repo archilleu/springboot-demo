@@ -174,17 +174,15 @@
         del_flag = #{delFlag,jdbcType=TINYINT}
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <select id="findPage" resultMap="BaseResultMap">
+    <select id="findPage" parameterType="java.util.Map" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from sys_dict
-    </select>
-    <select id="findPageByLabel" parameterType="java.lang.String" resultMap="BaseResultMap">
-        <bind name="pattern" value="'%' + _parameter.label + '%'"/>
-        select
-        <include refid="Base_Column_List"/>
-        from sys_dict
-        where label like #{pattern}
+        where 1=1
+        <if test="label!=null">
+            <bind name="patternLabel" value="'%' + label + '%'"/>
+            and label like #{patternLabel}
+        </if>
     </select>
     <select id="findByLable" parameterType="java.lang.String" resultMap="BaseResultMap">
         select

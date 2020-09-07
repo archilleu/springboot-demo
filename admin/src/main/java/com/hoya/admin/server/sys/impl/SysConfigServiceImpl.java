@@ -1,10 +1,12 @@
 package com.hoya.admin.server.sys.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import com.hoya.admin.dao.sys.SysConfigMapper;
 import com.hoya.admin.model.sys.SysConfig;
 import com.hoya.admin.server.sys.SysConfigService;
+import com.hoya.admin.util.SecurityUtils;
 import com.hoya.core.page.PageHelper;
 import com.hoya.core.page.PageRequest;
 import com.hoya.core.page.PageResult;
@@ -20,6 +22,8 @@ public class SysConfigServiceImpl implements SysConfigService {
     @Override
     public int save(SysConfig record) {
         if (record.getId() == null || record.getId() == 0) {
+            record.setCreateBy(SecurityUtils.getUsername());
+            record.setCreateTime(new Date());
             return sysConfigMapper.insertSelective(record);
         }
         return sysConfigMapper.updateByPrimaryKeySelective(record);

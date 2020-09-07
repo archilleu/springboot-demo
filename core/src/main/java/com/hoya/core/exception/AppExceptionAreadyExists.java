@@ -4,10 +4,10 @@ import org.springframework.http.HttpStatus;
 
 public class AppExceptionAreadyExists extends AppException {
     public AppExceptionAreadyExists() {
-        this(HttpStatus.FOUND.toString());
+        this(HttpStatus.NOT_FOUND.toString());
     }
 
     public AppExceptionAreadyExists(String message) {
-        super(HttpStatus.FOUND, message);
+        super(HttpStatus.NOT_FOUND, message);
     }
 }

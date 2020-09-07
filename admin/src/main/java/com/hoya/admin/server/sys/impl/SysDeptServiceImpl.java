@@ -1,11 +1,13 @@
 package com.hoya.admin.server.sys.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.hoya.admin.dao.sys.SysDeptMapper;
 import com.hoya.admin.model.sys.SysDept;
 import com.hoya.admin.server.sys.SysDeptService;
+import com.hoya.admin.util.SecurityUtils;
 import com.hoya.core.page.PageHelper;
 import com.hoya.core.page.PageRequest;
 import com.hoya.core.page.PageResult;
@@ -21,6 +23,8 @@ public class SysDeptServiceImpl implements SysDeptService {
     @Override
     public int save(SysDept record) {
         if (record.getId() == null || record.getId() == 0) {
+            record.setCreateBy(SecurityUtils.getUsername());
+            record.setCreateTime(new Date());
             return sysDeptMapper.insertSelective(record);
         }
         return sysDeptMapper.updateByPrimaryKeySelective(record);

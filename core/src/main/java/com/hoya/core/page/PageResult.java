@@ -29,6 +29,6 @@ public class PageResult {
 	/**
 	 * 分页数据
 	 */
-	private List<?> data;
+	private List<?> content;
 
 }

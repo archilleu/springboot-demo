@@ -15,6 +15,10 @@ public class PageHelper {
         return findPage(pageRequest, mapper, findPage);
     }
 
+    public static PageResult findPage(PageRequest pageRequest, Object mapper, Object... args) {
+        return findPage(pageRequest, mapper, findPage, args);
+    }
+
     public static PageResult findPage(
             PageRequest pageRequest, Object mapper, String methodName, Object... args) {
 
@@ -23,7 +27,7 @@ public class PageHelper {
             throw new AppExceptionServerError("内部错误");
         }
 
-        com.github.pagehelper.PageHelper.startPage(pageRequest.getPageNum(), pageRequest.getPageSize());
+        com.github.pagehelper.PageHelper.startPage(pageRequest.getPage(), pageRequest.getRows());
         List res = (List) ReflectionUtils.invokeMethod(method, mapper, args);
 
         PageInfo pageInfo = new PageInfo(res);
@@ -32,7 +36,7 @@ public class PageHelper {
         pageResult.setPageSize(pageInfo.getPageSize());
         pageResult.setTotalSize(pageInfo.getTotal());
         pageResult.setTotalPages(pageInfo.getPages());
-        pageResult.setData(pageInfo.getList());
+        pageResult.setContent(pageInfo.getList());
         return pageResult;
     }
 

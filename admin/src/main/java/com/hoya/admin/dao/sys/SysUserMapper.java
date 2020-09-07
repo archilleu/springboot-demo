@@ -3,6 +3,7 @@ package com.hoya.admin.dao.sys;
 import com.hoya.admin.model.sys.SysUser;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public interface SysUserMapper {
@@ -18,11 +19,7 @@ public interface SysUserMapper {
 
     int updateByPrimaryKey(SysUser record);
 
-    List<SysUser> findPage();
-
     SysUser findByName(@Param(value = "name") String name);
 
-    List<SysUser> findPageByName(@Param(value = "name") String name);
-
-    List<SysUser> findPageByNameAndEmail(@Param(value = "name") String name, @Param(value = "email") String email);
+    List<SysUser> findPage(LinkedHashMap<String, Object> params);
 }

@@ -2,10 +2,10 @@ package com.hoya.admin.server.sys.impl;
 
 import java.util.*;
 
-import com.hoya.admin.constant.SysConstants;
 import com.hoya.admin.dao.sys.SysMenuMapper;
 import com.hoya.admin.model.sys.SysMenu;
 import com.hoya.admin.server.sys.SysMenuService;
+import com.hoya.admin.util.SecurityUtils;
 import com.hoya.core.page.PageHelper;
 import com.hoya.core.page.PageRequest;
 import com.hoya.core.page.PageResult;
@@ -21,6 +21,8 @@ public class SysMenuServiceImpl implements SysMenuService {
     @Override
     public int save(SysMenu record) {
         if (record.getId() == null || record.getId() == 0) {
+            record.setCreateBy(SecurityUtils.getUsername());
+            record.setCreateTime(new Date());
             return sysMenuMapper.insertSelective(record);
         }
         if (record.getParentId() == null) {
@@ -55,8 +57,30 @@ public class SysMenuServiceImpl implements SysMenuService {
     }
 
     @Override
-    public List<SysMenu> findTree(String userName, FindType findType) {
-        List<SysMenu> menus = findByUser(userName);
+    public List<SysMenu> findMenuTree() {
+        List<SysMenu> menus = sysMenuMapper.findAll();
+        return createMenuTree(menus);
+    }
+
+    @Override
+    public List<SysMenu> findMenuTree(String userName) {
+        List<SysMenu> menus = sysMenuMapper.findByUserName(userName);
+        return createMenuTree(menus);
+    }
+
+    @Override
+    public List<SysMenu> findNavTree() {
+        List<SysMenu> menus = sysMenuMapper.findNavAll();
+        return createMenuTree(menus);
+    }
+
+    @Override
+    public List<SysMenu> findNavTreeByUsername(String userName) {
+        List<SysMenu> menus  = sysMenuMapper.findNavByUserName(userName);
+        return createMenuTree(menus);
+    }
+
+    private List<SysMenu> createMenuTree(List<SysMenu> menus) {
         Map<Long, List<SysMenu>> idMenuMap = createIdChildrenMap(menus);
 
         //顶级菜单
@@ -71,14 +95,6 @@ public class SysMenuServiceImpl implements SysMenuService {
         root.setChildren(children);
         createMenuTree(idMenuMap, root);
         return children;
-    }
-
-    @Override
-    public List<SysMenu> findByUser(String userName) {
-        if (userName == null || "".equals(userName) || SysConstants.ADMIN.equalsIgnoreCase(userName)) {
-            return sysMenuMapper.findAll();
-        }
-        return sysMenuMapper.findByUserName(userName);
     }
 
     // 生成ID，children菜单关系map
@@ -116,4 +132,11 @@ public class SysMenuServiceImpl implements SysMenuService {
         return;
     }
 
+    public List<SysMenu> findAll() {
+        return sysMenuMapper.findAll();
+    }
+
+    public List<SysMenu> findByUsername(String userName) {
+        return sysMenuMapper.findByUserName(userName);
+    }
 }

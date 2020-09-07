@@ -10,24 +10,48 @@ import java.util.List;
  */
 public interface SysMenuService extends CurdService<SysMenu> {
 
-    // 获取菜单类型，
-    enum FindType {
-        ALL, // 获取所有菜单，包含按钮
-        EXCLUDE_BUTTON // 获取所有菜单，不包含按钮
-    }
-
     /**
-     * 查询菜单树,用户ID和用户名为空则查询全部
-     * @param userName
+     * 查找完整的菜单树
+     *
      * @return
      */
-    List<SysMenu> findTree(String userName, FindType findType);
+    List<SysMenu> findMenuTree();
 
     /**
-     * 根据用户名查找菜单列表
+     * 根据用户名查询菜单树
      *
      * @param userName
      * @return
      */
-    List<SysMenu> findByUser(String userName);
+    List<SysMenu> findMenuTree(String userName);
+
+    /**
+     * 查找全部导航树
+     *
+     * @return
+     */
+    List<SysMenu> findNavTree();
+
+    /**
+     * 根据用户名查询导航树
+     *
+     * @param userName
+     * @return
+     */
+    List<SysMenu> findNavTreeByUsername(String userName);
+
+    /**
+     * 获取全部的菜单
+     *
+     * @return
+     */
+    List<SysMenu> findAll();
+
+    /**
+     * 根据用户名获取菜单
+     *
+     * @param userName
+     * @return
+     */
+    List<SysMenu> findByUsername(String userName);
 }
