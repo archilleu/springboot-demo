@@ -1,5 +1,6 @@
 package com.hoya.admin.controller.sys;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hoya.admin.security.JwtAuthenticatioToken;
 import com.hoya.admin.util.SecurityUtils;
 import com.hoya.admin.vo.LoginBean;
@@ -42,7 +43,9 @@ public class SysLoginController {
 
         // 系统登录认证
         JwtAuthenticatioToken token = SecurityUtils.login(request, username, password, authenticationManager);
-        return new HttpResult(token.getToken());
+        JSONObject res = new JSONObject();
+        res.put("token", token.getToken());
+        return new HttpResult(res);
     }
 
 }
