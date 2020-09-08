@@ -13,6 +13,7 @@ import com.hoya.admin.model.sys.SysUserRole;
 import com.hoya.admin.server.sys.SysMenuService;
 import com.hoya.admin.server.sys.SysUserService;
 import com.hoya.admin.util.SecurityUtils;
+import com.hoya.admin.vo.SysUserRolesBean;
 import com.hoya.core.page.PageHelper;
 import com.hoya.core.page.PageRequest;
 import com.hoya.core.page.PageResult;
@@ -47,22 +48,6 @@ public class SysUserServiceImpl implements SysUserService {
         } else {
             // 更新用户信息
             sysUserMapper.updateByPrimaryKeySelective(record);
-        }
-
-        //TODO:单独做个接口 更新用户角色
-        Long id = record.getId();
-        if (id != null && id == 0) {
-            return 1;
-        }
-        if (id != null) {
-            for (SysUserRole sysUserRole : record.getUserRoles()) {
-                sysUserRole.setUserId(id);
-            }
-        } else {
-            sysUserRoleMapper.deleteByUserId(record.getId());
-        }
-        for (SysUserRole sysUserRole : record.getUserRoles()) {
-            sysUserRoleMapper.insertSelective(sysUserRole);
         }
 
         return 1;
@@ -150,4 +135,13 @@ public class SysUserServiceImpl implements SysUserService {
         return sysUserRoleMapper.findUserRoles(userId);
     }
 
+    @Override
+    public int saveUserRoles(SysUserRolesBean sysUserRolesBean) {
+
+        sysUserRoleMapper.deleteByUserId(sysUserRolesBean.getUserId());
+
+        int count = sysUserRoleMapper.insertBatch(sysUserRolesBean.getUserId(), sysUserRolesBean.getRoles());
+
+        return count;
+    }
 }

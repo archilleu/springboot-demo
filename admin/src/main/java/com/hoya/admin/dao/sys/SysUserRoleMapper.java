@@ -21,4 +21,6 @@ public interface SysUserRoleMapper {
     List<SysUserRole> findUserRoles(@Param(value = "userId") Long userId);
 
     int deleteByUserId(@Param(value = "userId") Long userId);
+
+    int insertBatch(Long userId, List<Long> roleIds);
 }

@@ -2,8 +2,10 @@ package com.hoya.admin.controller.sys;
 
 import com.hoya.admin.constant.SysConstants;
 import com.hoya.admin.model.sys.SysUser;
+import com.hoya.admin.model.sys.SysUserRole;
 import com.hoya.admin.server.sys.SysUserService;
 import com.hoya.admin.util.PasswordUtils;
+import com.hoya.admin.vo.SysUserRolesBean;
 import com.hoya.core.exception.*;
 import com.hoya.core.page.PageRequest;
 import com.hoya.core.utils.RequestParametersCheck;
@@ -30,8 +32,8 @@ public class SysUserController {
 
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('sys:user:add') AND hasAuthority('sys:user:edit')")
-        public HttpResult save(@RequestBody @Validated SysUser record, BindingResult bindingResult) {
-            RequestParametersCheck.check(bindingResult);
+    public HttpResult save(@RequestBody @Validated SysUser record, BindingResult bindingResult) {
+        RequestParametersCheck.check(bindingResult);
 
         if (SysConstants.ADMIN_ID.equals(record.getId()))
             throw new AppExceptionForbidden("不能修改超级管理员");
@@ -101,6 +103,20 @@ public class SysUserController {
     public HttpResult findPermissions(@RequestParam String name) {
         try {
             return new HttpResult(sysUserService.findPermissions(name));
+        } catch (Exception e) {
+            logger.error(e.toString());
+            throw new AppExceptionServerError("内部错误");
+        }
+    }
+
+    @PostMapping("/saveUserRoles")
+    @PreAuthorize("hasAuthority('sys:user:edit')")
+    public HttpResult saveUserRole(@RequestBody @Validated SysUserRolesBean sysUserRolesBean, BindingResult bindingResult) {
+        RequestParametersCheck.check(bindingResult);
+
+        try {
+            sysUserService.saveUserRoles(sysUserRolesBean);
+            return HttpResult.OK;
         } catch (Exception e) {
             logger.error(e.toString());
             throw new AppExceptionServerError("内部错误");
