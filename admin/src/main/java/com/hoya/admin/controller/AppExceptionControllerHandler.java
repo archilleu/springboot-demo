@@ -31,7 +31,7 @@ public class AppExceptionControllerHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<AppError> exception(HttpMessageNotReadableException ex) {
-        AppError error = new AppError(HttpStatus.BAD_REQUEST.value(), "HTTP数据解析失败");
+        AppError error = new AppError(HttpStatus.BAD_REQUEST.value(), "序列化bean失败");
         ResponseEntity<AppError> entity = new ResponseEntity<AppError>(error, HttpStatus.BAD_REQUEST);
         return entity;
     }
