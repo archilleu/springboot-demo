@@ -140,8 +140,11 @@ public class SysUserServiceImpl implements SysUserService {
 
         sysUserRoleMapper.deleteByUserId(sysUserRolesBean.getUserId());
 
-        int count = sysUserRoleMapper.insertBatch(sysUserRolesBean.getUserId(), sysUserRolesBean.getRoles());
+        if(sysUserRolesBean.getRoles().isEmpty()) {
+            return 0;
+        }
 
+        int count = sysUserRoleMapper.insertBatch(sysUserRolesBean.getUserId(), sysUserRolesBean.getRoles());
         return count;
     }
 }
