@@ -56,25 +56,29 @@ public class SysDeptServiceImpl implements SysDeptService {
 
     @Override
     public List<SysDept> findTree() {
-        List<SysDept> sysDepts = new ArrayList<>();
+        List<SysDept> treeDept = new ArrayList<>();
         List<SysDept> depts = sysDeptMapper.findAll();
         for (SysDept dept : depts) {
             if (dept.getParentId() == null || dept.getParentId() == 0) {
-                dept.setLevel(0);
-                sysDepts.add(dept);
+                treeDept.add(dept);
             }
         }
-        findChildren(sysDepts, depts);
-        return sysDepts;
+        findChildren(treeDept, depts);
+        return treeDept;
     }
 
-    private void findChildren(List<SysDept> sysDepts, List<SysDept> depts) {
-        for (SysDept sysDept : sysDepts) {
+    @Override
+    public List<SysDept> findTree(Long parentId) {
+        return sysDeptMapper.findByParentId(parentId);
+    }
+
+    // 粗暴递归，参考menu的算法高效点
+    private void findChildren(List<SysDept> treeDept, List<SysDept> depts) {
+        for (SysDept sysDept : treeDept) {
             List<SysDept> children = new ArrayList<>();
             for (SysDept dept : depts) {
                 if (sysDept.getId() != null && sysDept.getId().equals(dept.getParentId())) {
-                    dept.setParentName(dept.getName());
-                    dept.setLevel(sysDept.getLevel() + 1);
+                    dept.setParentName(sysDept.getName());
                     children.add(dept);
                 }
             }

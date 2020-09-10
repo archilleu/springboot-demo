@@ -3,6 +3,7 @@ package com.hoya.admin.controller.sys;
 import com.hoya.admin.model.sys.SysDept;
 import com.hoya.admin.server.sys.SysDeptService;
 import com.hoya.core.exception.AppExceptionAreadyExists;
+import com.hoya.core.exception.AppExceptionNotFound;
 import com.hoya.core.exception.AppExceptionServerError;
 import com.hoya.core.exception.HttpResult;
 import com.hoya.core.utils.RequestParametersCheck;
@@ -56,7 +57,32 @@ public class SysDeptController {
 
     @PreAuthorize("hasAuthority('sys:dept:view')")
     @GetMapping(value = "/findTree")
-    public HttpResult findTree() {
+    public HttpResult findTree(@RequestParam(required = false) Long parentId) {
+        try {
+            SysDept parent = null;
+            if (null != parentId) {
+                parent = sysDeptService.findById(parentId);
+                if (null == parent)
+                    throw new AppExceptionNotFound("机构不存在");
+            }
+
+            final String parentName = null == parent ? "" : parent.getName();
+            List<SysDept> children = sysDeptService.findTree(parentId);
+            children.forEach(item -> {
+                item.setParentName(parentName);
+            });
+            return new HttpResult(children);
+        } catch (AppExceptionNotFound e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.toString());
+            throw new AppExceptionServerError("内部错误");
+        }
+    }
+
+    @PreAuthorize("hasAuthority('sys:dept:view')")
+    @GetMapping(value = "/findTreeAll")
+    public HttpResult findTreeAll() {
         try {
             return new HttpResult(sysDeptService.findTree());
         } catch (Exception e) {

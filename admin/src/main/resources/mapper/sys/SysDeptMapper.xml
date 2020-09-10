@@ -144,6 +144,18 @@
         <include refid="Base_Column_List"/>
         from sys_dept
     </select>
+    <select id="findByParentId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_dept
+        where
+        <if test="parentId == null">
+            parent_id is null
+        </if>
+        <if test="parentId != null">
+            parent_id = #{parentId}
+        </if>
+    </select>
     <select id="findPage" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

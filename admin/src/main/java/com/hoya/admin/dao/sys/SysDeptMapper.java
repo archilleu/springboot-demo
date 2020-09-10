@@ -1,6 +1,7 @@
 package com.hoya.admin.dao.sys;
 
 import com.hoya.admin.model.sys.SysDept;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,4 +21,6 @@ public interface SysDeptMapper {
     List<SysDept> findPage();
 
     List<SysDept> findAll();
+
+    List<SysDept> findByParentId(@Param(value = "parentId") Long parentId);
 }
