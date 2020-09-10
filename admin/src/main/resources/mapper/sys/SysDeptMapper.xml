@@ -26,7 +26,7 @@
         delete from sys_dept
         where id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="com.hoya.admin.model.sys.SysDept">
+    <insert id="insert" parameterType="com.hoya.admin.model.sys.SysDept" useGeneratedKeys="true" keyProperty="id">
         insert into sys_dept (id, name, parent_id,
         order_num, create_by, create_time,
         last_update_by, last_update_time, del_flag
@@ -36,7 +36,7 @@
         #{lastUpdateBy,jdbcType=VARCHAR}, #{lastUpdateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=TINYINT}
         )
     </insert>
-    <insert id="insertSelective" parameterType="com.hoya.admin.model.sys.SysDept">
+    <insert id="insertSelective" parameterType="com.hoya.admin.model.sys.SysDept" useGeneratedKeys="true" keyProperty="id">
         insert into sys_dept
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">

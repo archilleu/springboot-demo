@@ -33,8 +33,10 @@ public class SysDeptController {
         RequestParametersCheck.check(bindingResult);
 
         try {
+            //FIXME:hasChildren需要更改逻辑
+            record.setHasChildren(false);
             sysDeptService.save(record);
-            return HttpResult.OK;
+            return new HttpResult(record);
         } catch (DuplicateKeyException e) {
             throw new AppExceptionAreadyExists("部门已经存在");
         } catch (Exception e) {
