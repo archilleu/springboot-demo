@@ -22,9 +22,6 @@ public class SysDept extends BaseModel {
     private List<SysDept> children;
 
     // 非数据库字段
-    private Boolean hasChildren = true;
-
-    // 非数据库字段
-    private String parentName;
+    private Integer hasChildren;
 
 }

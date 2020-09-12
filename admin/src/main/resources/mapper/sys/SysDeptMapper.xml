@@ -147,7 +147,8 @@
     <select id="findByParentId" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from sys_dept
+        ,(select count(*) from sys_dept where parent_id = dept.id) as hasChildren
+        from sys_dept dept
         where
         <if test="parentId == null">
             parent_id is null

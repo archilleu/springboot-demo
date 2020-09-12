@@ -33,8 +33,6 @@ public class SysDeptController {
         RequestParametersCheck.check(bindingResult);
 
         try {
-            //FIXME:hasChildren需要更改逻辑
-            record.setHasChildren(false);
             sysDeptService.save(record);
             return new HttpResult(record);
         } catch (DuplicateKeyException e) {
@@ -68,11 +66,7 @@ public class SysDeptController {
                     throw new AppExceptionNotFound("机构不存在");
             }
 
-            final String parentName = null == parent ? "" : parent.getName();
             List<SysDept> children = sysDeptService.findTree(parentId);
-            children.forEach(item -> {
-                item.setParentName(parentName);
-            });
             return new HttpResult(children);
         } catch (AppExceptionNotFound e) {
             throw e;
