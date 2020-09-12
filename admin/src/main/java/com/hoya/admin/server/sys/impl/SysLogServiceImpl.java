@@ -50,11 +50,7 @@ public class SysLogServiceImpl implements SysLogService {
 
     @Override
     public PageResult findPage(PageRequest pageRequest) {
-        Object label = pageRequest.getParam("userName");
-        if (label != null) {
-            return PageHelper.findPage(pageRequest, sysLogMapper, "findPageByUserName", label);
-        }
-        return PageHelper.findPage(pageRequest, sysLogMapper);
+        return PageHelper.findPage(pageRequest, sysLogMapper, pageRequest.getParams());
     }
 
 }

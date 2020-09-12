@@ -33,7 +33,7 @@ public class SysMenuController {
 
         try {
             sysMenuService.save(record);
-            return HttpResult.OK;
+            return new HttpResult(record);
         } catch (DuplicateKeyException e) {
             throw new AppExceptionAreadyExists("菜单已经存在");
         } catch (Exception e) {
@@ -66,7 +66,7 @@ public class SysMenuController {
     }
 
     @PreAuthorize("hasAuthority('sys:menu:view')")
-    @GetMapping(value = "/findMenuTree")
+    @PostMapping(value = "/findMenuTree")
     public HttpResult findMenuTree() {
         try {
             return new HttpResult(sysMenuService.findMenuTree());

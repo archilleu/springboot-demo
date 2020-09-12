@@ -60,7 +60,7 @@ public class SysUserController {
 
         try {
             sysUserService.save(record);
-            return HttpResult.OK;
+            return new HttpResult(record);
         } catch (DuplicateKeyException e) {
             throw new AppExceptionAreadyExists("用户已经存在");
         } catch (Exception e) {

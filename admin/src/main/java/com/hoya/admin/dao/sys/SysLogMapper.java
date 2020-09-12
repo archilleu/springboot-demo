@@ -3,6 +3,7 @@ package com.hoya.admin.dao.sys;
 import com.hoya.admin.model.sys.SysLog;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public interface SysLogMapper {
@@ -18,7 +19,5 @@ public interface SysLogMapper {
 
     int updateByPrimaryKey(SysLog record);
 
-    List<SysLog> findPage();
-
-    List<SysLog> findPageByUserName(@Param(value = "userName") String userName);
+    List<SysLog> findPage(LinkedHashMap<String, Object> params);
 }

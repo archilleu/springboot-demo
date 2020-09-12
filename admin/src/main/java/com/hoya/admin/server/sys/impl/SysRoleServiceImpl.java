@@ -67,11 +67,8 @@ public class SysRoleServiceImpl implements SysRoleService {
 
     @Override
     public PageResult findPage(PageRequest pageRequest) {
-        Object label = pageRequest.getParam("name");
-        if (label != null) {
-            return PageHelper.findPage(pageRequest, sysRoleMapper, "findPageByName", label);
-        }
-        return PageHelper.findPage(pageRequest, sysRoleMapper);
+        PageResult pageResult = PageHelper.findPage(pageRequest, sysRoleMapper, pageRequest.getParams());
+        return pageResult;
     }
 
     @Override

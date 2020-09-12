@@ -23,7 +23,7 @@
         delete from sys_role_dept
         where id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="com.hoya.admin.model.sys.SysRoleDept">
+    <insert id="insert" parameterType="com.hoya.admin.model.sys.SysRoleDept" useGeneratedKeys="true" keyProperty="id">
         insert into sys_role_dept (id, role_id, dept_id,
         create_by, create_time, last_update_by,
         last_update_time)
@@ -31,7 +31,7 @@
         #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateBy,jdbcType=VARCHAR},
         #{lastUpdateTime,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.hoya.admin.model.sys.SysRoleDept">
+    <insert id="insertSelective" parameterType="com.hoya.admin.model.sys.SysRoleDept" useGeneratedKeys="true" keyProperty="id">
         insert into sys_role_dept
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">

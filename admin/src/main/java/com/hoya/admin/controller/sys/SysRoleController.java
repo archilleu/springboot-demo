@@ -38,7 +38,7 @@ public class SysRoleController {
 
         try {
             sysRoleService.save(record);
-            return HttpResult.OK;
+            return new HttpResult(record);
         } catch (DuplicateKeyException e) {
             throw new AppExceptionAreadyExists("角色已经存在");
         } catch (Exception e) {

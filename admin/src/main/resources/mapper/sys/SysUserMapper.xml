@@ -32,7 +32,7 @@
         delete from sys_user
         where id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="com.hoya.admin.model.sys.SysUser">
+    <insert id="insert" parameterType="com.hoya.admin.model.sys.SysUser" useGeneratedKeys="true" keyProperty="id">
         insert into sys_user (id, name, nick_name,
         avatar, password, salt,
         email, mobile, status,
@@ -46,7 +46,7 @@
         #{lastUpdateBy,jdbcType=VARCHAR}, #{lastUpdateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=TINYINT}
         )
     </insert>
-    <insert id="insertSelective" parameterType="com.hoya.admin.model.sys.SysUser">
+    <insert id="insertSelective" parameterType="com.hoya.admin.model.sys.SysUser" useGeneratedKeys="true" keyProperty="id">
         insert into sys_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">

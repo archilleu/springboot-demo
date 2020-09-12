@@ -29,7 +29,7 @@
         delete from sys_dict
         where id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="com.hoya.admin.model.sys.SysDict">
+    <insert id="insert" parameterType="com.hoya.admin.model.sys.SysDict" useGeneratedKeys="true" keyProperty="id">
         insert into sys_dict (id, value, label,
         type, description, sort,
         create_by, create_time, last_update_by,
@@ -41,7 +41,7 @@
         #{lastUpdateTime,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=TINYINT}
         )
     </insert>
-    <insert id="insertSelective" parameterType="com.hoya.admin.model.sys.SysDict">
+    <insert id="insertSelective" parameterType="com.hoya.admin.model.sys.SysDict" useGeneratedKeys="true" keyProperty="id">
         insert into sys_dict
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">

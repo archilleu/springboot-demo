@@ -28,8 +28,6 @@ public class SysMenu extends BaseModel {
     private Byte delFlag;
 
     // 非数据库字段
-    private String parentName;
-    // 非数据库字段
     private List<SysMenu> children = new LinkedList<>();
 
 }

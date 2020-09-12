@@ -24,7 +24,7 @@
         delete from sys_role
         where id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="com.hoya.admin.model.sys.SysRole">
+    <insert id="insert" parameterType="com.hoya.admin.model.sys.SysRole" useGeneratedKeys="true" keyProperty="id">
         insert into sys_role (id, name, remark,
         create_by, create_time, last_update_by,
         last_update_time, del_flag)
@@ -32,7 +32,7 @@
         #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateBy,jdbcType=VARCHAR},
         #{lastUpdateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=TINYINT})
     </insert>
-    <insert id="insertSelective" parameterType="com.hoya.admin.model.sys.SysRole">
+    <insert id="insertSelective" parameterType="com.hoya.admin.model.sys.SysRole" useGeneratedKeys="true" keyProperty="id">
         insert into sys_role
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -125,10 +125,15 @@
         del_flag = #{delFlag,jdbcType=TINYINT}
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <select id="findPage" resultMap="BaseResultMap">
+    <select id="findPage" parameterType="java.util.Map" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from sys_role
+        where 1=1
+        <if test="name!=null">
+            <bind name="patternName" value="'%' + name + '%'"/>
+            and name like #{patternName}
+        </if>
     </select>
     <select id="findAll" resultMap="BaseResultMap">
         select

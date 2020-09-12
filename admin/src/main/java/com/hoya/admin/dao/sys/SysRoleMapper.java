@@ -3,6 +3,7 @@ package com.hoya.admin.dao.sys;
 import com.hoya.admin.model.sys.SysRole;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public interface SysRoleMapper {
@@ -22,7 +23,8 @@ public interface SysRoleMapper {
 
     List<SysRole> findAll();
 
-    List<SysRole> findPageByName(@Param(value = "name") String name);
+    List<SysRole> findPage(LinkedHashMap<String, Object> params);
 
     List<SysRole> findByName(@Param(value = "name") String name);
+
 }

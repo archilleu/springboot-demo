@@ -1,9 +1,8 @@
 package com.hoya.admin.dao.sys;
 
-import com.hoya.admin.model.sys.SysLog;
 import com.hoya.admin.model.sys.SysLoginLog;
-import org.apache.ibatis.annotations.Param;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public interface SysLoginLogMapper {
@@ -19,9 +18,6 @@ public interface SysLoginLogMapper {
 
     int updateByPrimaryKey(SysLoginLog record);
 
-    List<SysLog> findPage();
+    List<SysLoginLog> findPage(LinkedHashMap<String, Object> params);
 
-    List<SysLog> findPageByUserName(@Param(value = "userName") String userName);
-
-    List<SysLog> findPageByStatus(@Param(value = "status") String status);
 }

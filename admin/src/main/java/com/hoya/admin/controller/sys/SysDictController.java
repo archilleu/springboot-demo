@@ -32,7 +32,7 @@ public class SysDictController {
 
         try {
             sysDictService.save(record);
-            return HttpResult.OK;
+            return new HttpResult(record);
         } catch (DuplicateKeyException e) {
             throw new AppExceptionAreadyExists("字典值已经存在");
         } catch (Exception e) {

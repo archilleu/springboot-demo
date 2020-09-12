@@ -49,15 +49,7 @@ public class SysLoginLogServiceImpl implements SysLoginLogService {
 
     @Override
     public PageResult findPage(PageRequest pageRequest) {
-        Object userName = pageRequest.getParam("userName");
-        if (userName != null) {
-            return PageHelper.findPage(pageRequest, sysLoginLogMapper, "findPageByUserName", userName);
-        }
-        Object status = pageRequest.getParam("status");
-        if (status != null) {
-            return PageHelper.findPage(pageRequest, sysLoginLogMapper, "findPageByStatus", status);
-        }
-        return PageHelper.findPage(pageRequest, sysLoginLogMapper);
+        return PageHelper.findPage(pageRequest, sysLoginLogMapper, pageRequest.getParams());
     }
 
 }
