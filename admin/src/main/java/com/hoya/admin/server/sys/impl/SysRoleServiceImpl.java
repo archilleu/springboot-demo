@@ -119,9 +119,4 @@ public class SysRoleServiceImpl implements SysRoleService {
         return records.size();
     }
 
-    @Override
-    public List<SysRole> findByName(String name) {
-        return sysRoleMapper.findByName(name);
-    }
-
 }

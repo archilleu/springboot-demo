@@ -66,14 +66,4 @@ public class SysConfigController {
         }
     }
 
-    @PreAuthorize("hasAuthority('sys:config:view')")
-    @GetMapping(value = "/findByLable")
-    public HttpResult findByLable(@RequestParam String lable) {
-        try {
-            return new HttpResult(sysConfigService.findByLable(lable));
-        } catch (Exception e) {
-            logger.error(e.toString());
-            throw new AppExceptionServerError("内部错误");
-        }
-    }
 }

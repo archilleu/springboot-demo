@@ -43,11 +43,6 @@ public class SysLoginLogServiceImpl implements SysLoginLogService {
     }
 
     @Override
-    public SysLoginLog findById(Long id) {
-        return sysLoginLogMapper.selectByPrimaryKey(id);
-    }
-
-    @Override
     public PageResult findPage(PageRequest pageRequest) {
         return PageHelper.findPage(pageRequest, sysLoginLogMapper, pageRequest.getParams());
     }

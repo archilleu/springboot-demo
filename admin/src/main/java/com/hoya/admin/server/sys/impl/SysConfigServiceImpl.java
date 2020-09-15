@@ -57,9 +57,4 @@ public class SysConfigServiceImpl implements SysConfigService {
         return PageHelper.findPage(pageRequest, sysConfigMapper);
     }
 
-    @Override
-    public List<SysConfig> findByLable(String lable) {
-        return sysConfigMapper.findByLable(lable);
-    }
-
 }

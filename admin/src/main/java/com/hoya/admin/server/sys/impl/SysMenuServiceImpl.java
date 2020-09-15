@@ -47,24 +47,8 @@ public class SysMenuServiceImpl implements SysMenuService {
     }
 
     @Override
-    public SysMenu findById(Long id) {
-        return sysMenuMapper.selectByPrimaryKey(id);
-    }
-
-    @Override
-    public PageResult findPage(PageRequest pageRequest) {
-        return PageHelper.findPage(pageRequest, sysMenuMapper);
-    }
-
-    @Override
-    public List<SysMenu> findMenuTree() {
+    public List<SysMenu> getMenuTree() {
         List<SysMenu> menus = sysMenuMapper.findAll();
-        return createMenuTree(menus);
-    }
-
-    @Override
-    public List<SysMenu> findMenuTree(String userName) {
-        List<SysMenu> menus = sysMenuMapper.findByUserName(userName);
         return createMenuTree(menus);
     }
 

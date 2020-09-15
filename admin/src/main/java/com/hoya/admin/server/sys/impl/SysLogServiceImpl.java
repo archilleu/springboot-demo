@@ -44,11 +44,6 @@ public class SysLogServiceImpl implements SysLogService {
     }
 
     @Override
-    public SysLog findById(Long id) {
-        return sysLogMapper.selectByPrimaryKey(id);
-    }
-
-    @Override
     public PageResult findPage(PageRequest pageRequest) {
         return PageHelper.findPage(pageRequest, sysLogMapper, pageRequest.getParams());
     }

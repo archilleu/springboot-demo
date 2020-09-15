@@ -55,7 +55,7 @@ public class SysDeptServiceImpl implements SysDeptService {
     }
 
     @Override
-    public List<SysDept> findTree() {
+    public List<SysDept> getTree() {
         List<SysDept> treeDept = new ArrayList<>();
         List<SysDept> depts = sysDeptMapper.findAll();
         for (SysDept dept : depts) {
@@ -68,11 +68,11 @@ public class SysDeptServiceImpl implements SysDeptService {
     }
 
     @Override
-    public List<SysDept> findTree(Long parentId) {
+    public List<SysDept> findByParentId(Long parentId) {
         return sysDeptMapper.findByParentId(parentId);
     }
 
-    // 粗暴递归，参考menu的算法高效点
+    // FIXME:粗暴递归，参考menu的算法高效点
     private void findChildren(List<SysDept> treeDept, List<SysDept> depts) {
         for (SysDept sysDept : treeDept) {
             List<SysDept> children = new ArrayList<>();

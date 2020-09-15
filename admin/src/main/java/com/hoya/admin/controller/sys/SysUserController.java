@@ -88,17 +88,6 @@ public class SysUserController {
     }
 
     @PreAuthorize("hasAuthority('sys:user:view')")
-    @GetMapping(value = "/findByUsername")
-    public HttpResult findByUsername(@RequestParam String name) {
-        try {
-            return new HttpResult(sysUserService.findByName(name));
-        } catch (Exception e) {
-            logger.error(e.toString());
-            throw new AppExceptionServerError("内部错误");
-        }
-    }
-
-    @PreAuthorize("hasAuthority('sys:user:view')")
     @GetMapping(value = "/findPermissions")
     public HttpResult findPermissions(@RequestParam String name) {
         try {
@@ -117,17 +106,6 @@ public class SysUserController {
         try {
             sysUserService.saveUserRoles(sysUserRolesBean);
             return HttpResult.OK;
-        } catch (Exception e) {
-            logger.error(e.toString());
-            throw new AppExceptionServerError("内部错误");
-        }
-    }
-
-    @PreAuthorize("hasAuthority('sys:user:view')")
-    @GetMapping(value = "/findUserRoles")
-    public HttpResult findUserRoles(@RequestParam Long userId) {
-        try {
-            return new HttpResult(sysUserService.findUserRoles(userId));
         } catch (Exception e) {
             logger.error(e.toString());
             throw new AppExceptionServerError("内部错误");

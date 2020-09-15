@@ -25,6 +25,4 @@ public interface SysRoleMapper {
 
     List<SysRole> findPage(LinkedHashMap<String, Object> params);
 
-    List<SysRole> findByName(@Param(value = "name") String name);
-
 }

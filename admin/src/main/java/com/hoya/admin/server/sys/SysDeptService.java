@@ -12,12 +12,12 @@ public interface SysDeptService extends CurdService<SysDept> {
      *
      * @return
      */
-    List<SysDept> findTree();
+    List<SysDept> getTree();
 
     /**
-     * 获取parentId的子机构
+     * 根据parentId查询子机构
      * @param parentId
      * @return
      */
-    List<SysDept> findTree(Long parentId);
+    List<SysDept> findByParentId(Long parentId);
 }

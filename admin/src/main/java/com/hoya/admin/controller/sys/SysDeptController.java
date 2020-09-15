@@ -56,7 +56,7 @@ public class SysDeptController {
     }
 
     @PreAuthorize("hasAuthority('sys:dept:view')")
-    @GetMapping(value = "/findTree")
+    @GetMapping(value = "/findByParentId")
     public HttpResult findTree(@RequestParam(required = false) Long parentId) {
         try {
             SysDept parent = null;
@@ -66,7 +66,7 @@ public class SysDeptController {
                     throw new AppExceptionNotFound("机构不存在");
             }
 
-            List<SysDept> children = sysDeptService.findTree(parentId);
+            List<SysDept> children = sysDeptService.findByParentId(parentId);
             return new HttpResult(children);
         } catch (AppExceptionNotFound e) {
             throw e;
@@ -77,10 +77,10 @@ public class SysDeptController {
     }
 
     @PreAuthorize("hasAuthority('sys:dept:view')")
-    @GetMapping(value = "/findTreeAll")
+    @GetMapping(value = "/getTree")
     public HttpResult findTreeAll() {
         try {
-            return new HttpResult(sysDeptService.findTree());
+            return new HttpResult(sysDeptService.getTree());
         } catch (Exception e) {
             logger.error(e.toString());
             throw new AppExceptionServerError("内部错误");

@@ -55,21 +55,10 @@ public class SysMenuController {
     }
 
     @PreAuthorize("hasAuthority('sys:menu:view')")
-    @GetMapping(value = "/findNavTree")
-    public HttpResult findNavTree(@RequestParam String userName) {
-        try {
-            return new HttpResult(sysMenuService.findNavTreeByUsername(userName));
-        } catch (Exception e) {
-            logger.error(e.toString());
-            throw new AppExceptionServerError("内部错误");
-        }
-    }
-
-    @PreAuthorize("hasAuthority('sys:menu:view')")
-    @PostMapping(value = "/findMenuTree")
+    @PostMapping(value = "/getMenuTree")
     public HttpResult findMenuTree() {
         try {
-            return new HttpResult(sysMenuService.findMenuTree());
+            return new HttpResult(sysMenuService.getMenuTree());
         } catch (Exception e) {
             logger.error(e.toString());
             throw new AppExceptionServerError("内部错误");

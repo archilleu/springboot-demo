@@ -11,22 +11,14 @@ import java.util.List;
 public interface SysMenuService extends CurdService<SysMenu> {
 
     /**
-     * 查找完整的菜单树
+     * 获取完整的菜单树
      *
      * @return
      */
-    List<SysMenu> findMenuTree();
+    List<SysMenu> getMenuTree();
 
     /**
-     * 根据用户名查询菜单树
-     *
-     * @param userName
-     * @return
-     */
-    List<SysMenu> findMenuTree(String userName);
-
-    /**
-     * 查找全部导航树
+     * 查找用户导航树(超级管理员)
      *
      * @return
      */
@@ -41,14 +33,14 @@ public interface SysMenuService extends CurdService<SysMenu> {
     List<SysMenu> findNavTreeByUsername(String userName);
 
     /**
-     * 获取全部的菜单
+     * 获取全部的菜单(超级管理员）,用于获取用户权限
      *
      * @return
      */
     List<SysMenu> findAll();
 
     /**
-     * 根据用户名获取菜单
+     * 根据用户名获取菜单,用于获取用户权限
      *
      * @param userName
      * @return
