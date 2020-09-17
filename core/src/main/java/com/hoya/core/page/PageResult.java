@@ -9,12 +9,12 @@ public class PageResult {
 	/**
 	 * 当前页码
 	 */
-	private int pageNum;
+	private int page;
 
 	/**
 	 * 每页数量
 	 */
-	private int pageSize;
+	private int rows;
 
 	/**
 	 * 记录总数

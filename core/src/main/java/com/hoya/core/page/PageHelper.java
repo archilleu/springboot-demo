@@ -32,8 +32,8 @@ public class PageHelper {
 
         PageInfo pageInfo = new PageInfo(res);
         PageResult pageResult = new PageResult();
-        pageResult.setPageNum(pageInfo.getPageNum());
-        pageResult.setPageSize(pageInfo.getPageSize());
+        pageResult.setPage(pageInfo.getPageNum());
+        pageResult.setRows(pageInfo.getPageSize());
         pageResult.setTotalSize(pageInfo.getTotal());
         pageResult.setTotalPages(pageInfo.getPages());
         pageResult.setContent(pageInfo.getList());
