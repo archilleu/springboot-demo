@@ -19,5 +19,11 @@ public interface SysDictMapper {
 
     int updateByPrimaryKey(SysDict record);
 
+    /**
+     * 列表查询
+     * 查询条件：label，value
+     * @param params
+     * @return
+     */
     List<SysDict> findPage(LinkedHashMap<String, Object> params);
 }
