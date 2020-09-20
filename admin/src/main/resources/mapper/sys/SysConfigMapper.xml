@@ -174,9 +174,18 @@
         del_flag = #{delFlag,jdbcType=TINYINT}
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <select id="findPage" resultMap="BaseResultMap">
+    <select id="findPage" parameterType="java.util.Map" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from sys_config
+        where 1=1
+        <if test="value!=null">
+            <bind name="patternValue" value="'%' + value + '%'"/>
+            and value like #{patternValue}
+        </if>
+        <if test="label!=null">
+            <bind name="patternLabel" value="'%' + label + '%'"/>
+            and label like #{patternLabel}
+        </if>
     </select>
 </mapper>
