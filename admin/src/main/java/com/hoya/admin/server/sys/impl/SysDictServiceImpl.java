@@ -10,7 +10,7 @@ import com.hoya.core.page.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -23,7 +23,7 @@ public class SysDictServiceImpl implements SysDictService {
     public int save(SysDict record) {
         if (record.getId() == null || record.getId() == 0) {
             record.setCreateBy(SecurityUtils.getUsername());
-            record.setCreateTime(new Date());
+            record.setCreateTime(new Timestamp(System.currentTimeMillis()));
             return sysDictMapper.insertSelective(record);
         }
         return sysDictMapper.updateByPrimaryKeySelective(record);

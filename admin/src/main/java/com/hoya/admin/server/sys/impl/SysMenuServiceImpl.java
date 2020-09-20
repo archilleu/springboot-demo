@@ -1,14 +1,12 @@
 package com.hoya.admin.server.sys.impl;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 import com.hoya.admin.dao.sys.SysMenuMapper;
 import com.hoya.admin.model.sys.SysMenu;
 import com.hoya.admin.server.sys.SysMenuService;
 import com.hoya.admin.util.SecurityUtils;
-import com.hoya.core.page.PageHelper;
-import com.hoya.core.page.PageRequest;
-import com.hoya.core.page.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +20,7 @@ public class SysMenuServiceImpl implements SysMenuService {
     public int save(SysMenu record) {
         if (record.getId() == null || record.getId() == 0) {
             record.setCreateBy(SecurityUtils.getUsername());
-            record.setCreateTime(new Date());
+            record.setCreateTime(new Timestamp(System.currentTimeMillis()));
             return sysMenuMapper.insertSelective(record);
         }
         if (record.getParentId() == null) {

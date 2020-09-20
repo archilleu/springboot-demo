@@ -1,6 +1,6 @@
 package com.hoya.admin.server.sys.impl;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import com.hoya.admin.dao.sys.SysLoginLogMapper;
@@ -23,7 +23,7 @@ public class SysLoginLogServiceImpl implements SysLoginLogService {
     public int save(SysLoginLog record) {
         if (record.getId() == null || record.getId() == 0) {
             record.setCreateBy(SecurityUtils.getUsername());
-            record.setCreateTime(new Date());
+            record.setCreateTime(new Timestamp(System.currentTimeMillis()));
             return sysLoginLogMapper.insertSelective(record);
         }
         return sysLoginLogMapper.updateByPrimaryKeySelective(record);

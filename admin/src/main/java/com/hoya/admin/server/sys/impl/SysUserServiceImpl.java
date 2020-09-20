@@ -1,5 +1,6 @@
 package com.hoya.admin.server.sys.impl;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 import com.hoya.admin.constant.SysConstants;
@@ -43,7 +44,7 @@ public class SysUserServiceImpl implements SysUserService {
         if (record.getId() == null || record.getId() == 0) {
             // 新增用户
             record.setCreateBy(SecurityUtils.getUsername());
-            record.setCreateTime(new Date());
+            record.setCreateTime(new Timestamp(System.currentTimeMillis()));
             sysUserMapper.insertSelective(record);
         } else {
             // 更新用户信息
