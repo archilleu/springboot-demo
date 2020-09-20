@@ -2,7 +2,7 @@ package com.hoya.admin.model;
 
 import lombok.Data;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  * 基础模型
@@ -14,10 +14,12 @@ public class BaseModel {
 
     private String createBy;
 
-    private Date createTime;
+    //时间精确到秒(数据库精确到秒)
+    private Timestamp createTime;
 
     private String lastUpdateBy;
 
-    private Date lastUpdateTime;
+    //时间精确到秒(数据库精确到秒)
+    private Timestamp lastUpdateTime;
 
 }
