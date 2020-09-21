@@ -51,7 +51,7 @@
                     TIME_WITH_TIMEZONE  	-> java.time.OffsetTime
                     TIMESTAMP_WITH_TIMEZONE	-> java.time.OffsetDateTime
                 -->
-            <!--<property name="useJSR310Types" value="false"/>-->
+            <property name="useJSR310Types" value="true"/>
         </javaTypeResolver>
 
         <!-- 生成实体类地址 -->

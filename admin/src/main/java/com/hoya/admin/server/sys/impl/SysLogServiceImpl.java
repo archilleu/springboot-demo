@@ -10,7 +10,7 @@ import com.hoya.core.page.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -23,7 +23,7 @@ public class SysLogServiceImpl implements SysLogService {
     public int save(SysLog record) {
         if (record.getId() == null || record.getId() == 0) {
             record.setCreateBy(SecurityUtils.getUsername());
-            record.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            record.setCreateTime(LocalDateTime.now());
             return sysLogMapper.insertSelective(record);
         }
         return sysLogMapper.updateByPrimaryKeySelective(record);

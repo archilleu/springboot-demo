@@ -1,6 +1,6 @@
 package com.hoya.admin.server.sys.impl;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class SysDeptServiceImpl implements SysDeptService {
     public int save(SysDept record) {
         if (record.getId() == null || record.getId() == 0) {
             record.setCreateBy(SecurityUtils.getUsername());
-            record.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            record.setCreateTime(LocalDateTime.now());
             return sysDeptMapper.insertSelective(record);
         }
         return sysDeptMapper.updateByPrimaryKeySelective(record);

@@ -1,6 +1,6 @@
 package com.hoya.admin.server.sys.impl;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.hoya.admin.constant.SysConstants;
@@ -37,7 +37,7 @@ public class SysRoleServiceImpl implements SysRoleService {
     public int save(SysRole record) {
         if (record.getId() == null || record.getId() == 0) {
             record.setCreateBy(SecurityUtils.getUsername());
-            record.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            record.setCreateTime(LocalDateTime.now());
             return sysRoleMapper.insertSelective(record);
         }
 

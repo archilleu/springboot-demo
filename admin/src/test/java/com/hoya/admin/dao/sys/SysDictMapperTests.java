@@ -1,7 +1,6 @@
 package com.hoya.admin.dao.sys;
 
 import com.hoya.admin.BaseTests;
-import com.hoya.admin.model.sys.SysConfig;
 import com.hoya.admin.model.sys.SysDict;
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class SysDictMapperTests extends BaseTests {
 
     @Override
     public void init() {
-        Timestamp now = new Timestamp(LocalDateTime.now().getSecond() * 1000);
+        LocalDateTime now = LocalDateTime.of(LocalDate.now(), LocalTime.of(0,0,0));
         this.sysDict = new SysDict();
         sysDict.setValue("value");
         sysDict.setLabel("label");

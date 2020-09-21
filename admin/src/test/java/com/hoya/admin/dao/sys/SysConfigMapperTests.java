@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SysConfigMapperTests extends BaseTests {
 
@@ -25,7 +25,7 @@ public class SysConfigMapperTests extends BaseTests {
 
     @Override
     public void init() {
-        Timestamp now = new Timestamp(LocalDateTime.now().getSecond() * 1000);
+        LocalDateTime now = LocalDateTime.of(LocalDate.now(), LocalTime.of(0,0,0));
         this.sysConfig = new SysConfig();
         sysConfig.setValue("value");
         sysConfig.setLabel("label");

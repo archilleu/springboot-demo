@@ -1,6 +1,6 @@
 package com.hoya.admin.server.sys.impl;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import com.hoya.admin.dao.sys.SysMenuMapper;
@@ -20,7 +20,7 @@ public class SysMenuServiceImpl implements SysMenuService {
     public int save(SysMenu record) {
         if (record.getId() == null || record.getId() == 0) {
             record.setCreateBy(SecurityUtils.getUsername());
-            record.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            record.setCreateTime(LocalDateTime.now());
             return sysMenuMapper.insertSelective(record);
         }
         if (record.getParentId() == null) {

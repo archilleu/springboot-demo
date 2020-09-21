@@ -1,6 +1,6 @@
 package com.hoya.admin.server.sys.impl;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.hoya.admin.dao.sys.SysConfigMapper;
@@ -23,7 +23,7 @@ public class SysConfigServiceImpl implements SysConfigService {
     public int save(SysConfig record) {
         if (record.getId() == null || record.getId() == 0) {
             record.setCreateBy(SecurityUtils.getUsername());
-            record.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            record.setCreateTime(LocalDateTime.now());
             return sysConfigMapper.insertSelective(record);
         }
         return sysConfigMapper.updateByPrimaryKeySelective(record);
