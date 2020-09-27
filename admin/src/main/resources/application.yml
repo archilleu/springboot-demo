@@ -12,12 +12,16 @@ spring:
     profiles:
         active: dev
     application:
-      name: haoya-admin
+      name: admin
     http:
         multipart:
             max-file-size: 100MB
             max-request-size: 100MB
             enabled: true
+    boot:
+        admin:
+            client:
+                url: http://localhost:8000
 
     datasource:
       name: druidDataSource
@@ -48,3 +52,11 @@ pagehelper:
     supportMethodsArguments: true
     params: count=countSql
 
+management:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+    endpoint:
+        health:
+            show-details: ALWAYS
