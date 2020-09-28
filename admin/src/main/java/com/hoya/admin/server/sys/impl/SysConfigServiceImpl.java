@@ -50,11 +50,7 @@ public class SysConfigServiceImpl implements SysConfigService {
 
     @Override
     public PageResult findPage(PageRequest pageRequest) {
-        Object label = pageRequest.getParam("label");
-        if (label != null) {
-            return PageHelper.findPage(pageRequest, sysConfigMapper, "findPageByLabel", label);
-        }
-        return PageHelper.findPage(pageRequest, sysConfigMapper);
+        return PageHelper.findPage(pageRequest, sysConfigMapper, pageRequest.getParams());
     }
 
 }

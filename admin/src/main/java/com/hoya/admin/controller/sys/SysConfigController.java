@@ -1,5 +1,6 @@
 package com.hoya.admin.controller.sys;
 
+import com.hoya.admin.annotation.OperatorLogger;
 import com.hoya.admin.model.sys.SysConfig;
 import com.hoya.admin.server.sys.SysConfigService;
 import com.hoya.core.exception.AppExceptionAreadyExists;
@@ -55,6 +56,7 @@ public class SysConfigController {
         }
     }
 
+    @OperatorLogger("获取配置列表")
     @PreAuthorize("hasAuthority('sys:config:view')")
     @PostMapping(value = "/findPage")
     public HttpResult findPage(@RequestBody PageRequest pageRequest) {
