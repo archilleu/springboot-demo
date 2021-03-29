@@ -2,7 +2,6 @@ package com.hoya.core.annotation;
 
 
 import com.hoya.core.config.EnableGlobalExceptionHandlerConfiguration;
-import com.hoya.core.config.EnableGlobalResultResponseConfiguration;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.ElementType;
@@ -16,6 +15,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@Import(EnableGlobalExceptionHandlerConfiguration.class)
+@Import(EnableGlobalExceptionHandlerConfiguration.class)//显示导入类，不然spring boot 默认扫描不到这个类
 public @interface EnableGlobalExceptionHandle {
 }

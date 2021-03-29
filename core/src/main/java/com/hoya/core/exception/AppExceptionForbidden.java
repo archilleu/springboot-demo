@@ -1,6 +1,6 @@
 package com.hoya.core.exception;
 
-public class AppExceptionForbidden extends AppException {
+public class AppExceptionForbidden extends ServerException {
     public AppExceptionForbidden() {
         this(null);
     }

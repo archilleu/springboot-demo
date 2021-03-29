@@ -2,6 +2,10 @@ package com.hoya.core.exception;
 
 import org.springframework.http.HttpStatus;
 
+/**
+ * 错误码表
+ */
+
 public enum ResultCode {
     /**
      * 1000~1999 信息，服务器收到请求，需要请求者继续执行操作

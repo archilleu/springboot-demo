@@ -1,7 +1,8 @@
 package com.hoya.core.advice;
 
+import com.hoya.core.annotation.EnableGlobalExceptionHandle;
 import com.hoya.core.exception.AppError;
-import com.hoya.core.exception.AppException;
+import com.hoya.core.exception.ServerException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -9,14 +10,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- * {@link GlobalExceptionHandlerAdvice}全局异常处理
+ * {@link GlobalExceptionHandlerAdvice}全局异常处理,处理 {@link EnableGlobalExceptionHandle}注解
  */
 
 @RestControllerAdvice
 public class GlobalExceptionHandlerAdvice {
 
-    @ExceptionHandler(AppException.class)
-    public ResponseEntity<AppError> appException(AppException ex) {
+    @ExceptionHandler(ServerException.class)
+    public ResponseEntity<AppError> appException(ServerException ex) {
         AppError error = new AppError(ex.getCode(), ex.getMessage());
         return new ResponseEntity<AppError>(error, HttpStatus.valueOf(ex.getCode()/10));
     }

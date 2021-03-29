@@ -1,9 +1,10 @@
 package com.hoya.core.exception;
 
 import lombok.Getter;
+import  com.hoya.core.advice.GlobalExceptionHandlerAdvice;
 
 /**
- * REST API 错误对象
+ * REST API 错误对象,供{@link GlobalExceptionHandlerAdvice} 使用
  */
 
 @Getter

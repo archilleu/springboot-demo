@@ -1,9 +1,8 @@
 package com.hoya.core.advice;
 
-import com.alibaba.fastjson.JSON;
 import com.hoya.core.config.GlobalDefaultProperties;
 import com.hoya.core.annotation.EnableGlobalResultResponse;
-import com.hoya.core.annotation.IgnoreGlobalDispose;
+import com.hoya.core.annotation.IgnoreGlobalResultDispose;
 import com.hoya.core.exception.AppError;
 import com.hoya.core.exception.HttpResult;
 import com.hoya.core.exception.ResultCode;
@@ -42,7 +41,14 @@ public class GlobalResultResponseAdvice implements ResponseBodyAdvice<Object> {
     public Object beforeBodyWrite(Object resp, MethodParameter methodParameter, MediaType mediaType,
                                   Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest serverHttpRequest,
                                   ServerHttpResponse serverHttpResponse) {
-        if(resp instanceof AppError) {
+        /**
+         * 使用fastJSON来处理{@link GlobalExceptionHandlerAdvice::castHttpMessageConverter}异常不会传导
+         * if(resp instanceof AppError) {
+         * return resp;
+         }
+         */
+
+        if(resp instanceof HttpResult) {
             return resp;
         }
 
@@ -61,27 +67,28 @@ public class GlobalResultResponseAdvice implements ResponseBodyAdvice<Object> {
     }
 
     private Boolean filter(MethodParameter methodParameter) {
+        // 检查注解是否存在
+        if (methodParameter.getDeclaringClass().isAnnotationPresent(IgnoreGlobalResultDispose.class)) {
+            return false;
+        }
+        if (methodParameter.getMethod().isAnnotationPresent(IgnoreGlobalResultDispose.class)) {
+            return false;
+        }
+
         Class<?> declaringClass = methodParameter.getDeclaringClass();
         // 检查过滤包路径
-        long count = globalDefaultProperties.getAdviceFilterPackage().stream()
+        long count = globalDefaultProperties.getAdvicePackage().stream()
                 .filter(l -> declaringClass.getName().contains(l)).count();
         if (count > 0) {
-            return false;
+            return true;
         }
 
         // 检查<类>过滤列表
-        if (globalDefaultProperties.getAdviceFilterClass().contains(declaringClass.getName())) {
-            return false;
+        if (globalDefaultProperties.getAdviceClass().contains(declaringClass.getName())) {
+            return true;
         }
 
-        // 检查注解是否存在
-        if (methodParameter.getDeclaringClass().isAnnotationPresent(IgnoreGlobalDispose.class)) {
-            return false;
-        }
-        if (methodParameter.getMethod().isAnnotationPresent(IgnoreGlobalDispose.class)) {
-            return false;
-        }
 
-        return true;
+        return false;
     }
 }

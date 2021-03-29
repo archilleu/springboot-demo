@@ -1,6 +1,6 @@
 package com.hoya.core.exception;
 
-public class AppExceptionBadRequest extends AppException {
+public class AppExceptionBadRequest extends ServerException {
     public AppExceptionBadRequest() {
         this(null);
     }

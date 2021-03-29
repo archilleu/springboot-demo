@@ -21,13 +21,13 @@ public class GlobalDefaultProperties {
      * 统一返回过滤包
      * 要忽略的包
      */
-    @Value("${advice-filter-package:[]}")
-    private List<String> adviceFilterPackage = new ArrayList<>();
+    @Value("${advice-package:[]}")
+    private List<String> advicePackage = new ArrayList<>();
 
     /**
      * 统一返回过滤类
      * 要忽略的类
      */
-    @Value("${advice-filter-class:[]}")
-    private List<String> adviceFilterClass = new ArrayList<>();
+    @Value("${advice-class:[]}")
+    private List<String> adviceClass = new ArrayList<>();
 }

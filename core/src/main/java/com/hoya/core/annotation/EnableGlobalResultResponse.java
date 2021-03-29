@@ -15,6 +15,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@Import(EnableGlobalResultResponseConfiguration.class)
+@Import(EnableGlobalResultResponseConfiguration.class)//显示导入类，不然spring boot 默认扫描不到这个类
 public @interface EnableGlobalResultResponse {
 }

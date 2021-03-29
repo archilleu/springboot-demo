@@ -1,6 +1,11 @@
 package com.hoya.core.exception;
 
 import lombok.Data;
+import com.hoya.core.advice.GlobalResultResponseAdvice;
+
+/**
+ * {@link GlobalResultResponseAdvice} 全局包装返回对象
+ */
 
 @Data
 public class HttpResult {

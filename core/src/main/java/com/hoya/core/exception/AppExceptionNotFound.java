@@ -1,6 +1,6 @@
 package com.hoya.core.exception;
 
-public class AppExceptionNotFound extends AppException {
+public class AppExceptionNotFound extends ServerException {
     public AppExceptionNotFound() {
         this(null);
     }
