@@ -1,13 +1,11 @@
 package com.hoya.core.exception;
 
-import org.springframework.http.HttpStatus;
-
 public class AppExceptionBadRequest extends AppException {
     public AppExceptionBadRequest() {
-        this(HttpStatus.BAD_REQUEST.toString());
+        this(null);
     }
 
     public AppExceptionBadRequest(String message) {
-        super(HttpStatus.BAD_REQUEST, message);
+        super(ResultCode.BAD_REQUEST, message);
     }
 }

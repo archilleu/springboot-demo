@@ -10,9 +10,18 @@ import org.springframework.http.HttpStatus;
 @Getter
 public class AppException extends RuntimeException {
 
-    public AppException(HttpStatus status, String message) {
-        super(message);
-        this.status = status;
+    public AppException(ResultCode resultCode) {
+        this(resultCode, null);
+    }
+
+    public AppException(ResultCode resultCode, String message) {
+        if(null == message) {
+            this.message = resultCode.getMessage();
+        } else {
+            this.message = message;
+        }
+
+        this.code = resultCode.getCode();
     }
 
     public static final AppException Found = new AppExceptionFound();
@@ -22,5 +31,6 @@ public class AppException extends RuntimeException {
     public static final AppException NotFound = new AppExceptionNotFound();
     public static final AppException ServerError = new AppExceptionServerError();
 
-    private HttpStatus status;
+    private Integer code;
+    private String message;
 }

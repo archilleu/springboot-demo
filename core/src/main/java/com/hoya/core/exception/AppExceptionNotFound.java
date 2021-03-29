@@ -1,13 +1,11 @@
 package com.hoya.core.exception;
 
-import org.springframework.http.HttpStatus;
-
 public class AppExceptionNotFound extends AppException {
     public AppExceptionNotFound() {
-        this(HttpStatus.NOT_FOUND.toString());
+        this(null);
     }
 
     public AppExceptionNotFound(String message) {
-        super(HttpStatus.NOT_FOUND, message);
+        super(ResultCode.NOT_FOUND, message);
     }
 }

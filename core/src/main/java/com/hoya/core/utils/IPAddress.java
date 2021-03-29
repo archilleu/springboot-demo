@@ -2,6 +2,10 @@ package com.hoya.core.utils;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * 获取IP地址
+ */
+
 public class IPAddress {
     public static String getIPAddress(HttpServletRequest request) {
         String ip = null;

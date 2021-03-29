@@ -1,39 +1,36 @@
-package com.hoya.admin.controller;
-
-/**
- * REST api内部定义异常处理控制器
- */
+package com.hoya.core.advice;
 
 import com.hoya.core.exception.AppError;
 import com.hoya.core.exception.AppException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@ControllerAdvice
-public class AppExceptionControllerHandler {
+/**
+ * {@link GlobalExceptionHandlerAdvice}全局异常处理
+ */
+
+@RestControllerAdvice
+public class GlobalExceptionHandlerAdvice {
 
     @ExceptionHandler(AppException.class)
     public ResponseEntity<AppError> appException(AppException ex) {
-        AppError error = new AppError(ex.getStatus().value(), ex.getMessage());
-        ResponseEntity<AppError> entity = new ResponseEntity<AppError>(error, ex.getStatus());
-        return entity;
+        AppError error = new AppError(ex.getCode(), ex.getMessage());
+        return new ResponseEntity<AppError>(error, HttpStatus.valueOf(ex.getCode()/10));
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<AppError> exception(IllegalArgumentException ex) {
         AppError error = new AppError(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
-        ResponseEntity<AppError> entity = new ResponseEntity<AppError>(error, HttpStatus.BAD_REQUEST);
-        return entity;
+        return new ResponseEntity<AppError>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<AppError> exception(HttpMessageNotReadableException ex) {
         AppError error = new AppError(HttpStatus.BAD_REQUEST.value(), "序列化bean失败");
-        ResponseEntity<AppError> entity = new ResponseEntity<AppError>(error, HttpStatus.BAD_REQUEST);
-        return entity;
+        return new ResponseEntity<AppError>(error, HttpStatus.BAD_REQUEST);
     }
 
 }

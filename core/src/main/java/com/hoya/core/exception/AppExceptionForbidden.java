@@ -1,13 +1,11 @@
 package com.hoya.core.exception;
 
-import org.springframework.http.HttpStatus;
-
 public class AppExceptionForbidden extends AppException {
     public AppExceptionForbidden() {
-        this(HttpStatus.FORBIDDEN.toString());
+        this(null);
     }
 
     public AppExceptionForbidden(String message) {
-        super(HttpStatus.FORBIDDEN, message);
+        super(ResultCode.FORBIDDEN, message);
     }
 }

@@ -1,26 +1,17 @@
 package com.hoya.core.exception;
 
-import lombok.Getter;
-import org.springframework.http.HttpStatus;
+import lombok.Data;
 
-@Getter
+@Data
 public class HttpResult {
-    public HttpResult() {
-        this(null);
-    }
 
-    public HttpResult(Object data) {
-        this(data, "success");
-    }
-
-    public HttpResult(Object data, String message) {
+    public HttpResult(ResultCode resultCode, Object data) {
         this.data = data;
-        this.message = message;
+        this.code = resultCode.getCode();
+        this.message = resultCode.getMessage();
     }
 
-    public static final HttpResult OK = new HttpResult();
-
-    final private static int status = HttpStatus.OK.value();
+    private Integer code;
     private String message;
     private Object data;
 }
