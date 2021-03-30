@@ -28,4 +28,4 @@ datasource:
   host: localhost
   username: root
   password: root
-  database: test
+  database: demo

@@ -1,7 +1,7 @@
 package com.hoya.admin.security;
 
 import com.alibaba.fastjson.JSON;
-import com.hoya.core.exception.AppError;
+import com.hoya.core.exception.ServerError;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -16,7 +16,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        AppError error = new AppError(HttpServletResponse.SC_FORBIDDEN, "认证失败");
+        ServerError error = new ServerError(HttpServletResponse.SC_FORBIDDEN, "认证失败");
         String msg = JSON.toJSONString(error);
 
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);

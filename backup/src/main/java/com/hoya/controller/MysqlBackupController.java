@@ -24,7 +24,7 @@ public class MysqlBackupController {
     private MysqlBackupService mysqlBackupService;
 
     @GetMapping("/backup")
-    public HttpResult backup() {
+    public void backup() {
         String backupFolderName = BackupConstants.DEFAULT_BACKUP_NAME + "_" +
                 (new SimpleDateFormat(BackupConstants.DATE_FORMAT)).format(new Date());
         String backupFolderPath = BackupConstants.BACKUP_FOLDER + backupFolderName + File.separator;
@@ -33,37 +33,37 @@ public class MysqlBackupController {
             boolean success = mysqlBackupService.backup(properties.getHost(), properties.getUsername(),
                     properties.getPassword(), backupFolderPath, fileName, properties.getDatabase());
             if (false == success) {
-                throw new AppExceptionServerError("数据库备份失败");
+                throw new ServerExceptionServerError("数据库备份失败");
             }
-        }catch (AppException e) {
+        }catch (ServerException e) {
             throw e;
         } catch (Exception e) {
-            throw new AppExceptionServerError(e.getMessage());
+            throw new ServerExceptionServerError(e.getMessage());
         }
 
-        return HttpResult.OK;
+        return;
     }
 
     @GetMapping("/restore")
-    public HttpResult restore(@RequestParam String name) {
+    public void restore(@RequestParam String name) {
         String restoreFilePath = BackupConstants.RESTORE_FOLDER + name;
         try {
             boolean success = mysqlBackupService.restore(restoreFilePath, properties.getHost(), properties.getUsername(),
                     properties.getPassword(), properties.getDatabase());
             if (false == success) {
-                throw new AppExceptionServerError("数据库备份失败");
+                throw new ServerExceptionServerError("数据库备份失败");
             }
-        }catch (AppException e) {
+        }catch (ServerException e) {
             throw e;
         } catch (Exception e) {
-            throw new AppExceptionServerError(e.getMessage());
+            throw new ServerExceptionServerError(e.getMessage());
         }
 
-        return HttpResult.OK;
+        return;
     }
 
     @GetMapping("/findRecords")
-    public HttpResult findRecords() {
+    public List<Map<String, Object>> findRecords() {
         List<Map<String, Object>> backupRecords = new ArrayList<>();
         File restoreFolder = new File(BackupConstants.RESTORE_FOLDER);
         if (restoreFolder.exists()) {
@@ -81,20 +81,20 @@ public class MysqlBackupController {
             return (int) (l2 - l1);
         });
 
-        return new HttpResult(backupRecords);
+        return backupRecords;
     }
 
     @GetMapping("/delete")
-    public HttpResult delete(@RequestParam String name) {
+    public void delete(@RequestParam String name) {
         String restoreFilePath = BackupConstants.BACKUP_FOLDER + name;
         try {
             File file = new File(restoreFilePath);
             FileSystemUtils.deleteRecursively(file);
         } catch (Exception e) {
-            throw new AppExceptionNotFound("备份文件没有找到");
+            throw new ServerExceptionNotFound("备份文件没有找到");
         }
 
-        return HttpResult.OK;
+        return;
     }
 
 }

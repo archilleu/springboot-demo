@@ -6,7 +6,7 @@ import java.util.*;
 import com.hoya.admin.security.GrantedAuthorityImpl;
 import com.hoya.admin.security.JwtAuthenticatioToken;
 import com.hoya.admin.security.JwtUserDetails;
-import com.hoya.core.exception.AppExceptionForbidden;
+import com.hoya.core.exception.ServerExceptionForbidden;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -157,7 +157,7 @@ public class JwtTokenUtils implements Serializable {
             Claims claims = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
             return claims;
         } catch (Exception e) {
-            throw new AppExceptionForbidden("非法token");
+            throw new ServerExceptionForbidden("非法token");
         }
     }
 

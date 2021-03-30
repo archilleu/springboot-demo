@@ -2,15 +2,14 @@ package com.hoya.admin.controller.sys;
 
 import com.hoya.admin.constant.SysConstants;
 import com.hoya.admin.model.sys.SysUser;
-import com.hoya.admin.model.sys.SysUserRole;
 import com.hoya.admin.server.sys.SysUserService;
 import com.hoya.admin.util.PasswordUtils;
 import com.hoya.admin.vo.SysUserRolesBean;
 import com.hoya.core.exception.*;
 import com.hoya.core.page.PageRequest;
+import com.hoya.core.page.PageResult;
 import com.hoya.core.utils.RequestParametersCheck;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,25 +17,24 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
+import java.util.Set;
 
+@Slf4j
 @RestController
 @RequestMapping("/sys/user")
 public class SysUserController {
-
-    private Logger logger = LoggerFactory.getLogger(SysUserController.class);
 
     @Autowired
     private SysUserService sysUserService;
 
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('sys:user:add') AND hasAuthority('sys:user:edit')")
-    public HttpResult save(@RequestBody @Validated SysUser record, BindingResult bindingResult) {
+    public SysUser save(@RequestBody @Validated SysUser record, BindingResult bindingResult) {
         RequestParametersCheck.check(bindingResult);
 
         if (SysConstants.ADMIN_ID.equals(record.getId()))
-            throw new AppExceptionForbidden("不能修改超级管理员");
+            throw new ServerExceptionForbidden("不能修改超级管理员");
 
         SysUser user = sysUserService.findById(record.getId());
         if (record.getPassword() != null) {
@@ -60,66 +58,66 @@ public class SysUserController {
 
         try {
             sysUserService.save(record);
-            return new HttpResult(record);
+            return record;
         } catch (DuplicateKeyException e) {
-            throw new AppExceptionAreadyExists("用户已经存在");
+            throw new ServerExceptionFound("用户已经存在");
         } catch (Exception e) {
-            logger.error(e.toString());
-            throw new AppExceptionServerError("内部错误");
+            log.error(e.toString());
+            throw new ServerExceptionServerError("内部错误");
         }
 
     }
 
     @PreAuthorize("hasAuthority('sys:user:delete')")
     @PostMapping(value = "/delete")
-    public HttpResult delete(@RequestBody List<SysUser> records) {
+    public void delete(@RequestBody List<SysUser> records) {
         for (SysUser record : records) {
             if (SysConstants.ADMIN_ID.equals(record.getId()))
-                throw new AppExceptionForbidden("不能删除超级管理员");
+                throw new ServerExceptionForbidden("不能删除超级管理员");
         }
 
         try {
             sysUserService.delete(records);
-            return HttpResult.OK;
+            return;
         } catch (Exception e) {
-            logger.error(e.toString());
-            throw new AppExceptionServerError("内部错误");
+            log.error(e.toString());
+            throw new ServerExceptionServerError("内部错误");
         }
     }
 
     @PreAuthorize("hasAuthority('sys:user:view')")
     @GetMapping(value = "/findPermissions")
-    public HttpResult findPermissions(@RequestParam String name) {
+    public Set<String> sfindPermissions(@RequestParam String name) {
         try {
-            return new HttpResult(sysUserService.findPermissions(name));
+            return sysUserService.findPermissions(name);
         } catch (Exception e) {
-            logger.error(e.toString());
-            throw new AppExceptionServerError("内部错误");
+            log.error(e.toString());
+            throw new ServerExceptionServerError("内部错误");
         }
     }
 
     @PostMapping("/saveUserRoles")
     @PreAuthorize("hasAuthority('sys:user:edit')")
-    public HttpResult saveUserRole(@RequestBody @Validated SysUserRolesBean sysUserRolesBean, BindingResult bindingResult) {
+    public void saveUserRole(@RequestBody @Validated SysUserRolesBean sysUserRolesBean, BindingResult bindingResult) {
         RequestParametersCheck.check(bindingResult);
 
         try {
             sysUserService.saveUserRoles(sysUserRolesBean);
-            return HttpResult.OK;
+            return;
         } catch (Exception e) {
-            logger.error(e.toString());
-            throw new AppExceptionServerError("内部错误");
+            log.error(e.toString());
+            throw new ServerExceptionServerError("内部错误");
         }
     }
 
     @PreAuthorize("hasAuthority('sys:user:view')")
     @PostMapping(value = "/findPage")
-    public HttpResult findPage(@RequestBody PageRequest pageRequest) {
+    public PageResult findPage(@RequestBody PageRequest pageRequest) {
         try {
-            return new HttpResult(sysUserService.findPage(pageRequest));
+            return sysUserService.findPage(pageRequest);
         } catch (Exception e) {
-            logger.error(e.toString());
-            throw new AppExceptionServerError("内部错误");
+            log.error(e.toString());
+            throw new ServerExceptionServerError("内部错误");
         }
     }
 

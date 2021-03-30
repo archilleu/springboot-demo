@@ -4,9 +4,9 @@ import com.hoya.admin.model.sys.SysDict;
 import com.hoya.admin.server.sys.SysDictService;
 import com.hoya.core.exception.*;
 import com.hoya.core.page.PageRequest;
+import com.hoya.core.page.PageResult;
 import com.hoya.core.utils.RequestParametersCheck;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,51 +16,50 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/sys/dict")
 public class SysDictController {
-
-    private Logger logger = LoggerFactory.getLogger(SysDictController.class);
 
     @Autowired
     private SysDictService sysDictService;
 
     @PreAuthorize("hasAuthority('sys:dict:add') AND hasAuthority('sys:dict:edit')")
     @PostMapping(value = "/save")
-    public HttpResult save(@RequestBody @Validated SysDict record, BindingResult bindingResult) {
+    public SysDict save(@RequestBody @Validated SysDict record, BindingResult bindingResult) {
         RequestParametersCheck.check(bindingResult);
 
         try {
             sysDictService.save(record);
-            return new HttpResult(record);
+            return record;
         } catch (DuplicateKeyException e) {
-            throw new AppExceptionAreadyExists("字典值已经存在");
+            throw new ServerExceptionFound("字典值已经存在");
         } catch (Exception e) {
-            logger.error(e.toString());
-            throw new AppExceptionServerError("内部错误");
+            log.error(e.toString());
+            throw new ServerExceptionServerError("内部错误");
         }
     }
 
     @PreAuthorize("hasAuthority('sys:dict:delete')")
     @PostMapping(value = "/delete")
-    public HttpResult delete(@RequestBody List<SysDict> records) {
+    public void delete(@RequestBody List<SysDict> records) {
         try {
             sysDictService.delete(records);
-            return HttpResult.OK;
+            return;
         } catch (Exception e) {
-            logger.error(e.toString());
-            throw new AppExceptionServerError("内部错误");
+            log.error(e.toString());
+            throw new ServerExceptionServerError("内部错误");
         }
     }
 
     @PreAuthorize("hasAuthority('sys:dict:view')")
     @PostMapping(value = "/findPage")
-    public HttpResult findPage(@RequestBody PageRequest pageRequest) {
+    public PageResult findPage(@RequestBody PageRequest pageRequest) {
         try {
-            return new HttpResult(sysDictService.findPage(pageRequest));
+            return sysDictService.findPage(pageRequest);
         } catch (Exception e) {
-            logger.error(e.toString());
-            throw new AppExceptionServerError("内部错误");
+            log.error(e.toString());
+            throw new ServerExceptionServerError("内部错误");
         }
     }
 

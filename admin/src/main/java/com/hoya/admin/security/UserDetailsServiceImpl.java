@@ -2,7 +2,7 @@ package com.hoya.admin.security;
 
 import com.hoya.admin.model.sys.SysUser;
 import com.hoya.admin.server.sys.SysUserService;
-import com.hoya.core.exception.AppExceptionNotFound;
+import com.hoya.core.exception.ServerExceptionNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,7 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         SysUser user = sysUserService.findByName(username);
         if (user == null) {
-            throw new AppExceptionNotFound("该用户不存在");
+            throw new ServerExceptionNotFound("该用户不存在");
         }
         // 用户权限列表，根据用户拥有的权限标识与如 @PreAuthorize("hasAuthority('sys:menu:view')") 标注的接口对比，
         // 决定是否可以调用接口

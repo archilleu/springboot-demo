@@ -12,8 +12,8 @@ import com.hoya.admin.model.sys.SysRole;
 import com.hoya.admin.model.sys.SysRoleMenu;
 import com.hoya.admin.server.sys.SysRoleService;
 import com.hoya.admin.util.SecurityUtils;
-import com.hoya.core.exception.AppExceptionForbidden;
-import com.hoya.core.exception.AppExceptionNotFound;
+import com.hoya.core.exception.ServerExceptionForbidden;
+import com.hoya.core.exception.ServerExceptionNotFound;
 import com.hoya.core.page.PageHelper;
 import com.hoya.core.page.PageRequest;
 import com.hoya.core.page.PageResult;
@@ -80,7 +80,7 @@ public class SysRoleServiceImpl implements SysRoleService {
     public List<SysMenu> findRoleMenus(Long roleId) {
         SysRole sysRole = sysRoleMapper.selectByPrimaryKey(roleId);
         if (null == sysRole) {
-            throw new AppExceptionNotFound("角色不存在");
+            throw new ServerExceptionNotFound("角色不存在");
         }
 
         if (SysConstants.ADMIN_ID.equals(sysRole.getId())) {
@@ -99,12 +99,12 @@ public class SysRoleServiceImpl implements SysRoleService {
 
         for (SysRoleMenu record : records) {
             if(SysConstants.ADMIN_ID.equals(record.getId())) {
-                throw new AppExceptionForbidden("超级管理员拥有所有菜单权限，不允许修改！");
+                throw new ServerExceptionForbidden("超级管理员拥有所有菜单权限，不允许修改！");
             }
 
             SysRole sysRole = sysRoleMapper.selectByPrimaryKey(record.getRoleId());
             if(null == sysRole) {
-                throw new AppExceptionNotFound("角色不存在");
+                throw new ServerExceptionNotFound("角色不存在");
             }
         }
 

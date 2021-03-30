@@ -4,7 +4,7 @@ spring:
         name: druidDataSource
         type: com.alibaba.druid.pool.DruidDataSource
         druid:
-            url: jdbc:mysql://localhost:3306/test?serverTimezone=UTC&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+            url: jdbc:mysql://localhost:3306/demo?serverTimezone=UTC&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
             username: root
             password: root
             filters: stat,wall,slf4j,config #使用默认的logback日志

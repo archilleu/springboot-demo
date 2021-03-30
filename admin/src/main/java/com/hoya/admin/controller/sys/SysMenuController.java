@@ -2,12 +2,10 @@ package com.hoya.admin.controller.sys;
 
 import com.hoya.admin.model.sys.SysMenu;
 import com.hoya.admin.server.sys.SysMenuService;
-import com.hoya.core.exception.AppExceptionAreadyExists;
-import com.hoya.core.exception.AppExceptionServerError;
-import com.hoya.core.exception.HttpResult;
+import com.hoya.core.exception.ServerExceptionFound;
+import com.hoya.core.exception.ServerExceptionServerError;
 import com.hoya.core.utils.RequestParametersCheck;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,51 +15,50 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/sys/menu")
 public class SysMenuController {
-
-    private Logger logger = LoggerFactory.getLogger(SysMenuController.class);
 
     @Autowired
     private SysMenuService sysMenuService;
 
     @PreAuthorize("hasAuthority('sys:menu:add') AND hasAuthority('sys:menu:edit')")
     @PostMapping(value = "/save")
-    public HttpResult save(@RequestBody @Validated SysMenu record, BindingResult bindingResult) {
+    public SysMenu save(@RequestBody @Validated SysMenu record, BindingResult bindingResult) {
         RequestParametersCheck.check(bindingResult);
 
         try {
             sysMenuService.save(record);
-            return new HttpResult(record);
+            return record;
         } catch (DuplicateKeyException e) {
-            throw new AppExceptionAreadyExists("菜单已经存在");
+            throw new ServerExceptionFound("菜单已经存在");
         } catch (Exception e) {
-            logger.error(e.toString());
-            throw new AppExceptionServerError("内部错误");
+            log.error(e.toString());
+            throw new ServerExceptionServerError("内部错误");
         }
     }
 
     @PreAuthorize("hasAuthority('sys:menu:delete')")
     @PostMapping(value = "/delete")
-    public HttpResult delete(@RequestBody List<SysMenu> records) {
+    public void delete(@RequestBody List<SysMenu> records) {
         try {
             sysMenuService.delete(records);
-            return HttpResult.OK;
+            return;
         } catch (Exception e) {
-            logger.error(e.toString());
-            throw new AppExceptionServerError("内部错误");
+            log.error(e.toString());
+            throw new ServerExceptionServerError("内部错误");
         }
     }
 
     @PreAuthorize("hasAuthority('sys:menu:view')")
     @PostMapping(value = "/getMenuTree")
-    public HttpResult findMenuTree() {
+    public List<SysMenu> findMenuTree() {
         try {
-            return new HttpResult(sysMenuService.getMenuTree());
+            return sysMenuService.getMenuTree();
         } catch (Exception e) {
-            logger.error(e.toString());
-            throw new AppExceptionServerError("内部错误");
+            log.error(e.toString());
+            throw new ServerExceptionServerError("内部错误");
         }
     }
 }
