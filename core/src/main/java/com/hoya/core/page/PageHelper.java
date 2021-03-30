@@ -1,7 +1,7 @@
 package com.hoya.core.page;
 
 import com.github.pagehelper.PageInfo;
-import com.hoya.core.exception.AppExceptionServerError;
+import com.hoya.core.exception.ServerExceptionServerError;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Method;
@@ -24,7 +24,7 @@ public class PageHelper {
 
         Method method = getMethod(mapper.getClass(), methodName, args);
         if (null == method) {
-            throw new AppExceptionServerError("内部错误");
+            throw new ServerExceptionServerError("内部错误");
         }
 
         com.github.pagehelper.PageHelper.startPage(pageRequest.getPage(), pageRequest.getRows());

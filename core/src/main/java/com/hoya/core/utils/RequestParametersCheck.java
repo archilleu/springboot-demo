@@ -1,6 +1,6 @@
 package com.hoya.core.utils;
 
-import com.hoya.core.exception.AppExceptionBadRequest;
+import com.hoya.core.exception.ServerExceptionBadRequest;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
@@ -8,7 +8,7 @@ import org.springframework.validation.FieldError;
  * Model JSR 检查
  */
 public class RequestParametersCheck {
-    public static void check(BindingResult bindingResult) throws AppExceptionBadRequest {
+    public static void check(BindingResult bindingResult) throws ServerExceptionBadRequest {
         if(bindingResult.hasErrors()) {
             StringBuilder sb = new StringBuilder();
             for(FieldError fieldError : bindingResult.getFieldErrors()) {
@@ -16,7 +16,7 @@ public class RequestParametersCheck {
                 sb.append(";");
             }
 
-            throw new AppExceptionBadRequest(sb.toString());
+            throw new ServerExceptionBadRequest(sb.toString());
         }
 
         return;

@@ -3,7 +3,6 @@ package com.hoya.core.advice;
 import com.hoya.core.config.GlobalDefaultProperties;
 import com.hoya.core.annotation.EnableGlobalResultResponse;
 import com.hoya.core.annotation.IgnoreGlobalResultDispose;
-import com.hoya.core.exception.AppError;
 import com.hoya.core.exception.HttpResult;
 import com.hoya.core.exception.ResultCode;
 import org.springframework.core.MethodParameter;
@@ -41,12 +40,6 @@ public class GlobalResultResponseAdvice implements ResponseBodyAdvice<Object> {
     public Object beforeBodyWrite(Object resp, MethodParameter methodParameter, MediaType mediaType,
                                   Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest serverHttpRequest,
                                   ServerHttpResponse serverHttpResponse) {
-        /**
-         * 使用fastJSON来处理{@link GlobalExceptionHandlerAdvice::castHttpMessageConverter}异常不会传导
-         * if(resp instanceof AppError) {
-         * return resp;
-         }
-         */
 
         if(resp instanceof HttpResult) {
             return resp;

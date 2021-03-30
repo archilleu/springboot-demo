@@ -8,13 +8,13 @@ import  com.hoya.core.advice.GlobalExceptionHandlerAdvice;
  */
 
 @Getter
-public class AppError {
-    public AppError(int status, String message) {
+public class ServerError {
+    public ServerError(int status, String message) {
         this.status = status;
         this.message = message;
     }
 
-    public AppError(int status, String message, Object data) {
+    public ServerError(int status, String message, Object data) {
         this(status, message);
         this.data = data;
     }

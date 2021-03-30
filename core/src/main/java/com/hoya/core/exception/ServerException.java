@@ -23,12 +23,12 @@ public class ServerException extends RuntimeException {
         this.code = resultCode.getCode();
     }
 
-    public static final ServerException Found = new AppExceptionFound();
+    public static final ServerException Found = new ServerExceptionFound();
 
-    public static final ServerException BadRequest = new AppExceptionBadRequest();
-    public static final ServerException Forbidden = new AppExceptionForbidden();
-    public static final ServerException NotFound = new AppExceptionNotFound();
-    public static final ServerException ServerError = new AppExceptionServerError();
+    public static final ServerException BadRequest = new ServerExceptionBadRequest();
+    public static final ServerException Forbidden = new ServerExceptionForbidden();
+    public static final ServerException NotFound = new ServerExceptionNotFound();
+    public static final ServerException ServerError = new ServerExceptionServerError();
 
     private Integer code;
     private String message;
