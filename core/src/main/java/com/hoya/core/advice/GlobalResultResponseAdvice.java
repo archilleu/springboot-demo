@@ -5,6 +5,8 @@ import com.hoya.core.annotation.EnableGlobalResultResponse;
 import com.hoya.core.annotation.IgnoreGlobalResultDispose;
 import com.hoya.core.exception.HttpResult;
 import com.hoya.core.exception.ResultCode;
+import com.hoya.core.exception.ServerError;
+import com.hoya.core.exception.ServerException;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -45,6 +47,9 @@ public class GlobalResultResponseAdvice implements ResponseBodyAdvice<Object> {
             return resp;
         }
 
+        if(resp instanceof ServerError) {
+            return resp;
+        }
         /**
          * string 特殊处理
          * 返回值是String，Spring会使用StringHttpMessageConverter来处理返回体，但是我们定义的统一返回处理类将返回值String，变成了HttpResult，是一个对象

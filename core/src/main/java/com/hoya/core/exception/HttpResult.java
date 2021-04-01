@@ -10,6 +10,10 @@ import com.hoya.core.advice.GlobalResultResponseAdvice;
 @Data
 public class HttpResult {
 
+    public HttpResult() {
+
+    }
+
     public HttpResult(ResultCode resultCode, Object data) {
         this.data = data;
         this.code = resultCode.getCode();

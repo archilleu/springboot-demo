@@ -47,6 +47,7 @@ public enum ResultCode {
     ,NOT_IMPLEMENTED(5010, HttpStatus.NOT_IMPLEMENTED.toString())
     ,BAD_GATEWAY(5020, HttpStatus.BAD_GATEWAY.toString())
     ,SERVICE_UNAVAILABLE(5030, HttpStatus.SERVICE_UNAVAILABLE.toString())
+    ,DATABASE_ERROR(5040, "database error")
     ;
 
     private Integer code;
@@ -57,11 +58,11 @@ public enum ResultCode {
         this.message = message;
     }
 
-    Integer getCode() {
+    public Integer getCode() {
         return this.code;
     }
 
-    String getMessage() {
+    public String getMessage() {
         return this.message;
     }
 }

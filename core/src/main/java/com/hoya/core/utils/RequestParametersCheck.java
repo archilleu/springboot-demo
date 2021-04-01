@@ -12,7 +12,9 @@ public class RequestParametersCheck {
         if(bindingResult.hasErrors()) {
             StringBuilder sb = new StringBuilder();
             for(FieldError fieldError : bindingResult.getFieldErrors()) {
-                sb.append(fieldError.getField() + fieldError.getDefaultMessage());
+                sb.append(fieldError.getField());
+                sb.append(" ");
+                sb.append(fieldError.getDefaultMessage());
                 sb.append(";");
             }
 

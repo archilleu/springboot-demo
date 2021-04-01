@@ -1,6 +1,11 @@
 package com.hoya.core.test;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hoya.core.controller.EnableGlobalResultResponseController;
+import com.hoya.core.controller.TestModel;
+import com.hoya.core.exception.HttpResult;
+import com.hoya.core.exception.ResultCode;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -35,29 +40,51 @@ public class ResultResponseTests extends BaseTests {
     }
 
     @Test
-    public void testInsertError() {
-
-    }
-
-    @Test
-    public void testUpdateError() {
-
-    }
-
-    @Test
     public void testRight() throws Exception {
-        RequestBuilder request = get(URL_SUCCESS)
-//                .contentType(MediaType.APPLICATION_JSON).content(JSONObject.toJSONString(track))
+        RequestBuilder request = get(URL_VOID)
                 .accept(MediaType.APPLICATION_JSON_UTF8_VALUE);
         MvcResult result = mockMvc.perform(request)
                 .andExpect(status().isOk())//返回HTTP状态为200
                 .andReturn();
-        JSONObject res = JSONObject.parseObject(result.getResponse().getContentAsString());
-        System.out.println(res);
-//        track = JSONObject.parseObject(res.getString("data"), Track.class);
-//        Track track = JSONObject.parseObject(res.getString("data"), new TypeReference<Track>(){});
+        String res = result.getResponse().getContentAsString();
+        JSONObject val = JSONObject.parseObject(res);
+        Assert.assertEquals(val.getLongValue("code"), 2000l);
+
+        request = get(URL_INTEGER)
+                .accept(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        result = mockMvc.perform(request)
+                .andExpect(status().isOk())//返回HTTP状态为200
+                .andReturn();
+        res = result.getResponse().getContentAsString();
+        HttpResult httpResult = JSONObject.parseObject(res, HttpResult.class);
+        Assert.assertEquals(httpResult.getCode().longValue(), 2000);
+        Assert.assertEquals((Integer) httpResult.getData(), EnableGlobalResultResponseController.STANDARD_INT);
+
+        request = get(URL_STRING)
+                .accept(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        result = mockMvc.perform(request)
+                .andExpect(status().isOk())//返回HTTP状态为200
+                .andReturn();
+        res = result.getResponse().getContentAsString();
+        httpResult = JSONObject.parseObject(res, HttpResult.class);
+        Assert.assertEquals(httpResult.getCode().longValue(), 2000);
+        Assert.assertEquals((String) httpResult.getData(), EnableGlobalResultResponseController.STANDARD_STRING);
+
+        request = get(URL_OBJECT)
+                .accept(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        result = mockMvc.perform(request)
+                .andExpect(status().isOk())//返回HTTP状态为200
+                .andReturn();
+        res = result.getResponse().getContentAsString();
+        httpResult = JSONObject.parseObject(res, HttpResult.class);
+        Assert.assertEquals(httpResult.getCode().longValue(), 2000);
+        TestModel testModel = ((JSONObject) httpResult.getData()).toJavaObject(TestModel.class);
+        Assert.assertEquals(testModel, EnableGlobalResultResponseController.STANDARD_OBJECT);
 
     }
 
-    final private String URL_SUCCESS = "/success";
+    final private String URL_VOID = "/void";
+    final private String URL_INTEGER = "/int";
+    final private String URL_STRING = "/string";
+    final private String URL_OBJECT = "/object";
 }

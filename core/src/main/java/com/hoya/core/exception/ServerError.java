@@ -10,7 +10,7 @@ import  com.hoya.core.advice.GlobalExceptionHandlerAdvice;
 @Getter
 public class ServerError {
     public ServerError(int status, String message) {
-        this.status = status;
+        this.code = status;
         this.message = message;
     }
 
@@ -19,7 +19,7 @@ public class ServerError {
         this.data = data;
     }
 
-    private int status;
+    private int code;
     private String message;
     private Object data;
 }
