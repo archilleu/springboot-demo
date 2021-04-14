@@ -6,7 +6,6 @@ import com.hoya.core.annotation.IgnoreGlobalResultDispose;
 import com.hoya.core.exception.HttpResult;
 import com.hoya.core.exception.ResultCode;
 import com.hoya.core.exception.ServerError;
-import com.hoya.core.exception.ServerException;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;

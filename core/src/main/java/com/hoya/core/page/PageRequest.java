@@ -2,7 +2,6 @@ package com.hoya.core.page;
 
 import lombok.Data;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -22,14 +21,6 @@ public class PageRequest {
      * 查询参数
      */
     private Map<String, Object> params = new LinkedHashMap<>();
-
-    /**
-     * 设置参数值
-     * @param params 参数
-     */
-    public void setParams(Map<String, Object> params) {
-        this.params = params;
-    }
 
     /**
      * 获取参数key值

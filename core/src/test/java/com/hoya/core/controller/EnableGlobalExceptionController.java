@@ -4,7 +4,6 @@ package com.hoya.core.controller;
  * {@link EnableGlobalExceptionHandle}返回包装器测试
  */
 
-import com.hoya.core.exception.HttpResult;
 import com.hoya.core.exception.ResultCode;
 import com.hoya.core.exception.ServerException;
 import com.hoya.core.utils.RequestParametersCheck;

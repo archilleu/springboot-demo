@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.hoya.core.controller.EnableGlobalResultResponseController;
 import com.hoya.core.controller.TestModel;
 import com.hoya.core.exception.HttpResult;
-import com.hoya.core.exception.ResultCode;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
