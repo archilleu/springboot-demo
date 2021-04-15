@@ -3,8 +3,8 @@ package com.hoya.admin.controller.user;
 import com.hoya.admin.security.JwtAuthenticatioToken;
 import com.hoya.admin.util.SecurityUtils;
 import com.hoya.admin.vo.LoginBean;
+import com.hoya.core.aop.annotation.ParameterValidated;
 import com.hoya.core.exception.ServerException;
-import com.hoya.core.utils.RequestParametersCheck;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,17 +25,17 @@ public class LoginController {
 
     @GetMapping("captcha.jpg")
     public void captcha(HttpServletResponse response, HttpServletRequest request) {
-        throw ServerException.Found;
         //TODO:无状态验证码
+        throw ServerException.Forbidden;
     }
 
     /**
      * 登录接口
      */
+    @ParameterValidated
     @PostMapping(value = "/login")
-    public Object login(@RequestBody @Validated LoginBean loginBean, BindingResult bindingResult,
+    public String login(@RequestBody @Validated LoginBean loginBean, BindingResult bindingResult,
                             HttpServletRequest request) {
-        RequestParametersCheck.check(bindingResult);
 
         String username = loginBean.getAccount();
         String password = loginBean.getPassword();
