@@ -5,8 +5,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotNull;
-import java.util.LinkedList;
-import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper=true)
@@ -28,8 +26,5 @@ public class SysMenu extends BaseModel {
     private Integer orderNum;
 
     private Byte delFlag;
-
-    // 非数据库字段
-    private List<SysMenu> children = new LinkedList<>();
 
 }

@@ -46,72 +46,17 @@ public class SysMenuServiceImpl implements SysMenuService {
 
     @Override
     public List<SysMenu> getMenuTree() {
-        List<SysMenu> menus = sysMenuMapper.findAll();
-        return createMenuTree(menus);
+        return sysMenuMapper.findAll();
     }
 
     @Override
     public List<SysMenu> findNavTree() {
-        List<SysMenu> menus = sysMenuMapper.findNavAll();
-        return createMenuTree(menus);
+        return sysMenuMapper.findNavAll();
     }
 
     @Override
     public List<SysMenu> findNavTreeByUsername(String userName) {
-        List<SysMenu> menus  = sysMenuMapper.findNavByUserName(userName);
-        return createMenuTree(menus);
-    }
-
-    private List<SysMenu> createMenuTree(List<SysMenu> menus) {
-        Map<Long, List<SysMenu>> idMenuMap = createIdChildrenMap(menus);
-
-        //顶级菜单
-        List<SysMenu> topMenu = idMenuMap.get(0L);
-        if (null == topMenu) {
-            return new LinkedList<>();
-        }
-
-        SysMenu root = new SysMenu();
-        root.setId(0L);
-        List<SysMenu> children = new LinkedList<>();
-        root.setChildren(children);
-        createMenuTree(idMenuMap, root);
-        return children;
-    }
-
-    // 生成ID，children菜单关系map
-    private Map<Long, List<SysMenu>> createIdChildrenMap(List<SysMenu> menus) {
-        Map<Long, List<SysMenu>> idMenuMap = new HashMap<>();
-        for (SysMenu menu : menus) {
-            List<SysMenu> list = idMenuMap.get(menu.getParentId());
-            if (null == list) {
-                list = new LinkedList<>();
-                idMenuMap.put(menu.getParentId(), list);
-            }
-            list.add(menu);
-        }
-
-        return idMenuMap;
-    }
-
-    // 生成菜单树
-    private void createMenuTree(Map<Long, List<SysMenu>> idMenuMap, SysMenu root) {
-        // 获取当前的菜单id当作是下一级菜单的parentId
-        Long parentId = root.getId();
-        // 获取当前菜单的子菜单列表
-        List<SysMenu> menus = idMenuMap.get(parentId);
-        if (null == menus) {
-            // 没有子菜单
-            return;
-        }
-
-        List<SysMenu> children = root.getChildren();
-        for(SysMenu sysMenu : menus){
-            children.add(sysMenu);
-            createMenuTree(idMenuMap, sysMenu);
-        }
-
-        return;
+        return sysMenuMapper.findNavByUserName(userName);
     }
 
     public List<SysMenu> findAll() {

@@ -10,7 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
 public class JwtAccessDeniedHandler implements AccessDeniedHandler {
 
@@ -22,9 +22,6 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         response.setCharacterEncoding("utf-8");
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        PrintWriter printWriter = response.getWriter();
-        printWriter.print(msg);
-        printWriter.flush();
-        printWriter.close();
+        response.getOutputStream().write(msg.getBytes(StandardCharsets.UTF_8));
     }
 }

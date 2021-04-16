@@ -1,8 +1,9 @@
 package com.hoya.admin.controller.user;
 
+import com.hoya.admin.controller.user.vo.LoginInfoVo;
+import com.hoya.admin.controller.user.vo.LoginRequestVo;
 import com.hoya.admin.security.JwtAuthenticatioToken;
 import com.hoya.admin.util.SecurityUtils;
-import com.hoya.admin.vo.LoginBean;
 import com.hoya.core.aop.annotation.ParameterValidated;
 import com.hoya.core.exception.ServerException;
 import lombok.extern.slf4j.Slf4j;
@@ -34,15 +35,17 @@ public class LoginController {
      */
     @ParameterValidated
     @PostMapping(value = "/login")
-    public String login(@RequestBody @Validated LoginBean loginBean, BindingResult bindingResult,
-                            HttpServletRequest request) {
+    public LoginInfoVo login(@RequestBody @Validated LoginRequestVo loginRequest, BindingResult bindingResult,
+                        HttpServletRequest request) {
 
-        String username = loginBean.getAccount();
-        String password = loginBean.getPassword();
+        String username = loginRequest.getAccount();
+        String password = loginRequest.getPassword();
 
         // 系统登录认证
         JwtAuthenticatioToken token = SecurityUtils.login(request, username, password, authenticationManager);
-        return token.getToken();
+        LoginInfoVo loginInfoVo = new LoginInfoVo();
+        loginInfoVo.setToken(token.getToken());
+        return loginInfoVo;
     }
 
 }

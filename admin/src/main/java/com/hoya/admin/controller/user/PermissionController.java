@@ -7,25 +7,23 @@ import com.hoya.core.exception.ServerExceptionServerError;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Set;
 
 @Slf4j
 @RestController
+@RequestMapping("/user")
 public class PermissionController {
 
     @Autowired
     private SysUserService sysUserService;
 
-    @GetMapping(value = "/user/findPermission")
+    @GetMapping(value = "/findPermission")
     public Set<String> findPermission() {
         //获取当前登陆用户
         String userName = SecurityUtils.getUsername();
-        if (null == userName) {
-            throw new ServerExceptionForbidden("用户尚未登陆");
-        }
-
         try {
             Set<String> res = sysUserService.findPermissions(userName);
             return res;
