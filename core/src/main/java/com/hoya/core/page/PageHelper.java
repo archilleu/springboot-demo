@@ -6,6 +6,7 @@ import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings({"all"})
 public class PageHelper {
@@ -15,7 +16,7 @@ public class PageHelper {
         return findPage(pageRequest, mapper, findPage);
     }
 
-    public static PageResult findPage(PageRequest pageRequest, Object mapper, Object... args) {
+    public static PageResult findPage(PageRequest pageRequest, Object mapper, Map<String, Object> args) {
         return findPage(pageRequest, mapper, findPage, args);
     }
 
@@ -24,7 +25,7 @@ public class PageHelper {
 
         Method method = getMethod(mapper.getClass(), methodName, args);
         if (null == method) {
-            throw new ServerExceptionServerError("内部错误");
+            throw new ServerExceptionServerError(mapper.getClass().getName() + " not found methom:" + methodName);
         }
 
         com.github.pagehelper.PageHelper.startPage(pageRequest.getPage(), pageRequest.getRows());
@@ -46,14 +47,6 @@ public class PageHelper {
             paramTypes[i] = params[i].getClass();
         }
         Method method = ReflectionUtils.findMethod(clazz, methodName, paramTypes);
-        if (null == method) {
-            try {
-                throw new NoSuchMethodException(clazz.getName() + " 类中没有找到 " + methodName + " 方法。");
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            }
-        }
-
         return method;
     }
 }

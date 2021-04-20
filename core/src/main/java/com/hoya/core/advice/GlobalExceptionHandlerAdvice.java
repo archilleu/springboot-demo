@@ -15,11 +15,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * {@link GlobalExceptionHandlerAdvice}全局异常处理,处理 {@link EnableGlobalExceptionHandle}注解

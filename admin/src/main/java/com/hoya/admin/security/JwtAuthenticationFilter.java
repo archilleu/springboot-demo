@@ -3,6 +3,7 @@ package com.hoya.admin.security;
 import com.alibaba.fastjson.JSON;
 import com.hoya.admin.util.SecurityUtils;
 import com.hoya.core.exception.ServerError;
+import com.hoya.core.exception.ServerExceptionUnauthorized;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,7 +14,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -32,6 +32,13 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         try {
             SecurityUtils.checkAuthentication(request);
             chain.doFilter(request, response);
+        }catch (ServerExceptionUnauthorized e) {
+            ServerError error = new ServerError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
+            String msg = JSON.toJSONString(error);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setCharacterEncoding("utf-8");
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.getOutputStream().write(msg.getBytes(StandardCharsets.UTF_8));
         } catch (Exception e) {
             ServerError error = new ServerError(HttpServletResponse.SC_FORBIDDEN, e.getMessage());
             String msg = JSON.toJSONString(error);

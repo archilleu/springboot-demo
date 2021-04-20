@@ -16,7 +16,7 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        ServerError error = new ServerError(HttpServletResponse.SC_FORBIDDEN, "授权失败");
+        ServerError error = new ServerError(HttpServletResponse.SC_FORBIDDEN, "禁止访问");
         String msg = JSON.toJSONString(error);
 
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);

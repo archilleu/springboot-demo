@@ -7,7 +7,9 @@ import com.hoya.admin.security.GrantedAuthorityImpl;
 import com.hoya.admin.security.JwtAuthenticatioToken;
 import com.hoya.admin.security.JwtUserDetails;
 import com.hoya.core.exception.ServerExceptionForbidden;
+import com.hoya.core.exception.ServerExceptionUnauthorized;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.Authentication;
@@ -156,6 +158,8 @@ public class JwtTokenUtils implements Serializable {
         try {
             Claims claims = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
             return claims;
+        }catch (ExpiredJwtException e) {
+            throw new ServerExceptionUnauthorized("token过期");
         } catch (Exception e) {
             throw new ServerExceptionForbidden("非法token");
         }

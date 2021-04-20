@@ -1,5 +1,6 @@
 package com.hoya.core.advice;
 
+import com.alibaba.fastjson.JSON;
 import com.hoya.core.config.GlobalDefaultProperties;
 import com.hoya.core.annotation.EnableGlobalResultResponse;
 import com.hoya.core.annotation.IgnoreGlobalResultDispose;
@@ -51,13 +52,10 @@ public class GlobalResultResponseAdvice implements ResponseBodyAdvice<Object> {
         }
         /**
          * string 特殊处理
-         * 返回值是String，Spring会使用StringHttpMessageConverter来处理返回体，但是我们定义的统一返回处理类将返回值String，变成了HttpResult，是一个对象
-         * 使用fastJSON来处理{@link GlobalExceptionHandlerAdvice::castHttpMessageConverter}
-         *
-         if (resp instanceof String) {
-         return JSON.toJSON(new HttpResult(ResultCode.OK, resp)).toString();
-         }
          */
+         if (resp instanceof String) {
+             return JSON.toJSON(new HttpResult(ResultCode.OK, resp)).toString();
+         }
 
         HttpResult result = new HttpResult(ResultCode.OK, resp);
         return result;
