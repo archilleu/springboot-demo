@@ -4,21 +4,23 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 import com.hoya.admin.constant.SysConstants;
+import com.hoya.admin.controller.sys.vo.SysUserRolesVo;
 import com.hoya.admin.dao.sys.SysRoleMapper;
 import com.hoya.admin.dao.sys.SysUserMapper;
 import com.hoya.admin.dao.sys.SysUserRoleMapper;
+import com.hoya.admin.model.sys.SysDept;
 import com.hoya.admin.model.sys.SysMenu;
 import com.hoya.admin.model.sys.SysRole;
 import com.hoya.admin.model.sys.SysUser;
-import com.hoya.admin.model.sys.SysUserRole;
 import com.hoya.admin.server.sys.SysMenuService;
 import com.hoya.admin.server.sys.SysUserService;
 import com.hoya.admin.util.SecurityUtils;
-import com.hoya.admin.vo.SysUserRolesBean;
+import com.hoya.core.exception.ServerExceptionFound;
 import com.hoya.core.page.PageHelper;
 import com.hoya.core.page.PageRequest;
 import com.hoya.core.page.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -41,17 +43,21 @@ public class SysUserServiceImpl implements SysUserService {
     @Transactional
     @Override
     public int save(SysUser record) {
-        if (record.getId() == null || record.getId() == 0) {
-            // 新增用户
-            record.setCreateBy(SecurityUtils.getUsername());
-            record.setCreateTime(LocalDateTime.now());
-            sysUserMapper.insertSelective(record);
-        } else {
-            // 更新用户信息
-            sysUserMapper.updateByPrimaryKeySelective(record);
-        }
+        try {
+            if (record.getId() == null || record.getId() == 0) {
+                // 新增用户
+                record.setCreateBy(SecurityUtils.getUsername());
+                record.setCreateTime(LocalDateTime.now());
+                sysUserMapper.insertSelective(record);
+            } else {
+                // 更新用户信息
+                sysUserMapper.updateByPrimaryKeySelective(record);
+            }
 
-        return 1;
+            return 1;
+        } catch (DuplicateKeyException e) {
+            throw new ServerExceptionFound("用户已经存在");
+        }
     }
 
     @Override
@@ -82,35 +88,8 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public PageResult findPage(PageRequest pageRequest) {
-        PageResult pageResult = PageHelper.findPage(pageRequest, sysUserMapper, pageRequest.getParams());
-
-        // 加载用户角色信息
-        findUserRoles(pageResult);
+        PageResult pageResult = PageHelper.findPage(pageRequest, sysUserMapper, "findListWithRole", pageRequest.getParams());
         return pageResult;
-    }
-
-    private void findUserRoles(PageResult pageResult) {
-        List<?> content = pageResult.getContent();
-        for (Object object : content) {
-            SysUser sysUser = (SysUser) object;
-            List<SysUserRole> userRoles = findUserRoles(sysUser.getId());
-            sysUser.setUserRoles(userRoles);
-            sysUser.setRoleNames(getRoleNames(userRoles));
-        }
-    }
-
-    private List<String> getRoleNames(List<SysUserRole> userRoles) {
-        List<String> roles = new ArrayList<>();
-        for (SysUserRole userRole : userRoles) {
-            SysRole sysRole = sysRoleMapper.selectByPrimaryKey(userRole.getRoleId());
-            if (sysRole == null) {
-                continue;
-            }
-
-            roles.add(sysRole.getName());
-        }
-
-        return roles;
     }
 
     @Override
@@ -132,12 +111,18 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
-    public List<SysUserRole> findUserRoles(Long userId) {
+    public List<SysRole> findUserRoles(Long userId) {
         return sysUserRoleMapper.findUserRoles(userId);
     }
 
     @Override
-    public int saveUserRoles(SysUserRolesBean sysUserRolesBean) {
+    public List<SysDept> findUserDept(Long userId) {
+        return sysUserMapper.findUserDept(userId);
+    }
+
+    @Override
+    @Transactional
+    public int saveUserRoles(SysUserRolesVo sysUserRolesBean) {
 
         sysUserRoleMapper.deleteByUserId(sysUserRolesBean.getUserId());
 

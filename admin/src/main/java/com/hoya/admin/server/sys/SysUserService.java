@@ -1,8 +1,9 @@
 package com.hoya.admin.server.sys;
 
+import com.hoya.admin.controller.sys.vo.SysUserRolesVo;
+import com.hoya.admin.model.sys.SysDept;
+import com.hoya.admin.model.sys.SysRole;
 import com.hoya.admin.model.sys.SysUser;
-import com.hoya.admin.model.sys.SysUserRole;
-import com.hoya.admin.vo.SysUserRolesBean;
 import com.hoya.core.service.CurdService;
 
 import java.util.List;
@@ -14,8 +15,10 @@ public interface SysUserService extends CurdService<SysUser> {
 
     Set<String> findPermissions(String userName);
 
-    List<SysUserRole> findUserRoles(Long userId);
+    List<SysRole> findUserRoles(Long userId);
 
-    int saveUserRoles(SysUserRolesBean sysUserRolesBean);
+    List<SysDept> findUserDept(Long userId);
+
+    int saveUserRoles(SysUserRolesVo sysUserRolesBean);
 
 }

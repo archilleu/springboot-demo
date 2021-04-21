@@ -3,6 +3,7 @@ package com.hoya.admin.controller.user;
 import com.hoya.admin.constant.SysConstants;
 import com.hoya.admin.controller.user.vo.MenuVo;
 import com.hoya.admin.model.sys.SysMenu;
+import com.hoya.admin.security.JwtUserDetails;
 import com.hoya.admin.server.sys.SysMenuService;
 import com.hoya.admin.util.SecurityUtils;
 import com.hoya.core.exception.ServerError;
@@ -32,13 +33,13 @@ public class MenuController {
     @GetMapping(value = "/menu/findNavTree")
     public List<MenuVo> findNavTree() {
         //获取当前登陆用户
-        String userName = SecurityUtils.getUsername();
+        JwtUserDetails user = SecurityUtils.getCurrentUser();
         try {
             List<SysMenu> navList = null;
-            if(SysConstants.ADMIN.equals(userName)) {
+            if(user.getRoles().contains(SysConstants.ROLE_ADMIN)) {
                 navList = sysMenuService.findNavTree();
             } else {
-                navList = sysMenuService.findNavTreeByUsername(userName);
+                navList = sysMenuService.findNavTreeByUsername(user.getUsername());
             }
 
             return createMenuTree(navList);

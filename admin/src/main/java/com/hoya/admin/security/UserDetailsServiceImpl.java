@@ -1,6 +1,8 @@
 package com.hoya.admin.security;
 
+import com.hoya.admin.model.sys.SysRole;
 import com.hoya.admin.model.sys.SysUser;
+import com.hoya.admin.server.sys.SysRoleService;
 import com.hoya.admin.server.sys.SysUserService;
 import com.hoya.core.exception.ServerExceptionNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +34,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // 用户权限列表，根据用户拥有的权限标识与如 @PreAuthorize("hasAuthority('sys:menu:view')") 标注的接口对比，
         // 决定是否可以调用接口
         Set<String> permissions = sysUserService.findPermissions(user.getName());
+        Set<String> roles = sysUserService.findUserRoles(user.getId()).stream().map(SysRole::getName).collect(Collectors.toSet());
         List<GrantedAuthority> grantedAuthorities = permissions.stream()
                 .map(GrantedAuthorityImpl::new)
                 .collect(Collectors.toList());
-        return new JwtUserDetails(user.getName(), user.getPassword(), user.getId(), user.getSalt(), grantedAuthorities);
+        return new JwtUserDetails(user.getName(), user.getPassword(), user.getId(), user.getSalt(), roles, grantedAuthorities);
     }
 }

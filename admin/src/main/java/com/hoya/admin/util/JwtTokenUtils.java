@@ -43,6 +43,11 @@ public class JwtTokenUtils implements Serializable {
      * 权限列表
      */
     private static final String AUTHORITIES = "authorities";
+
+    /**
+     * 角色列表
+     */
+    private static final String ROLES = "roles";
     /**
      * 密钥
      */
@@ -64,7 +69,8 @@ public class JwtTokenUtils implements Serializable {
         claims.put(USERNAME, user.getUsername());
         claims.put(USER_ID, user.getId());
         claims.put(CREATED, new Date());
-        claims.put(AUTHORITIES, authentication.getAuthorities());
+        claims.put(ROLES, user.getRoles());
+        claims.put(AUTHORITIES, user.getAuthorities());
         return generateToken(claims);
     }
 
@@ -128,15 +134,24 @@ public class JwtTokenUtils implements Serializable {
                 return null;
             }
 
-            Object authors = claims.get(AUTHORITIES);
             Long id = claims.get(USER_ID, Long.class);
+
+            Object authors = claims.get(AUTHORITIES);
             List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
             if (authors != null && authors instanceof List) {
                 for (Object object : (List) authors) {
                     authorities.add(new GrantedAuthorityImpl((String) ((Map) object).get("authority")));
                 }
             }
-            UserDetails userDetails = new JwtUserDetails(username, null, id, null, authorities);
+
+            Object roles = claims.get(ROLES);
+            Set<String> rolesSet = new HashSet<>();
+            if (roles != null && roles instanceof List) {
+                for (Object object : (List) roles) {
+                    rolesSet.add((String) object);
+                }
+            }
+            UserDetails userDetails = new JwtUserDetails(username, null, id, null, rolesSet, authorities);
             authentication = new JwtAuthenticatioToken(userDetails, null, authorities, token);
         } else {
             String username = SecurityUtils.getUsername();

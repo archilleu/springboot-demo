@@ -7,12 +7,9 @@ import com.hoya.core.exception.ServerExceptionFound;
 import com.hoya.core.exception.ServerExceptionServerError;
 import com.hoya.core.page.PageRequest;
 import com.hoya.core.page.PageResult;
-import com.hoya.core.utils.RequestParametersCheck;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,14 +25,12 @@ public class SysConfigController {
 
     @PreAuthorize("hasAuthority('sys:config:add') AND hasAuthority('sys:config:edit')")
     @PostMapping(value = "/save")
-    public void save(@RequestBody @Validated SysConfig record, BindingResult bindingResult) {
-        RequestParametersCheck.check(bindingResult);
-
+    public SysConfig save(@RequestBody @Validated SysConfig record) {
         try {
             sysConfigService.save(record);
-            return;
-        } catch (DuplicateKeyException e) {
-            throw new ServerExceptionFound("配置项已经存在");
+            return record;
+        } catch (ServerExceptionFound e) {
+            throw e;
         } catch (Exception e) {
             log.error(e.toString());
             throw new ServerExceptionServerError("内部错误");

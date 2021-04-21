@@ -1,4 +1,4 @@
-package com.hoya.admin.vo;
+package com.hoya.admin.controller.sys.vo;
 
 import lombok.Data;
 
@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 @Data
-public class SysUserRolesBean {
+public class SysUserRolesVo {
     @NotNull
     private Long userId;
 

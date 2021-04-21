@@ -1,6 +1,7 @@
 package com.hoya.admin.util;
 
 import com.hoya.admin.security.JwtAuthenticatioToken;
+import com.hoya.admin.security.JwtUserDetails;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -50,6 +51,22 @@ public class SecurityUtils {
     }
 
     /**
+     * 获取当前用户
+     * @return
+     */
+    public static JwtUserDetails getCurrentUser() {
+        JwtUserDetails jwtUserDetails = null;
+        Authentication authentication = getAuthentication();
+        if (authentication != null) {
+            Object principal = authentication.getPrincipal();
+            if (principal != null && principal instanceof UserDetails) {
+                jwtUserDetails = ((JwtUserDetails) principal);
+            }
+        }
+        return jwtUserDetails;
+    }
+
+    /**
      * 获取当前用户名
      *
      * @return
@@ -57,13 +74,7 @@ public class SecurityUtils {
     public static String getUsername() {
         String username = null;
         Authentication authentication = getAuthentication();
-        if (authentication != null) {
-            Object principal = authentication.getPrincipal();
-            if (principal != null && principal instanceof UserDetails) {
-                username = ((UserDetails) principal).getUsername();
-            }
-        }
-        return username;
+        return getUsername(authentication);
     }
 
     /**

@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * 安全用户模型
@@ -17,13 +18,15 @@ public class JwtUserDetails implements UserDetails {
     private String password;
     private Long id;
     private String salt;
+    private Set<String> roles;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public JwtUserDetails(String username, String password, Long id, String salt, Collection<? extends GrantedAuthority> authorities) {
+    public JwtUserDetails(String username, String password, Long id, String salt, Set<String> roles, Collection<? extends GrantedAuthority> authorities) {
         this.username = username;
         this.password = password;
         this.salt = salt;
         this.id = id;
+        this.roles = roles;
         this.authorities = authorities;
     }
 
@@ -32,7 +35,6 @@ public class JwtUserDetails implements UserDetails {
         return username;
     }
 
-    @JsonIgnore
     public Long getId() {
         return id;
     }
@@ -46,6 +48,8 @@ public class JwtUserDetails implements UserDetails {
     public String getSalt() {
         return salt;
     }
+
+    public Set<String> getRoles() { return roles; }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

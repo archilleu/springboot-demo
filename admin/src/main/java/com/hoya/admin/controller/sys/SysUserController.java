@@ -1,24 +1,27 @@
 package com.hoya.admin.controller.sys;
 
 import com.hoya.admin.constant.SysConstants;
+import com.hoya.admin.controller.sys.vo.SysRoleVo;
+import com.hoya.admin.controller.sys.vo.SysUserRolesVo;
+import com.hoya.admin.controller.sys.vo.SysUserVo;
+import com.hoya.admin.model.sys.SysDept;
+import com.hoya.admin.model.sys.SysRole;
 import com.hoya.admin.model.sys.SysUser;
 import com.hoya.admin.server.sys.SysUserService;
 import com.hoya.admin.util.PasswordUtils;
-import com.hoya.admin.vo.SysUserRolesBean;
 import com.hoya.core.exception.*;
 import com.hoya.core.page.PageRequest;
 import com.hoya.core.page.PageResult;
-import com.hoya.core.utils.RequestParametersCheck;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -30,12 +33,12 @@ public class SysUserController {
 
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('sys:user:add') AND hasAuthority('sys:user:edit')")
-    public SysUser save(@RequestBody @Validated SysUser record, BindingResult bindingResult) {
-        RequestParametersCheck.check(bindingResult);
+    public SysUserVo save(@RequestBody @Validated SysUser record) {
 
         if (SysConstants.ADMIN_ID.equals(record.getId()))
             throw new ServerExceptionForbidden("不能修改超级管理员");
 
+        SysUserVo sysUserVo = new SysUserVo();
         SysUser user = sysUserService.findById(record.getId());
         if (record.getPassword() != null) {
             String salt = PasswordUtils.getSalt();
@@ -58,9 +61,24 @@ public class SysUserController {
 
         try {
             sysUserService.save(record);
-            return record;
-        } catch (DuplicateKeyException e) {
-            throw new ServerExceptionFound("用户已经存在");
+            BeanUtils.copyProperties(record, sysUserVo);
+            List<SysRole> sysRoles = sysUserService.findUserRoles(record.getId());
+            sysUserVo.setRoles(sysRoles.stream()
+                    .map(sysRole -> {
+                        SysRoleVo sysRoleVo = new SysRoleVo();
+                        sysRoleVo.setId(sysRole.getId());
+                        sysRoleVo.setName(sysRole.getName());
+                        sysRoleVo.setRemark(sysRole.getRemark());
+                        return sysRoleVo;
+                    })
+                    .collect(Collectors.toList()));
+            List<SysDept> sysDept = sysUserService.findUserDept(record.getId());
+            if(!sysDept.isEmpty()) {
+                sysUserVo.setDeptName(sysDept.get(0).getName());
+            }
+            return sysUserVo;
+        } catch (ServerExceptionFound e) {
+            throw e;
         } catch (Exception e) {
             log.error(e.toString());
             throw new ServerExceptionServerError("内部错误");
@@ -87,7 +105,7 @@ public class SysUserController {
 
     @PreAuthorize("hasAuthority('sys:user:view')")
     @GetMapping(value = "/findPermissions")
-    public Set<String> sfindPermissions(@RequestParam String name) {
+    public Set<String> findPermissions(@RequestParam String name) {
         try {
             return sysUserService.findPermissions(name);
         } catch (Exception e) {
@@ -98,9 +116,7 @@ public class SysUserController {
 
     @PostMapping("/saveUserRoles")
     @PreAuthorize("hasAuthority('sys:user:edit')")
-    public void saveUserRole(@RequestBody @Validated SysUserRolesBean sysUserRolesBean, BindingResult bindingResult) {
-        RequestParametersCheck.check(bindingResult);
-
+    public void saveUserRole(@RequestBody @Validated SysUserRolesVo sysUserRolesBean) {
         try {
             sysUserService.saveUserRoles(sysUserRolesBean);
             return;

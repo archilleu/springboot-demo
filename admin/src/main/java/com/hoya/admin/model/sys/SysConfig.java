@@ -13,14 +13,19 @@ public class SysConfig extends BaseModel {
     @NotNull
     private String value;
 
+    @NotNull
     private String label;
 
+    @NotNull
     private String type;
 
+    @NotNull
     private String description;
 
+    @NotNull
     private Long sort;
 
+    @NotNull
     private String remarks;
 
     private Byte delFlag;

@@ -1,5 +1,7 @@
 package com.hoya.admin.dao.sys;
 
+import com.hoya.admin.controller.sys.vo.SysUserVo;
+import com.hoya.admin.model.sys.SysDept;
 import com.hoya.admin.model.sys.SysUser;
 import org.apache.ibatis.annotations.Param;
 
@@ -22,4 +24,8 @@ public interface SysUserMapper {
     SysUser findByName(@Param(value = "name") String name);
 
     List<SysUser> findPage(LinkedHashMap<String, Object> params);
+
+    List<SysDept> findUserDept(Long userId);
+
+    List<SysUserVo> findListWithRole(LinkedHashMap<String, Object> params);
 }

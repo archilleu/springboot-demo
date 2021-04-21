@@ -114,11 +114,12 @@
         last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <select id="findUserRoles" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="findUserRoles" parameterType="java.lang.Long" resultType="com.hoya.admin.model.sys.SysRole">
         select
-        <include refid="Base_Column_List"/>
-        from sys_user_role
-        where user_id = #{userId,jdbcType=BIGINT}
+            sys_role.*
+        from sys_role, sys_user_role, sys_user
+        where
+            user_id = #{userId,jdbcType=BIGINT} and sys_user.id = sys_user_role.user_id and sys_role.id = sys_user_role.role_id;
     </select>
     <delete id="deleteByUserId" parameterType="java.lang.Long">
         delete from sys_user_role
@@ -126,7 +127,7 @@
     </delete>
 
     <!--    批量插入用户角色-->
-    <insert id="insertBatch" parameterType="com.hoya.admin.vo.SysUserRolesBean">
+    <insert id="insertBatch" parameterType="com.hoya.admin.controller.sys.vo.SysUserRolesVo">
         insert into sys_user_role
         (user_id, role_id)
         values

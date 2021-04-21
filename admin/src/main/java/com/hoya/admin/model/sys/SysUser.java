@@ -34,11 +34,4 @@ public class SysUser extends BaseModel {
 
     private Byte delFlag;
 
-    // 非数据库字段
-    private String deptName;
-    // 非数据库字段,角色名称
-    private List<String> roleNames;
-    // 非数据库字段,用户角色
-    private List<SysUserRole> userRoles;
-
 }

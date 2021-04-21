@@ -7,7 +7,13 @@ public interface SysConstants {
     String ADMIN = "admin";
 
     /**
+     * 系统管理员角色
+     */
+    String ROLE_ADMIN = "admin";
+
+    /**
      * 系统管理员ID
      */
     Long ADMIN_ID = 1L;
+
 }

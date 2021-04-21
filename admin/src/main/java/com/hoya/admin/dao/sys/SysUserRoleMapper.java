@@ -2,6 +2,7 @@ package com.hoya.admin.dao.sys;
 
 import java.util.List;
 
+import com.hoya.admin.model.sys.SysRole;
 import com.hoya.admin.model.sys.SysUserRole;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,7 +19,7 @@ public interface SysUserRoleMapper {
 
     int updateByPrimaryKey(SysUserRole record);
 
-    List<SysUserRole> findUserRoles(@Param(value = "userId") Long userId);
+    List<SysRole> findUserRoles(@Param(value = "userId") Long userId);
 
     int deleteByUserId(@Param(value = "userId") Long userId);
 
