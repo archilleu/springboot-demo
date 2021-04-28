@@ -4,7 +4,12 @@ server:
         uri-encoding: UTF-8
         max-threads: 1000
         min-spare-threads: 30
-    port: 8001
+    port: 8443
+    ssl:
+        key-store: classpath:cert.p12
+        key-store-password: 123456
+        keyStoreType: PKCS12
+        keyAlias: tomcat
     context-path: /admin
 
 spring:
