@@ -26,14 +26,13 @@ public class SysDictController {
 
     @PreAuthorize("hasAuthority('sys:dict:add') AND hasAuthority('sys:dict:edit')")
     @PostMapping(value = "/save")
-    public SysDict save(@RequestBody @Validated SysDict record, BindingResult bindingResult) {
-        RequestParametersCheck.check(bindingResult);
+    public SysDict save(@RequestBody @Validated SysDict record) {
 
         try {
             sysDictService.save(record);
             return record;
-        } catch (DuplicateKeyException e) {
-            throw new ServerExceptionFound("字典值已经存在");
+        } catch (ServerException e) {
+            throw e;
         } catch (Exception e) {
             log.error(e.toString());
             throw new ServerExceptionServerError("内部错误");

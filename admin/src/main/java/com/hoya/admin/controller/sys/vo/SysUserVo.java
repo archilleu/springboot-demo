@@ -1,9 +1,7 @@
 package com.hoya.admin.controller.sys.vo;
 
-import com.hoya.admin.model.sys.SysUserRole;
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 

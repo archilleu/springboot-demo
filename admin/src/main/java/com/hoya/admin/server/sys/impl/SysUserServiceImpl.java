@@ -51,6 +51,8 @@ public class SysUserServiceImpl implements SysUserService {
                 sysUserMapper.insertSelective(record);
             } else {
                 // 更新用户信息
+                record.setLastUpdateBy(SecurityUtils.getUsername());
+                record.setLastUpdateTime(LocalDateTime.now());
                 sysUserMapper.updateByPrimaryKeySelective(record);
             }
 

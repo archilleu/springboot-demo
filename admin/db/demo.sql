@@ -97,9 +97,9 @@ CREATE TABLE `sys_dept` (
 -- ----------------------------
 -- Records of sys_dept
 -- ----------------------------
-INSERT INTO `sys_dept` VALUES ('1', '轻尘集团', null, '0', 'admin', '2018-09-23 19:35:22', null, null, '0');
-INSERT INTO `sys_dept` VALUES ('2', '牧尘集团', null, '1', 'admin', '2018-09-23 19:35:55', null, null, '0');
-INSERT INTO `sys_dept` VALUES ('3', '三国集团', null, '2', 'admin', '2018-09-23 19:36:24', null, null, '0');
+INSERT INTO `sys_dept` VALUES ('1', '集团1', null, '0', 'admin', '2018-09-23 19:35:22', null, null, '0');
+INSERT INTO `sys_dept` VALUES ('2', '集团2', null, '1', 'admin', '2018-09-23 19:35:55', null, null, '0');
+INSERT INTO `sys_dept` VALUES ('3', '集团3', null, '2', 'admin', '2018-09-23 19:36:24', null, null, '0');
 INSERT INTO `sys_dept` VALUES ('4', '上海分公司', '2', '0', 'admin', '2018-09-23 19:37:03', null, null, '0');
 INSERT INTO `sys_dept` VALUES ('5', '北京分公司', '1', '1', 'admin', '2018-09-23 19:37:17', null, null, '0');
 INSERT INTO `sys_dept` VALUES ('6', '北京分公司', '2', '1', 'admin', '2018-09-23 19:37:28', null, null, '0');
@@ -295,47 +295,47 @@ CREATE TABLE `sys_log` (
 -- ----------------------------
 -- Records of sys_log
 -- ----------------------------
-INSERT INTO `sys_log` VALUES ('1', 'admin', null, 'com.louis.kitty.admin.sevice.impl.SysDictServiceImpl.findPage()', '{\"columnFilters\":{\"label\":{\"name\":\"label\",\"value\":\"\"}},\"pageNum\":1,\"pageSize\":8}', '4', '0:0:0:0:0:0:0:1', 'admin', '2018-09-23 19:54:16', null, null);
-INSERT INTO `sys_log` VALUES ('2', 'admin', null, 'com.louis.kitty.admin.sevice.impl.SysRoleServiceImpl.findPage()', '{\"columnFilters\":{\"name\":{\"name\":\"name\",\"value\":\"\"}},\"pageNum\":1,\"pageSize\":8}', '4', '0:0:0:0:0:0:0:1', 'admin', '2018-09-23 19:54:17', null, null);
-INSERT INTO `sys_log` VALUES ('3', 'admin', null, 'com.louis.kitty.admin.sevice.impl.SysUserServiceImpl.findPage()', '{\"columnFilters\":{\"name\":{\"name\":\"name\",\"value\":\"\"}},\"pageNum\":1,\"pageSize\":8}', '36', '0:0:0:0:0:0:0:1', 'admin', '2018-09-23 19:54:18', null, null);
-INSERT INTO `sys_log` VALUES ('4', 'admin', null, 'com.louis.kitty.admin.sevice.impl.SysDictServiceImpl.findPage()', '{\"columnFilters\":{\"label\":{\"name\":\"label\",\"value\":\"\"}},\"pageNum\":1,\"pageSize\":8}', '4', '0:0:0:0:0:0:0:1', 'admin', '2018-09-23 19:54:20', null, null);
-INSERT INTO `sys_log` VALUES ('5', 'admin', null, 'com.louis.kitty.admin.sevice.impl.SysRoleServiceImpl.findPage()', '{\"columnFilters\":{\"name\":{\"name\":\"name\",\"value\":\"\"}},\"pageNum\":1,\"pageSize\":8}', '4', '0:0:0:0:0:0:0:1', 'admin', '2018-09-23 19:54:20', null, null);
-INSERT INTO `sys_log` VALUES ('6', 'admin', null, 'com.louis.kitty.admin.sevice.impl.SysUserServiceImpl.findPage()', '{\"columnFilters\":{\"name\":{\"name\":\"name\",\"value\":\"\"}},\"pageNum\":1,\"pageSize\":8}', '27', '0:0:0:0:0:0:0:1', 'admin', '2018-09-23 19:54:21', null, null);
-INSERT INTO `sys_log` VALUES ('7', 'admin', null, 'com.louis.kitty.admin.sevice.impl.SysRoleServiceImpl.findPage()', '{\"columnFilters\":{\"name\":{\"name\":\"name\",\"value\":\"\"}},\"pageNum\":1,\"pageSize\":8}', '4', '0:0:0:0:0:0:0:1', 'admin', '2018-09-23 19:54:22', null, null);
-INSERT INTO `sys_log` VALUES ('8', 'admin', null, 'com.louis.kitty.admin.sevice.impl.SysDictServiceImpl.findPage()', '{\"columnFilters\":{\"label\":{\"name\":\"label\",\"value\":\"\"}},\"pageNum\":1,\"pageSize\":8}', '4', '0:0:0:0:0:0:0:1', 'admin', '2018-09-23 19:54:23', null, null);
-INSERT INTO `sys_log` VALUES ('2798', null, null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findByName()', '\"admin\"', '361', '0:0:0:0:0:0:0:1', null, null, null, null);
-INSERT INTO `sys_log` VALUES ('2799', null, null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findByName()', '\"admin\"', '4', '0:0:0:0:0:0:0:1', null, null, null, null);
-INSERT INTO `sys_log` VALUES ('2800', null, null, 'com.louis.mango.admin.service.impl.SysMenuServiceImpl.findByUser()', '\"admin\"', '43', '0:0:0:0:0:0:0:1', null, null, null, null);
-INSERT INTO `sys_log` VALUES ('2801', null, null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findPermissions()', '\"admin\"', '49', '0:0:0:0:0:0:0:1', null, null, null, null);
-INSERT INTO `sys_log` VALUES ('2802', null, null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findByName()', '\"admin\"', '221', '0:0:0:0:0:0:0:1', null, null, null, null);
-INSERT INTO `sys_log` VALUES ('2803', null, null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findByName()', '\"admin\"', '3', '0:0:0:0:0:0:0:1', null, null, null, null);
-INSERT INTO `sys_log` VALUES ('2804', null, null, 'com.louis.mango.admin.service.impl.SysMenuServiceImpl.findByUser()', '\"admin\"', '37', '0:0:0:0:0:0:0:1', null, null, null, null);
-INSERT INTO `sys_log` VALUES ('2805', null, null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findPermissions()', '\"admin\"', '43', '0:0:0:0:0:0:0:1', null, null, null, null);
-INSERT INTO `sys_log` VALUES ('2806', 'admin', null, 'com.louis.mango.admin.service.impl.SysLoginLogServiceImpl.writeLoginLog()', '\"admin\"', '138', '0:0:0:0:0:0:0:1', 'admin', '2019-01-21 10:15:43', null, null);
-INSERT INTO `sys_log` VALUES ('2807', 'admin', null, 'com.louis.mango.admin.service.impl.SysMenuServiceImpl.findTree()', '\"admin\"', '15', '0:0:0:0:0:0:0:1', 'admin', '2019-01-21 10:15:44', null, null);
-INSERT INTO `sys_log` VALUES ('2808', 'admin', null, 'com.louis.mango.admin.service.impl.SysMenuServiceImpl.findByUser()', '\"admin\"', '16', '0:0:0:0:0:0:0:1', 'admin', '2019-01-21 10:15:44', null, null);
-INSERT INTO `sys_log` VALUES ('2809', 'admin', null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findPermissions()', '\"admin\"', '22', '0:0:0:0:0:0:0:1', 'admin', '2019-01-21 10:15:44', null, null);
-INSERT INTO `sys_log` VALUES ('2876', 'admin', null, 'com.louis.mango.admin.service.impl.SysLoginLogServiceImpl.findPage()', '{\"pageNum\":1,\"pageSize\":9,\"params\":[{\"name\":\"userName\",\"value\":\"\"}]}', '13', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:10', null, null);
-INSERT INTO `sys_log` VALUES ('2877', 'admin', null, 'com.louis.mango.admin.service.impl.SysRoleServiceImpl.findPage()', '{\"pageNum\":1,\"pageSize\":9,\"params\":[{\"name\":\"name\",\"value\":\"\"}]}', '15', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:13', null, null);
-INSERT INTO `sys_log` VALUES ('2878', 'admin', null, 'com.louis.mango.admin.service.impl.SysMenuServiceImpl.findTree()', 'null', '10', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:13', null, null);
-INSERT INTO `sys_log` VALUES ('2879', 'admin', null, 'com.louis.mango.admin.service.impl.SysDeptServiceImpl.findTree()', null, '3', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:14', null, null);
-INSERT INTO `sys_log` VALUES ('2880', 'admin', null, 'com.louis.mango.admin.service.impl.SysDeptServiceImpl.findTree()', null, '2', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:14', null, null);
-INSERT INTO `sys_log` VALUES ('2881', 'admin', null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findPage()', '{\"pageNum\":1,\"pageSize\":9,\"params\":[{\"name\":\"name\",\"value\":\"\"}]}', '49', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:14', null, null);
-INSERT INTO `sys_log` VALUES ('2882', 'admin', null, 'com.louis.mango.admin.service.impl.SysRoleServiceImpl.findAll()', null, '1', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:14', null, null);
-INSERT INTO `sys_log` VALUES ('2883', 'admin', null, 'com.louis.mango.admin.service.impl.SysMenuServiceImpl.findTree()', 'null', '3', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:15', null, null);
-INSERT INTO `sys_log` VALUES ('2884', 'admin', null, 'com.louis.mango.admin.service.impl.SysConfigServiceImpl.findPage()', '{\"pageNum\":1,\"pageSize\":9,\"params\":[{\"name\":\"label\",\"value\":\"\"}]}', '8', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:15', null, null);
-INSERT INTO `sys_log` VALUES ('2885', 'admin', null, 'com.louis.mango.admin.service.impl.SysLoginLogServiceImpl.findPage()', '{\"pageNum\":1,\"pageSize\":9,\"params\":[{\"name\":\"userName\",\"value\":\"\"}]}', '7', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:16', null, null);
-INSERT INTO `sys_log` VALUES ('2886', 'admin', null, 'com.louis.mango.admin.service.impl.SysDeptServiceImpl.findTree()', null, '2', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:22', null, null);
-INSERT INTO `sys_log` VALUES ('2887', 'admin', null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findPage()', '{\"pageNum\":1,\"pageSize\":9,\"params\":[{\"name\":\"name\",\"value\":\"\"}]}', '61', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:22', null, null);
-INSERT INTO `sys_log` VALUES ('2888', 'admin', null, 'com.louis.mango.admin.service.impl.SysRoleServiceImpl.findAll()', null, '1', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:22', null, null);
-INSERT INTO `sys_log` VALUES ('2889', 'admin', null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findPage()', '{\"pageNum\":2,\"pageSize\":9,\"params\":[{\"name\":\"name\",\"value\":\"\"}]}', '18', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:25', null, null);
-INSERT INTO `sys_log` VALUES ('2890', 'admin', null, 'com.louis.mango.admin.service.impl.SysRoleServiceImpl.findAll()', null, '2', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:25', null, null);
-INSERT INTO `sys_log` VALUES ('2891', 'admin', null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findPage()', '{\"pageNum\":1,\"pageSize\":9,\"params\":[{\"name\":\"name\",\"value\":\"\"}]}', '43', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:27', null, null);
-INSERT INTO `sys_log` VALUES ('2892', 'admin', null, 'com.louis.mango.admin.service.impl.SysRoleServiceImpl.findAll()', null, '1', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:27', null, null);
-INSERT INTO `sys_log` VALUES ('2893', 'admin', null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.createUserExcelFile()', '{\"pageNum\":1,\"pageSize\":100000,\"params\":[{\"name\":\"name\",\"value\":\"\"}]}', '1577', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:38', null, null);
-INSERT INTO `sys_log` VALUES ('2894', 'admin', null, 'com.louis.mango.admin.service.impl.SysDeptServiceImpl.findTree()', null, '1', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:49:24', null, null);
-INSERT INTO `sys_log` VALUES ('2895', 'admin', null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findPage()', '{\"pageNum\":1,\"pageSize\":9,\"params\":[{\"name\":\"name\",\"value\":\"\"}]}', '75', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:49:24', null, null);
-INSERT INTO `sys_log` VALUES ('2896', 'admin', null, 'com.louis.mango.admin.service.impl.SysRoleServiceImpl.findAll()', null, '2', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:49:24', null, null);
+INSERT INTO `sys_log` VALUES ('1', 'admin', null, 'com.hoya.admin.sevice.impl.SysDictServiceImpl.findPage()', '{\"columnFilters\":{\"label\":{\"name\":\"label\",\"value\":\"\"}},\"pageNum\":1,\"pageSize\":8}', '4', '0:0:0:0:0:0:0:1', 'admin', '2018-09-23 19:54:16', null, null);
+INSERT INTO `sys_log` VALUES ('2', 'admin', null, 'com.hoya.admin.sevice.impl.SysRoleServiceImpl.findPage()', '{\"columnFilters\":{\"name\":{\"name\":\"name\",\"value\":\"\"}},\"pageNum\":1,\"pageSize\":8}', '4', '0:0:0:0:0:0:0:1', 'admin', '2018-09-23 19:54:17', null, null);
+INSERT INTO `sys_log` VALUES ('3', 'admin', null, 'com.hoya.admin.sevice.impl.SysUserServiceImpl.findPage()', '{\"columnFilters\":{\"name\":{\"name\":\"name\",\"value\":\"\"}},\"pageNum\":1,\"pageSize\":8}', '36', '0:0:0:0:0:0:0:1', 'admin', '2018-09-23 19:54:18', null, null);
+INSERT INTO `sys_log` VALUES ('4', 'admin', null, 'com.hoya.admin.sevice.impl.SysDictServiceImpl.findPage()', '{\"columnFilters\":{\"label\":{\"name\":\"label\",\"value\":\"\"}},\"pageNum\":1,\"pageSize\":8}', '4', '0:0:0:0:0:0:0:1', 'admin', '2018-09-23 19:54:20', null, null);
+INSERT INTO `sys_log` VALUES ('5', 'admin', null, 'com.hoya.admin.sevice.impl.SysRoleServiceImpl.findPage()', '{\"columnFilters\":{\"name\":{\"name\":\"name\",\"value\":\"\"}},\"pageNum\":1,\"pageSize\":8}', '4', '0:0:0:0:0:0:0:1', 'admin', '2018-09-23 19:54:20', null, null);
+INSERT INTO `sys_log` VALUES ('6', 'admin', null, 'com.hoya.admin.sevice.impl.SysUserServiceImpl.findPage()', '{\"columnFilters\":{\"name\":{\"name\":\"name\",\"value\":\"\"}},\"pageNum\":1,\"pageSize\":8}', '27', '0:0:0:0:0:0:0:1', 'admin', '2018-09-23 19:54:21', null, null);
+INSERT INTO `sys_log` VALUES ('7', 'admin', null, 'com.hoya.admin.sevice.impl.SysRoleServiceImpl.findPage()', '{\"columnFilters\":{\"name\":{\"name\":\"name\",\"value\":\"\"}},\"pageNum\":1,\"pageSize\":8}', '4', '0:0:0:0:0:0:0:1', 'admin', '2018-09-23 19:54:22', null, null);
+INSERT INTO `sys_log` VALUES ('8', 'admin', null, 'com.hoya.admin.sevice.impl.SysDictServiceImpl.findPage()', '{\"columnFilters\":{\"label\":{\"name\":\"label\",\"value\":\"\"}},\"pageNum\":1,\"pageSize\":8}', '4', '0:0:0:0:0:0:0:1', 'admin', '2018-09-23 19:54:23', null, null);
+INSERT INTO `sys_log` VALUES ('2798', null, null, 'com.hoya.admin.service.impl.SysUserServiceImpl.findByName()', '\"admin\"', '361', '0:0:0:0:0:0:0:1', null, null, null, null);
+INSERT INTO `sys_log` VALUES ('2799', null, null, 'com.hoya.admin.service.impl.SysUserServiceImpl.findByName()', '\"admin\"', '4', '0:0:0:0:0:0:0:1', null, null, null, null);
+INSERT INTO `sys_log` VALUES ('2800', null, null, 'com.hoya.admin.service.impl.SysMenuServiceImpl.findByUser()', '\"admin\"', '43', '0:0:0:0:0:0:0:1', null, null, null, null);
+INSERT INTO `sys_log` VALUES ('2801', null, null, 'com.hoya.admin.service.impl.SysUserServiceImpl.findPermissions()', '\"admin\"', '49', '0:0:0:0:0:0:0:1', null, null, null, null);
+INSERT INTO `sys_log` VALUES ('2802', null, null, 'com.hoya.admin.service.impl.SysUserServiceImpl.findByName()', '\"admin\"', '221', '0:0:0:0:0:0:0:1', null, null, null, null);
+INSERT INTO `sys_log` VALUES ('2803', null, null, 'com.hoya.admin.service.impl.SysUserServiceImpl.findByName()', '\"admin\"', '3', '0:0:0:0:0:0:0:1', null, null, null, null);
+INSERT INTO `sys_log` VALUES ('2804', null, null, 'com.hoya.admin.service.impl.SysMenuServiceImpl.findByUser()', '\"admin\"', '37', '0:0:0:0:0:0:0:1', null, null, null, null);
+INSERT INTO `sys_log` VALUES ('2805', null, null, 'com.hoya.admin.service.impl.SysUserServiceImpl.findPermissions()', '\"admin\"', '43', '0:0:0:0:0:0:0:1', null, null, null, null);
+INSERT INTO `sys_log` VALUES ('2806', 'admin', null, 'com.hoya.admin.service.impl.SysLoginLogServiceImpl.writeLoginLog()', '\"admin\"', '138', '0:0:0:0:0:0:0:1', 'admin', '2019-01-21 10:15:43', null, null);
+INSERT INTO `sys_log` VALUES ('2807', 'admin', null, 'com.hoya.admin.service.impl.SysMenuServiceImpl.findTree()', '\"admin\"', '15', '0:0:0:0:0:0:0:1', 'admin', '2019-01-21 10:15:44', null, null);
+INSERT INTO `sys_log` VALUES ('2808', 'admin', null, 'com.hoya.admin.service.impl.SysMenuServiceImpl.findByUser()', '\"admin\"', '16', '0:0:0:0:0:0:0:1', 'admin', '2019-01-21 10:15:44', null, null);
+INSERT INTO `sys_log` VALUES ('2809', 'admin', null, 'com.hoya.admin.service.impl.SysUserServiceImpl.findPermissions()', '\"admin\"', '22', '0:0:0:0:0:0:0:1', 'admin', '2019-01-21 10:15:44', null, null);
+INSERT INTO `sys_log` VALUES ('2876', 'admin', null, 'com.hoya.admin.service.impl.SysLoginLogServiceImpl.findPage()', '{\"pageNum\":1,\"pageSize\":9,\"params\":[{\"name\":\"userName\",\"value\":\"\"}]}', '13', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:10', null, null);
+INSERT INTO `sys_log` VALUES ('2877', 'admin', null, 'com.hoya.admin.service.impl.SysRoleServiceImpl.findPage()', '{\"pageNum\":1,\"pageSize\":9,\"params\":[{\"name\":\"name\",\"value\":\"\"}]}', '15', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:13', null, null);
+INSERT INTO `sys_log` VALUES ('2878', 'admin', null, 'com.hoya.admin.service.impl.SysMenuServiceImpl.findTree()', 'null', '10', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:13', null, null);
+INSERT INTO `sys_log` VALUES ('2879', 'admin', null, 'com.hoya.admin.service.impl.SysDeptServiceImpl.findTree()', null, '3', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:14', null, null);
+INSERT INTO `sys_log` VALUES ('2880', 'admin', null, 'com.hoya.admin.service.impl.SysDeptServiceImpl.findTree()', null, '2', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:14', null, null);
+INSERT INTO `sys_log` VALUES ('2881', 'admin', null, 'com.hoya.admin.service.impl.SysUserServiceImpl.findPage()', '{\"pageNum\":1,\"pageSize\":9,\"params\":[{\"name\":\"name\",\"value\":\"\"}]}', '49', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:14', null, null);
+INSERT INTO `sys_log` VALUES ('2882', 'admin', null, 'com.hoya.admin.service.impl.SysRoleServiceImpl.findAll()', null, '1', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:14', null, null);
+INSERT INTO `sys_log` VALUES ('2883', 'admin', null, 'com.hoya.admin.service.impl.SysMenuServiceImpl.findTree()', 'null', '3', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:15', null, null);
+INSERT INTO `sys_log` VALUES ('2884', 'admin', null, 'com.hoya.admin.service.impl.SysConfigServiceImpl.findPage()', '{\"pageNum\":1,\"pageSize\":9,\"params\":[{\"name\":\"label\",\"value\":\"\"}]}', '8', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:15', null, null);
+INSERT INTO `sys_log` VALUES ('2885', 'admin', null, 'com.hoya.admin.service.impl.SysLoginLogServiceImpl.findPage()', '{\"pageNum\":1,\"pageSize\":9,\"params\":[{\"name\":\"userName\",\"value\":\"\"}]}', '7', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:16', null, null);
+INSERT INTO `sys_log` VALUES ('2886', 'admin', null, 'com.hoya.admin.service.impl.SysDeptServiceImpl.findTree()', null, '2', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:22', null, null);
+INSERT INTO `sys_log` VALUES ('2887', 'admin', null, 'com.hoya.admin.service.impl.SysUserServiceImpl.findPage()', '{\"pageNum\":1,\"pageSize\":9,\"params\":[{\"name\":\"name\",\"value\":\"\"}]}', '61', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:22', null, null);
+INSERT INTO `sys_log` VALUES ('2888', 'admin', null, 'com.hoya.admin.service.impl.SysRoleServiceImpl.findAll()', null, '1', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:22', null, null);
+INSERT INTO `sys_log` VALUES ('2889', 'admin', null, 'com.hoya.admin.service.impl.SysUserServiceImpl.findPage()', '{\"pageNum\":2,\"pageSize\":9,\"params\":[{\"name\":\"name\",\"value\":\"\"}]}', '18', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:25', null, null);
+INSERT INTO `sys_log` VALUES ('2890', 'admin', null, 'com.hoya.admin.service.impl.SysRoleServiceImpl.findAll()', null, '2', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:25', null, null);
+INSERT INTO `sys_log` VALUES ('2891', 'admin', null, 'com.hoya.admin.service.impl.SysUserServiceImpl.findPage()', '{\"pageNum\":1,\"pageSize\":9,\"params\":[{\"name\":\"name\",\"value\":\"\"}]}', '43', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:27', null, null);
+INSERT INTO `sys_log` VALUES ('2892', 'admin', null, 'com.hoya.admin.service.impl.SysRoleServiceImpl.findAll()', null, '1', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:27', null, null);
+INSERT INTO `sys_log` VALUES ('2893', 'admin', null, 'com.hoya.admin.service.impl.SysUserServiceImpl.createUserExcelFile()', '{\"pageNum\":1,\"pageSize\":100000,\"params\":[{\"name\":\"name\",\"value\":\"\"}]}', '1577', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:48:38', null, null);
+INSERT INTO `sys_log` VALUES ('2894', 'admin', null, 'com.hoya.admin.service.impl.SysDeptServiceImpl.findTree()', null, '1', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:49:24', null, null);
+INSERT INTO `sys_log` VALUES ('2895', 'admin', null, 'com.hoya.admin.service.impl.SysUserServiceImpl.findPage()', '{\"pageNum\":1,\"pageSize\":9,\"params\":[{\"name\":\"name\",\"value\":\"\"}]}', '75', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:49:24', null, null);
+INSERT INTO `sys_log` VALUES ('2896', 'admin', null, 'com.hoya.admin.service.impl.SysRoleServiceImpl.findAll()', null, '2', '0:0:0:0:0:0:0:1', 'admin', '2019-01-22 14:49:24', null, null);
 
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -431,18 +431,6 @@ INSERT INTO `sys_menu` VALUES ('34', '删除', '32', null, 'sys:loginlog:delete'
 INSERT INTO `sys_menu` VALUES ('35', '操作日志', '1', '/sys/log', null, '1', 'el-icon-info', '8', null, null, 'admin', '2018-09-23 19:32:28', '0');
 INSERT INTO `sys_menu` VALUES ('36', '查看', '35', null, 'sys:log:view', '2', null, '0', null, null, null, null, '0');
 INSERT INTO `sys_menu` VALUES ('37', '删除', '35', null, 'sys:log:delete', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('38', '系统监控', '0', '', '', '0', 'el-icon-info', '4', 'admin', '2018-12-27 10:57:29', 'admin', '2019-01-10 17:31:04', '0');
-INSERT INTO `sys_menu` VALUES ('39', '数据监控', '38', 'http://127.0.0.1:8001/druid/login.html', null, '1', 'el-icon-warning', '0', null, null, 'admin', '2018-12-27 11:03:45', '0');
-INSERT INTO `sys_menu` VALUES ('40', '查看', '39', null, 'sys:druid:view', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('41', '服务监控', '38', 'http://127.0.0.1:8000/', null, '1', 'el-icon-view', '1', 'admin', '2018-11-02 20:02:15', 'admin', '2018-12-27 11:03:53', '0');
-INSERT INTO `sys_menu` VALUES ('42', '查看', '41', null, 'sys:monitor:view', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('43', '服务治理', '0', '', '', '0', 'el-icon-service', '2', 'admin', '2018-12-27 11:05:48', 'admin', '2018-12-27 11:06:39', '0');
-INSERT INTO `sys_menu` VALUES ('44', '注册中心', '43', 'http://127.0.0.1:8500', null, '1', ' el-icon-view', '0', 'admin', '2018-11-03 11:06:48', 'admin', '2018-12-27 11:08:11', '0');
-INSERT INTO `sys_menu` VALUES ('45', '查看', '44', null, 'sys:consul:view', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('46', '接口文档', '0', 'http://127.0.0.1:8001/swagger-ui.html', null, '1', 'el-icon-document', '3', null, null, 'admin', '2018-12-27 11:04:18', '0');
-INSERT INTO `sys_menu` VALUES ('47', '查看', '46', null, 'sys:swagger:view', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('48', '代码生成', '0', '/generator/generator', '', '1', 'el-icon-star-on', '5', 'admin', '2018-11-15 14:39:30', 'admin', '2018-11-15 14:56:18', '0');
-INSERT INTO `sys_menu` VALUES ('49', '查看', '48', null, 'sys:generator:view', '2', null, '0', null, null, null, null, '0');
 INSERT INTO `sys_menu` VALUES ('50', '在线用户', '0', '/sys/online', '', '1', 'el-icon-view', '5', 'admin', '2018-11-15 14:39:30', 'admin', '2018-11-15 14:56:18', '0');
 INSERT INTO `sys_menu` VALUES ('51', '查看', '50', null, 'sys:online:view', '2', null, '0', null, null, null, null, '0');
 INSERT INTO `sys_menu` VALUES ('52', '使用案例', '0', null, null, '0', 'el-icon-picture-outline', '6', null, null, 'admin', '2018-11-15 14:39:43', '0');
@@ -450,6 +438,7 @@ INSERT INTO `sys_menu` VALUES ('53', '国际化', '52', '/demo/i18n', null, '1',
 INSERT INTO `sys_menu` VALUES ('54', '查看', '53', null, 'sys:dict:view', '2', null, '0', null, null, null, null, '0');
 INSERT INTO `sys_menu` VALUES ('55', '换皮肤', '52', '/demo/theme', null, '1', 'el-icon-picture', '2', null, null, null, null, '0');
 INSERT INTO `sys_menu` VALUES ('56', '查看', '55', null, 'sys:dict:view', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('57', '第三方网站', '52', '/http://www.baidu.com', null, '1', 'el-icon-edit', '1', null, null, null, null, '0');
 
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

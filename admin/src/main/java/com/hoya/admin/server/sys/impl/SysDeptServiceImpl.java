@@ -8,10 +8,12 @@ import com.hoya.admin.dao.sys.SysDeptMapper;
 import com.hoya.admin.model.sys.SysDept;
 import com.hoya.admin.server.sys.SysDeptService;
 import com.hoya.admin.util.SecurityUtils;
+import com.hoya.core.exception.ServerExceptionFound;
 import com.hoya.core.page.PageHelper;
 import com.hoya.core.page.PageRequest;
 import com.hoya.core.page.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,12 +24,16 @@ public class SysDeptServiceImpl implements SysDeptService {
 
     @Override
     public int save(SysDept record) {
-        if (record.getId() == null || record.getId() == 0) {
-            record.setCreateBy(SecurityUtils.getUsername());
-            record.setCreateTime(LocalDateTime.now());
-            return sysDeptMapper.insertSelective(record);
+        try {
+            if (record.getId() == null || record.getId() == 0) {
+                record.setCreateBy(SecurityUtils.getUsername());
+                record.setCreateTime(LocalDateTime.now());
+                return sysDeptMapper.insertSelective(record);
+            }
+            return sysDeptMapper.updateByPrimaryKeySelective(record);
+        } catch (DuplicateKeyException e) {
+            throw new ServerExceptionFound("部门已经存在");
         }
-        return sysDeptMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override

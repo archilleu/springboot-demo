@@ -2,15 +2,12 @@ package com.hoya.admin.controller.sys;
 
 import com.hoya.admin.model.sys.SysDept;
 import com.hoya.admin.server.sys.SysDeptService;
-import com.hoya.core.exception.ServerExceptionFound;
+import com.hoya.core.exception.ServerException;
 import com.hoya.core.exception.ServerExceptionNotFound;
 import com.hoya.core.exception.ServerExceptionServerError;
-import com.hoya.core.utils.RequestParametersCheck;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,14 +23,13 @@ public class SysDeptController {
 
     @PreAuthorize("hasAuthority('sys:dept:add') AND hasAuthority('sys:dept:edit')")
     @PostMapping(value = "/save")
-    public SysDept save(@RequestBody @Validated SysDept record, BindingResult bindingResult) {
-        RequestParametersCheck.check(bindingResult);
+    public SysDept save(@RequestBody @Validated SysDept record) {
 
         try {
             sysDeptService.save(record);
             return record;
-        } catch (DuplicateKeyException e) {
-            throw new ServerExceptionFound("部门已经存在");
+        } catch (ServerException e) {
+            throw e;
         } catch (Exception e) {
             log.error(e.toString());
             throw new ServerExceptionServerError("内部错误");

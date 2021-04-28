@@ -4,10 +4,12 @@ import com.hoya.admin.dao.sys.SysDictMapper;
 import com.hoya.admin.model.sys.SysDict;
 import com.hoya.admin.server.sys.SysDictService;
 import com.hoya.admin.util.SecurityUtils;
+import com.hoya.core.exception.ServerExceptionFound;
 import com.hoya.core.page.PageHelper;
 import com.hoya.core.page.PageRequest;
 import com.hoya.core.page.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,12 +23,16 @@ public class SysDictServiceImpl implements SysDictService {
 
     @Override
     public int save(SysDict record) {
-        if (record.getId() == null || record.getId() == 0) {
-            record.setCreateBy(SecurityUtils.getUsername());
-            record.setCreateTime(LocalDateTime.now());
-            return sysDictMapper.insertSelective(record);
+        try {
+            if (record.getId() == null || record.getId() == 0) {
+                record.setCreateBy(SecurityUtils.getUsername());
+                record.setCreateTime(LocalDateTime.now());
+                return sysDictMapper.insertSelective(record);
+            }
+            return sysDictMapper.updateByPrimaryKeySelective(record);
+        } catch (DuplicateKeyException e) {
+            throw new ServerExceptionFound("字典值已经存在");
         }
-        return sysDictMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override

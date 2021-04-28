@@ -8,12 +8,9 @@ import com.hoya.admin.server.sys.SysRoleService;
 import com.hoya.core.exception.*;
 import com.hoya.core.page.PageRequest;
 import com.hoya.core.page.PageResult;
-import com.hoya.core.utils.RequestParametersCheck;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,9 +26,7 @@ public class SysRoleController {
 
     @PreAuthorize("hasAuthority('sys:role:add') AND hasAuthority('sys:role:edit')")
     @PostMapping(value = "/save")
-    public SysRole save(@RequestBody @Validated SysRole record, BindingResult bindingResult) {
-        RequestParametersCheck.check(bindingResult);
-
+    public SysRole save(@RequestBody @Validated SysRole record) {
         if (SysConstants.ADMIN_ID.equals(record.getId())) {
             throw new ServerExceptionForbidden("超级管理员不允许修改!");
         }
@@ -39,8 +34,8 @@ public class SysRoleController {
         try {
             sysRoleService.save(record);
             return record;
-        } catch (DuplicateKeyException e) {
-            throw new ServerExceptionFound("角色已经存在");
+        } catch (ServerException e) {
+            throw e;
         } catch (Exception e) {
             log.error(e.toString());
             throw new ServerExceptionServerError("内部错误");

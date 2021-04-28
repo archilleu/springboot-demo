@@ -35,71 +35,18 @@ public class MenuController {
         //获取当前登陆用户
         JwtUserDetails user = SecurityUtils.getCurrentUser();
         try {
-            List<SysMenu> navList = null;
+            List<MenuVo> list = null;
             if(user.getRoles().contains(SysConstants.ROLE_ADMIN)) {
-                navList = sysMenuService.findNavTree();
+                list = sysMenuService.findNavTree();
             } else {
-                navList = sysMenuService.findNavTreeByUsername(user.getUsername());
+                list = sysMenuService.findNavTreeByUsername(user.getUsername());
             }
 
-            return createMenuTree(navList);
+            return list;
         } catch (Exception e) {
             log.error(e.toString());
             throw ServerException.ServerError;
         }
     }
 
-    private List<MenuVo> createMenuTree(List<SysMenu> menus) {
-        Map<Long, List<SysMenu>> idMenuMap = createIdChildrenMap(menus);
-
-        //顶级菜单
-        List<SysMenu> topMenu = idMenuMap.get(0L);
-        if (null == topMenu) {
-            return new LinkedList<>();
-        }
-
-        MenuVo root = new MenuVo();
-        root.setId(0L);
-        List<MenuVo> children = new LinkedList<>();
-        root.setChildren(children);
-        createMenuTree(idMenuMap, root);
-        return children;
-    }
-
-    // 生成ID，children菜单关系map
-    private Map<Long, List<SysMenu>> createIdChildrenMap(List<SysMenu> menus) {
-        Map<Long, List<SysMenu>> idMenuMap = new HashMap<>();
-        for (SysMenu menu : menus) {
-            List<SysMenu> list = idMenuMap.get(menu.getParentId());
-            if (null == list) {
-                list = new LinkedList<>();
-                idMenuMap.put(menu.getParentId(), list);
-            }
-            list.add(menu);
-        }
-
-        return idMenuMap;
-    }
-
-    // 生成菜单树
-    private void createMenuTree(Map<Long, List<SysMenu>> idMenuMap, MenuVo root) {
-        // 获取当前的菜单id当作是下一级菜单的parentId
-        Long parentId = root.getId();
-        // 获取当前菜单的子菜单列表
-        List<SysMenu> menus = idMenuMap.get(parentId);
-        if (null == menus) {
-            // 没有子菜单
-            return;
-        }
-
-        List<MenuVo> children = root.getChildren();
-        for(SysMenu sysMenu : menus){
-            MenuVo menuVo = new MenuVo();
-            BeanUtils.copyProperties(sysMenu, menuVo, "delFlag");
-            children.add(menuVo);
-            createMenuTree(idMenuMap, menuVo);
-        }
-
-        return;
-    }
 }

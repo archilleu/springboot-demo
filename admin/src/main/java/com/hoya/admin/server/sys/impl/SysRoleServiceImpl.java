@@ -13,11 +13,13 @@ import com.hoya.admin.model.sys.SysRoleMenu;
 import com.hoya.admin.server.sys.SysRoleService;
 import com.hoya.admin.util.SecurityUtils;
 import com.hoya.core.exception.ServerExceptionForbidden;
+import com.hoya.core.exception.ServerExceptionFound;
 import com.hoya.core.exception.ServerExceptionNotFound;
 import com.hoya.core.page.PageHelper;
 import com.hoya.core.page.PageRequest;
 import com.hoya.core.page.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,13 +37,19 @@ public class SysRoleServiceImpl implements SysRoleService {
 
     @Override
     public int save(SysRole record) {
-        if (record.getId() == null || record.getId() == 0) {
-            record.setCreateBy(SecurityUtils.getUsername());
-            record.setCreateTime(LocalDateTime.now());
-            return sysRoleMapper.insertSelective(record);
-        }
+        try {
+            if (record.getId() == null || record.getId() == 0) {
+                record.setCreateBy(SecurityUtils.getUsername());
+                record.setCreateTime(LocalDateTime.now());
+                return sysRoleMapper.insertSelective(record);
+            }
 
-        return sysRoleMapper.updateByPrimaryKeySelective(record);
+            record.setLastUpdateBy(SecurityUtils.getUsername());
+            record.setLastUpdateTime(LocalDateTime.now());
+            return sysRoleMapper.updateByPrimaryKeySelective(record);
+        } catch (DuplicateKeyException e) {
+            throw new ServerExceptionFound("角色已经存在");
+        }
     }
 
     @Override
