@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.starter.base.mapper.sys.SysUserRoleMapper">
+    <resultMap id="BaseResultMap" type="com.starter.base.model.sys.SysUserRole">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="role_id" jdbcType="BIGINT" property="roleId"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy"/>
+        <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_id, role_id, create_by, create_time, last_update_by, last_update_time
+    </sql>
+    <select id="findUserRoles" parameterType="java.lang.Long" resultType="com.starter.base.model.sys.SysRole">
+        select
+        sys_role.*
+        from sys_role, sys_user_role, sys_user
+        where
+        user_id = #{userId,jdbcType=BIGINT} and sys_user.id = sys_user_role.user_id and sys_role.id =
+        sys_user_role.role_id;
+    </select>
+    <delete id="deleteByUserId" parameterType="java.lang.Long">
+        delete from sys_user_role
+        where user_id = #{userId,jdbcType=BIGINT}
+    </delete>
+
+    <!--    批量插入用户角色-->
+    <insert id="insertBatch" parameterType="com.starter.base.controller.vo.SysUserRolesVo">
+        insert into sys_user_role
+        (user_id, role_id)
+        values
+        <foreach collection="roleIds" item="roleId" separator=",">
+            (
+            #{userId}, #{roleId}
+            )
+        </foreach>
+    </insert>
+</mapper>
