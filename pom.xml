@@ -24,7 +24,7 @@
         <common.redis.version>0.0.1-SNAPSHOT</common.redis.version>
         <common.swagger.version>0.0.1-SNAPSHOT</common.swagger.version>
         <java.version>1.8</java.version>
-        <spring.boot.version>2.1.11.RELEASE</spring.boot.version>
+        <spring.boot.version>2.5.12</spring.boot.version>
         <redis.version>2.7.2</redis.version>
         <redis.pool2.version>2.11.1</redis.pool2.version>
         <shiro.version>1.9.1</shiro.version>
