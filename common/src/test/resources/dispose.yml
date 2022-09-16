@@ -1,3 +1,0 @@
-# 需要包装返回值包
-dispose:
-  advice-package: com.starter.common

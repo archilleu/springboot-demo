@@ -1,0 +1,63 @@
+server:
+  port: 8443
+  servlet:
+    context-path: /service
+
+#全局返回拦截包配置
+dispose:
+  advice-package: com.example
+
+#jwt
+jwt:
+  secret: yahaha
+  expireSecond: 3600000
+
+#mybatis
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+spring:
+  # 环境 dev|test|prod
+  profiles:
+    active: dev, kafka, redis
+  application:
+    name: service
+
+  datasource:
+    # 连接池
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      connection-timeout: 30000 # 等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 默认:30秒
+      minimum-idle: 10
+      maximum-pool-size: 100
+      auto-commit: true
+      idle-timeout: 600000 # 一个连接idle状态的最大时长（毫秒），超时则被释放（retired），默认:10分钟
+      max-lifetime: 18000000 # 一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），默认:30分钟 1800000ms，建议设置比数据库超时时长少60秒，参考MySQL wait_timeout参数（show variables like '%timeout%';） -->
+      connection-test-query: SELECT 1
+      validation-timeout: 3000
+
+#shiro
+shiro:
+  anno:
+    - /docs
+    - /user/login
+    #swagger
+    - /swagger-ui/**
+    - /swagger-resources/**
+    - /v3/**
+  filter:
+    - /**
+
+#swagger
+swagger:
+  enable: true
+  title: demo接口
+  description: 这是个测试接口
+  version: v1
+  contact:
+    name: cjy
+    url: http://www.google.com
+    email: cjy@gmail.com
+  basePackage: com.example
