@@ -35,7 +35,7 @@
         <apache.commons.lang3.version>3.12.0</apache.commons.lang3.version>
         <swagger3.version>3.0.0</swagger3.version>
         <knife4j.version>3.0.3</knife4j.version>
-        <kafka.version>2.8.0</kafka.version>
+        <kafka.version>2.9.11</kafka.version>
         <fastjson.version>2.0.12</fastjson.version>
     </properties>
     <dependencyManagement>
