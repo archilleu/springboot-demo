@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    # postgres
+    url: jdbc:oracle:thin:@localhost:41521/xe
+    username: bookinguser
+    password: rohit123
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    hikari:
+      connection-test-query: SELECT 1 from dual

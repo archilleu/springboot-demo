@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/demo?characterEncoding=utf8&useSSL=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    dir: auto
+    parent: com.example.demo
+    module: service
+    author: cjy
+    include:
+      - sys_config
+      - sys_dept
+      - sys_dict
+      - sys_log
+      - sys_login_log
+      - sys_menu
+      - sys_role
+      - sys_role_dept
+      - sys_role_menu
+      - sys_user
+      - sys_user_role

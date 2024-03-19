@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.service.mapper.SysUserRoleMapper">
+    <select id="findUserRoles" resultType="com.example.demo.service.model.entity.SysRole">
+        select
+        sys_role.*
+        from sys_role, sys_user_role, sys_user
+        where
+        sys_user.name = #{username} and sys_user.id = sys_user_role.user_id and sys_role.id =
+        sys_user_role.role_id;
+    </select>
+
+    <delete id="deleteByUserId">
+        delete from sys_user_role where user_id = #{userId}
+    </delete>
+
+    <insert id="insertBatch">
+        insert into sys_user_role
+        (user_id, role_id)
+        values
+        <foreach collection="roleIds" item="roleId" separator=",">
+            (
+            #{userId}, #{roleId}
+            )
+        </foreach>
+    </insert>
+
+</mapper>

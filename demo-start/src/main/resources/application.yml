@@ -1,0 +1,11 @@
+server:
+  port: 8889
+  servlet:
+    context-path: /start
+
+spring:
+  # 环境 dev|test|prod
+  profiles:
+    active: init
+  application:
+    name: start
