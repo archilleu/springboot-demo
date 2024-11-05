@@ -12,6 +12,7 @@
 
     <artifactId>common-auth</artifactId>
     <name>common-auth</name>
+    <packaging>jar</packaging>
     <description>auth project for Spring Boot</description>
 
     <properties>

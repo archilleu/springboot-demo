@@ -12,6 +12,7 @@
 
     <artifactId>common-cache-redis</artifactId>
     <name>common-cache-redis</name>
+    <packaging>jar</packaging>
     <description>redis project for Spring Boot</description>
 
     <properties>

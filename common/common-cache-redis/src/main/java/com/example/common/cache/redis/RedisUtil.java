@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @Component
+@SuppressWarnings("unused,unchecked")
 public class RedisUtil {
     private final RedisTemplate<String, Object> redisTemplate;
 
@@ -30,7 +31,7 @@ public class RedisUtil {
             redisTemplate.opsForValue().set(key, value);
             return true;
         } catch (Exception e) {
-            log.error("操作redis失败,key[{}]]", key, e.getMessage());
+            log.error("操作redis失败,key[{}], msg[{}]", key, e.getLocalizedMessage());
             return false;
         }
     }
@@ -48,7 +49,7 @@ public class RedisUtil {
                 return set(key, value);
             }
         } catch (Exception e) {
-            log.error("操作redis失败,key[{}]]", key, e.getMessage());
+            log.error("操作redis失败,key[{}], msg[{}]", key, e.getLocalizedMessage());
             return false;
         }
     }
@@ -62,7 +63,7 @@ public class RedisUtil {
             Object value = redisTemplate.opsForValue().get(key);
             return (T) value;
         } catch (Exception e) {
-            log.error("操作redis失败,key[{}]]", key, e.getMessage());
+            log.error("操作redis失败,key[{}], msg[{}]", key, e.getLocalizedMessage());
             return null;
         }
     }
@@ -76,7 +77,7 @@ public class RedisUtil {
             Object value = redisTemplate.opsForValue().get(key);
             return (List<T>) value;
         } catch (Exception e) {
-            log.error("操作redis失败,key[{}]]", key, e.getMessage());
+            log.error("操作redis失败,key[{}], msg[{}]", key, e.getLocalizedMessage());
             return null;
         }
     }
@@ -89,8 +90,7 @@ public class RedisUtil {
                 redisTemplate.delete(Arrays.asList(key));
             }
         } catch (Exception e) {
-            log.error("操作redis失败,key[{}]]", key, e.getMessage());
-            return;
+            log.error("操作redis失败,key[{}], msg[{}]", key, e.getLocalizedMessage());
         }
     }
 }

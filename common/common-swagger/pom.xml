@@ -12,6 +12,7 @@
 
     <artifactId>common-swagger</artifactId>
     <name>common-swagger</name>
+    <packaging>jar</packaging>
     <description>common-swagger project for Spring Boot</description>
 
     <properties>

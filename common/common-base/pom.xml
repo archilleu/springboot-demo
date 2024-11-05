@@ -12,6 +12,7 @@
 
     <artifactId>common-base</artifactId>
     <name>common-base</name>
+    <packaging>jar</packaging>
     <description>base project for Spring Boot</description>
 
     <properties>

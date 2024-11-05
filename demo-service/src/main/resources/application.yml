@@ -1,7 +1,7 @@
 server:
   port: 8888
   servlet:
-    context-path: /service
+    context-path: /demo-service
 
 spring:
   # https://stackoverflow.com/questions/40241843/failed-to-start-bean-documentationpluginsbootstrapper-in-spring-data-rest/70503395#70503395
@@ -12,6 +12,7 @@ spring:
   # 环境 dev|test|prod
   profiles:
     active: dev
+
   application:
     name: service
 

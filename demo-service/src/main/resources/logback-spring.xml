@@ -2,7 +2,7 @@
 <configuration debug="true">
     <contextName>service</contextName>
     <property name="PROJECT_NAME" value="server"/>
-    <property name="LOG_HOME" value="/app/demo/logs/service"/>
+    <property name="LOG_HOME" value="/usr/app/demo-service/logs"/>
 
     <!-- appender是configuration的子节点，是负责写日志的组件。 -->
     <!-- ConsoleAppender：把日志输出到控制台 -->
@@ -103,40 +103,24 @@
         </encoder>
     </appender>
 
-    <springProfile name="dev">
-        <!--给定记录器的每个启用的日志记录请求都将转发到该记录器中的所有appender以及层次结构中较高的appender（不用在意level值）。
-        换句话说，appender是从记录器层次结构中附加地继承的。
-        例如，如果将控制台appender添加到根记录器，则所有启用的日志记录请求将至少在控制台上打印。
-        如果另外将文件追加器添加到记录器（例如L），则对L和L'子项启用的记录请求将打印在文件和控制台上。
-        通过将记录器的additivity标志设置为false，可以覆盖此默认行为，以便不再添加appender累积-->
-        <!-- configuration中最多允许一个root，别的logger如果没有设置级别则从父级别root继承 -->
-        <root level="INFO">
-            <appender-ref ref="STDOUT"/>
-            <appender-ref ref="info_log"/>
-            <appender-ref ref="error_log"/>
-        </root>
+    <!--给定记录器的每个启用的日志记录请求都将转发到该记录器中的所有appender以及层次结构中较高的appender（不用在意level值）。
+    换句话说，appender是从记录器层次结构中附加地继承的。
+    例如，如果将控制台appender添加到根记录器，则所有启用的日志记录请求将至少在控制台上打印。
+    如果另外将文件追加器添加到记录器（例如L），则对L和L'子项启用的记录请求将打印在文件和控制台上。
+    通过将记录器的additivity标志设置为false，可以覆盖此默认行为，以便不再添加appender累积-->
+    <!-- configuration中最多允许一个root，别的logger如果没有设置级别则从父级别root继承 -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="info_log"/>
+        <appender-ref ref="error_log"/>
+    </root>
 
-        <!-- 利用logback输入mybatis的sql日志，
-        注意：如果不加 additivity="false" 则此logger会将输出转发到自身以及祖先的logger中，就会出现日志文件中sql重复打印-->
-        <logger name="com.example.demo.service.mapper" level="DEBUG" additivity="false">
-            <appender-ref ref="STDOUT"/>
-            <appender-ref ref="info_log"/>
-            <appender-ref ref="error_log"/>
-        </logger>
-    </springProfile>
-
-    <springProfile name="prod">
-        <root level="INFO">
-            <appender-ref ref="info_log"/>
-            <appender-ref ref="error_log"/>
-        </root>
-
-        <!-- 利用logback输入mybatis的sql日志，
-        注意：如果不加 additivity="false" 则此logger会将输出转发到自身以及祖先的logger中，就会出现日志文件中sql重复打印-->
-        <logger name="com.example.demo.service.mapper" level="DEBUG" additivity="false">
-            <appender-ref ref="info_log"/>
-            <appender-ref ref="error_log"/>
-        </logger>
-    </springProfile>
+    <!-- 利用logback输入mybatis的sql日志，
+    注意：如果不加 additivity="false" 则此logger会将输出转发到自身以及祖先的logger中，就会出现日志文件中sql重复打印-->
+    <logger name="com.example.demo.service.mapper" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="info_log"/>
+        <appender-ref ref="error_log"/>
+    </logger>
 
 </configuration>

@@ -100,7 +100,6 @@ public class ShiroConfig {
         shiroFilterProperties.getAnno().forEach(item -> filterRuleMap.put(item, JWT_ANNO_NAME));
         shiroFilterProperties.getFilter().forEach(item -> filterRuleMap.put(item, JWT_FILTER_NAME));
         // 所有请求通过我们自己的JWT Filter
-        filterRuleMap.put("/**", JWT_FILTER_NAME);
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return factoryBean;
     }

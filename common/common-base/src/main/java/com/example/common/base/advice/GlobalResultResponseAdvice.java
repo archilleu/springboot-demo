@@ -25,6 +25,7 @@ import java.util.Objects;
  */
 
 @RestControllerAdvice
+@SuppressWarnings("unchecked")
 public class GlobalResultResponseAdvice implements ResponseBodyAdvice<Object> {
 
     final private GlobalDefaultProperties globalDefaultProperties;
